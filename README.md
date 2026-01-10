@@ -23,11 +23,26 @@ The system operates on a "Zero-Trust" architecture divided into three security l
 
 ### 2. The Phantom Scraper (Stealth Extraction)
 - **Tech Stack**: Python, Playwright, BeautifulSoup, NumPy.
-- **Capabilities**:
-    - **CDP Evasion**: Modifies Chrome DevTools Protocol to hide automation flags (`navigator.webdriver`).
-    - **Bio-Mimicry**: Uses Bezier curves for human-like mouse movement and "Smart Scroll" to trigger lazy-loading.
-    - **Hard Target Access**: Capable of infiltrating protected environments (e.g., Bloomberg, Reuters, walled gardens).
-    - **Google Redirect Bypass**: Automatically negotiates Google News consent walls and redirect chains to reach the true intelligence vector.
+- **Protocol**: `phantom_scraper.py`
+- **Core Capabilities**:
+
+    #### 🕵️‍♂️ Phase 1: CDP Evasion (The Mask)
+    Directly modifies the *Chrome DevTools Protocol* (CDP) to eliminate automation fingerprints before the page loads:
+    - **`navigator.webdriver`**: Spoofed to `undefined`.
+    - **WebGL Fingerprinting**: Injects fake GPU vendor info (Intel Iris/NVIDIA) to hide headless Linux servers.
+    - **Plugin Mocking**: Injects fake plugin arrays to mimic a consumer PC.
+
+    #### 🧬 Phase 2: Bio-Mimicry (The Movement)
+    Replicates human motor control to defeat heuristic analysis:
+    - **Bezier Mouse curves**: Mouse movements follow non-linear, randomized paths (no straight lines).
+    - **Smart Scroll**: Variable-speed scrolling with random pauses to trigger "Lazy Loading" images and content.
+    - **Human Dilation**: Artificial latency injected into interactions to match human reaction times (~1.2x).
+
+    #### 🎯 Phase 3: Target Resolution (The Breach)
+    Advanced logic to handle hostile redirect chains (e.g., Google News RSS):
+    - **Consent Bypass**: Autonomously identifies and clicks "Accept/Agree" on cookie walls (GDPR/CMP).
+    - **Redirect Following**: Waits for the URL to evolve from the aggregator (Google) to the final publisher (Target).
+    - **Payload Extraction**: Surgical DOM cleaning to strip ads, scripts, and navigational noise, leaving only the narrative text.
 
 ### 3. Global Overwatch (GEOINT) [NEW]
 - **Tech Stack**: React Simple Maps, d3-geo, Google News RSS.
