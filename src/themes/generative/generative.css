@@ -1,0 +1,279 @@
+/**
+ * GENERATIVE CANVAS THEME
+ * Experimental art aesthetic (Processing, p5.js)
+ */
+
+.generative-theme {
+  --gen-bg: #0A0A0A;
+  --gen-text: #FFFFFF;
+  --gen-muted: #888888;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--gen-bg);
+  color: var(--gen-text);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Canvas Layer */
+.gen-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Content Layer */
+.gen-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/* Glass Panel */
+.gen-panel {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Typography */
+.gen-title {
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1, #FF6B6B);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+.gen-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gen-muted);
+  margin-top: 0.5rem;
+}
+
+.gen-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.gen-body {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Score Visualization */
+.gen-score {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  margin: 2rem auto;
+}
+
+.gen-score-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    currentColor 100%
+  );
+  opacity: 0.3;
+  filter: blur(10px);
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+.gen-score-value {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 900;
+  border: 2px solid currentColor;
+}
+
+.gen-score-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
+
+/* Input */
+.gen-input {
+  font-family: inherit;
+  font-size: 1.125rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: white;
+  width: 100%;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.gen-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.gen-input::placeholder {
+  color: var(--gen-muted);
+}
+
+/* Button */
+.gen-button {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.gen-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.gen-button:hover::before {
+  transform: translateX(100%);
+}
+
+.gen-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* List */
+.gen-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gen-list li {
+  padding: 0.75rem 0;
+  padding-left: 2rem;
+  position: relative;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.gen-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.25rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Loading State */
+.gen-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.gen-loading-dots {
+  display: flex;
+  gap: 1rem;
+}
+
+.gen-loading-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.gen-loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.gen-loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  .gen-title {
+    font-size: 2.5rem;
+  }
+
+  .gen-content {
+    padding: 2rem 1rem;
+  }
+
+  .gen-panel {
+    padding: 1.5rem;
+  }
+
+  /* Disable complex effects on mobile for performance */
+  .gen-canvas {
+    filter: blur(2px);
+    opacity: 0.5;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .gen-title,
+  .gen-score-ring,
+  .gen-loading-dot {
+    animation: none;
+  }
+}

@@ -1,0 +1,134 @@
+/**
+ * BRUTALIST MINIMALISM THEME
+ * Extreme reduction (Craigslist, Hacker News, early Web)
+ * CONSTRAINT: <100 lines of CSS total
+ */
+
+.brutalist-theme {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000000;
+  background: #FFFFFF;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.brutalist-theme h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+.brutalist-theme h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+}
+
+.brutalist-theme h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 15px 0 8px 0;
+}
+
+.brutalist-theme a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
+.brutalist-theme a:visited {
+  color: #551A8B;
+}
+
+.brutalist-theme a:active {
+  color: #EE0000;
+}
+
+.brutalist-theme table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.brutalist-theme th,
+.brutalist-theme td {
+  border: 1px solid #000000;
+  padding: 5px 8px;
+  text-align: left;
+}
+
+.brutalist-theme th {
+  background: #CCCCCC;
+  font-weight: bold;
+}
+
+.brutalist-theme ul,
+.brutalist-theme ol {
+  margin: 10px 0;
+  padding-left: 25px;
+}
+
+.brutalist-theme input[type="text"],
+.brutalist-theme input[type="url"],
+.brutalist-theme textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid #000000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.brutalist-theme button,
+.brutalist-theme input[type="submit"] {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 4px 8px;
+  border: 1px solid #000000;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+
+.brutalist-theme button:active,
+.brutalist-theme input[type="submit"]:active {
+  background: #CCCCCC;
+}
+
+.brutalist-theme pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  background: #F0F0F0;
+  border: 1px solid #000000;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.brutalist-theme code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+}
+
+.brutalist-theme hr {
+  border: none;
+  border-top: 1px solid #000000;
+  margin: 15px 0;
+}
+
+/* Score indicator - minimal */
+.brutalist-score {
+  font-weight: bold;
+  padding: 2px 6px;
+  border: 2px solid #000000;
+  display: inline-block;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Status messages */
+.brutalist-loading {
+  text-align: center;
+  padding: 40px;
+  border: 1px solid #000000;
+  margin: 20px 0;
+}

@@ -3,18 +3,38 @@ import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simp
 import { motion } from "framer-motion";
 
 // TopoJSON World Atlas (Natural Earth 110m)
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-110m.json";
 
 // Manual ISO mapping (Supports Alpha-3 and Numeric codes from world-atlas)
+// Manual ISO mapping (Supports Alpha-3 and Numeric codes from world-atlas)
 const ISO_MAP = {
-    // Alpha-3 (Just in case)
-    "ITA": "IT", "USA": "US", "GBR": "GB", "DEU": "DE", "FRA": "FR",
-    "RUS": "RU", "UKR": "UA", "CHN": "CN", "JPN": "JP", "IND": "IN",
-    "BRA": "BR", "ISR": "IL", "IRN": "IR", "SAU": "SA", "AUS": "AU", "KOR": "KR",
-    // Numeric (Standard world-atlas)
-    "380": "IT", "840": "US", "826": "GB", "276": "DE", "250": "FR",
-    "643": "RU", "804": "UA", "156": "CN", "392": "JP", "356": "IN",
-    "076": "BR", "376": "IL", "364": "IR", "682": "SA", "036": "AU", "410": "KR"
+    // NORTH AMERICA
+    "USA": "US", "CAN": "CA", "MEX": "MX",
+    "840": "US", "124": "CA", "484": "MX",
+
+    // EUROPE
+    "GBR": "GB", "DEU": "DE", "FRA": "FR", "ITA": "IT", "ESP": "ES", "NLD": "NL",
+    "BEL": "BE", "SWE": "SE", "NOR": "NO", "POL": "PL", "UKR": "UA", "RUS": "RU", "TUR": "TR",
+    "DNK": "DK", "CHE": "CH", "EST": "EE", "LVA": "LV", "LTU": "LT",
+    "826": "GB", "276": "DE", "250": "FR", "380": "IT", "724": "ES", "528": "NL",
+    "056": "BE", "752": "SE", "578": "NO", "616": "PL", "804": "UA", "643": "RU", "792": "TR",
+    "208": "DK", "756": "CH", "233": "EE", "428": "LV", "440": "LT",
+
+    // ASIA / PACIFIC
+    "CHN": "CN", "JPN": "JP", "IND": "IN", "KOR": "KR", "TWN": "TW", "AUS": "AU", "NZL": "NZ", "IDN": "ID",
+    "156": "CN", "392": "JP", "356": "IN", "410": "KR", "158": "TW", "036": "AU", "554": "NZ", "360": "ID",
+
+    // MIDDLE EAST
+    "ISR": "IL", "SAU": "SA", "ARE": "AE", "EGY": "EG",
+    "376": "IL", "682": "SA", "784": "AE", "818": "EG",
+
+    // LATIN AMERICA
+    "BRA": "BR", "ARG": "AR", "COL": "CO", "VEN": "VE",
+    "076": "BR", "032": "AR", "170": "CO", "862": "VE",
+
+    // AFRICA
+    "ZAF": "ZA", "NGA": "NG",
+    "710": "ZA", "566": "NG"
 };
 
 const MapHUD = ({ onSelectCountry, isLoading }) => {
@@ -39,32 +59,29 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="relative w-full h-[500px] rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm"
+            className="relative w-full h-full rounded-2xl overflow-hidden border border-[#E5E5E5] bg-[#F5F5F5] shadow-sm"
         >
-            {/* Subtle Grid Overlay */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            {/* Dot Pattern Overlay */}
+            <div className="absolute inset-0 opacity-[0.4] pointer-events-none"
                 style={{
-                    backgroundImage: `
-            linear-gradient(rgba(79, 70, 229, 0.5) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(79, 70, 229, 0.5) 1px, transparent 1px)
-          `,
-                    backgroundSize: '40px 40px'
+                    backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)',
+                    backgroundSize: '20px 20px'
                 }}
             />
 
-            {/* Loading Overlay - Premium */}
+            {/* Loading Overlay - Editorial */}
             {isLoading && (
-                <div className="absolute inset-0 bg-white/95 z-20 flex items-center justify-center backdrop-blur-sm">
-                    <div className="flex items-center gap-3 px-5 py-3 bg-indigo-50 border border-indigo-200 rounded-xl">
-                        <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                        <span className="text-sm font-semibold text-primary">Scanning sector...</span>
+                <div className="absolute inset-0 bg-white/90 z-20 flex items-center justify-center backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="w-12 h-12 border-4 border-[#E5E5E5] border-t-[#DC2626] rounded-full animate-spin"></div>
+                        <span className="text-sm font-bold tracking-widest uppercase text-[#1A1A1A]">Acquiring Target...</span>
                     </div>
                 </div>
             )}
 
             <ComposableMap
                 projection="geoMercator"
-                projectionConfig={{ scale: 140, center: [10, 30] }}
+                projectionConfig={{ scale: 140, center: [0, 20] }}
                 className="w-full h-full"
             >
                 <ZoomableGroup>
@@ -85,21 +102,22 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
                                         onClick={() => handleClick(geo)}
                                         style={{
                                             default: {
-                                                fill: isSupported ? "#e2e8f0" : "#f8fafc",
-                                                stroke: "#cbd5e1",
-                                                strokeWidth: 0.5,
+                                                fill: isSupported ? "#D4D4D8" : "#FFFFFF", // Visible differentiation
+                                                stroke: isSupported ? "#737373" : "#E5E5E5",
+                                                strokeWidth: isSupported ? 0.75 : 0.5,
                                                 outline: "none",
                                                 cursor: isSupported ? "pointer" : "default"
                                             },
                                             hover: {
-                                                fill: isSupported ? "#6366f1" : "#e2e8f0",
-                                                stroke: isSupported ? "#818cf8" : "#cbd5e1",
+                                                fill: isSupported ? "#FEE2E2" : "#FFFFFF", // Red tint only for supported
+                                                stroke: isSupported ? "#DC2626" : "#E5E5E5",
                                                 strokeWidth: isSupported ? 1.5 : 0.5,
                                                 outline: "none",
                                                 cursor: isSupported ? "pointer" : "default"
                                             },
                                             pressed: {
-                                                fill: "#4f46e5",
+                                                fill: "#FCA5A5",
+                                                stroke: "#DC2626",
                                                 outline: "none",
                                             },
                                         }}

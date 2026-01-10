@@ -109,6 +109,17 @@ async def run_analysis(request: AnalysisRequest):
             detail="TARGET SECURITY LEVEL TOO HIGH: ENCRYPTION / PAYWALL DETECTED. UNABLE TO EXTRACT NARRATIVE."
         )
 
+    # 404 / ERROR TRAP
+    # Evitiamo di mandare pagine di errore al LLM
+    error_indicators = ["404", "page not found", "error", "non trovata", "not available"]
+    first_chunk = raw_text[:200].lower()
+    if any(indicator in first_chunk for indicator in error_indicators):
+         print(f"!!! BROKEN LINK DETECTED: {raw_text[:100]}...")
+         raise HTTPException(
+            status_code=404, 
+            detail="TARGET NOT FOUND: The URL appears to be broken or removed."
+        )
+
     try:
         analysis_json = analyze_logic(raw_text)
         print("--- INFERENCE COMPLETE ---")
@@ -137,22 +148,56 @@ import feedparser
 # ISO Alpha-2 -> Google News RSS Parameters
 # Ensures local news perspective, not US-centric view
 GEO_CONFIG = {
-    "IT": {"hl": "it", "gl": "IT", "ceid": "IT:it", "name": "Italy"},
+    # NORTH AMERICA
     "US": {"hl": "en-US", "gl": "US", "ceid": "US:en", "name": "United States"},
+    "CA": {"hl": "en-CA", "gl": "CA", "ceid": "CA:en", "name": "Canada"},
+    "MX": {"hl": "es-419", "gl": "MX", "ceid": "MX:es-419", "name": "Mexico"},
+
+    # EUROPE
     "GB": {"hl": "en-GB", "gl": "GB", "ceid": "GB:en", "name": "United Kingdom"},
     "DE": {"hl": "de", "gl": "DE", "ceid": "DE:de", "name": "Germany"},
     "FR": {"hl": "fr", "gl": "FR", "ceid": "FR:fr", "name": "France"},
-    "RU": {"hl": "ru", "gl": "RU", "ceid": "RU:ru", "name": "Russia"},
+    "IT": {"hl": "it", "gl": "IT", "ceid": "IT:it", "name": "Italy"},
+    "ES": {"hl": "es", "gl": "ES", "ceid": "ES:es", "name": "Spain"},
+    "NL": {"hl": "nl", "gl": "NL", "ceid": "NL:nl", "name": "Netherlands"},
+    "BE": {"hl": "fr", "gl": "BE", "ceid": "BE:fr", "name": "Belgium"},
+    "SE": {"hl": "sv", "gl": "SE", "ceid": "SE:sv", "name": "Sweden"},
+    "NO": {"hl": "no", "gl": "NO", "ceid": "NO:no", "name": "Norway"},
+    "PL": {"hl": "pl", "gl": "PL", "ceid": "PL:pl", "name": "Poland"},
     "UA": {"hl": "uk", "gl": "UA", "ceid": "UA:uk", "name": "Ukraine"},
+    "RU": {"hl": "ru", "gl": "RU", "ceid": "RU:ru", "name": "Russia"},
+    "TR": {"hl": "tr", "gl": "TR", "ceid": "TR:tr", "name": "Turkey"},
+    "DK": {"hl": "da", "gl": "DK", "ceid": "DK:da", "name": "Denmark"},
+    "CH": {"hl": "de-CH", "gl": "CH", "ceid": "CH:de", "name": "Switzerland"},
+    "EE": {"hl": "et", "gl": "EE", "ceid": "EE:et", "name": "Estonia"},
+    "LV": {"hl": "lv", "gl": "LV", "ceid": "LV:lv", "name": "Latvia"},
+    "LT": {"hl": "lt", "gl": "LT", "ceid": "LT:lt", "name": "Lithuania"},
+
+    # ASIA / PACIFIC
     "CN": {"hl": "zh-CN", "gl": "CN", "ceid": "CN:zh-Hans", "name": "China"},
     "JP": {"hl": "ja", "gl": "JP", "ceid": "JP:ja", "name": "Japan"},
     "IN": {"hl": "en-IN", "gl": "IN", "ceid": "IN:en", "name": "India"},
-    "BR": {"hl": "pt-BR", "gl": "BR", "ceid": "BR:pt-419", "name": "Brazil"},
-    "IL": {"hl": "he", "gl": "IL", "ceid": "IL:he", "name": "Israel"},
-    "IR": {"hl": "fa", "gl": "IR", "ceid": "IR:fa", "name": "Iran"},
-    "SA": {"hl": "ar", "gl": "SA", "ceid": "SA:ar", "name": "Saudi Arabia"},
-    "AU": {"hl": "en-AU", "gl": "AU", "ceid": "AU:en", "name": "Australia"},
     "KR": {"hl": "ko", "gl": "KR", "ceid": "KR:ko", "name": "South Korea"},
+    "TW": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant", "name": "Taiwan"},
+    "AU": {"hl": "en-AU", "gl": "AU", "ceid": "AU:en", "name": "Australia"},
+    "NZ": {"hl": "en-NZ", "gl": "NZ", "ceid": "NZ:en", "name": "New Zealand"},
+    "ID": {"hl": "id", "gl": "ID", "ceid": "ID:id", "name": "Indonesia"},
+
+    # MIDDLE EAST
+    "IL": {"hl": "he", "gl": "IL", "ceid": "IL:he", "name": "Israel"},
+    "SA": {"hl": "ar", "gl": "SA", "ceid": "SA:ar", "name": "Saudi Arabia"},
+    "AE": {"hl": "en-AE", "gl": "AE", "ceid": "AE:en", "name": "UAE"},
+    "EG": {"hl": "ar", "gl": "EG", "ceid": "EG:ar", "name": "Egypt"},
+
+    # LATIN AMERICA
+    "BR": {"hl": "pt-BR", "gl": "BR", "ceid": "BR:pt-419", "name": "Brazil"},
+    "AR": {"hl": "es-419", "gl": "AR", "ceid": "AR:es-419", "name": "Argentina"},
+    "CO": {"hl": "es-419", "gl": "CO", "ceid": "CO:es-419", "name": "Colombia"},
+    "VE": {"hl": "es-419", "gl": "VE", "ceid": "VE:es-419", "name": "Venezuela"},
+
+    # AFRICA
+    "ZA": {"hl": "en-ZA", "gl": "ZA", "ceid": "ZA:en", "name": "South Africa"},
+    "NG": {"hl": "en-NG", "gl": "NG", "ceid": "NG:en", "name": "Nigeria"},
 }
 
 @app.get("/recon/geo")

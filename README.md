@@ -15,34 +15,35 @@ The system operates on a "Zero-Trust" architecture divided into three security l
 
 ### 1. The Interface (Lab Mode)
 - **Tech Stack**: React (Vite), Tailwind CSS v3, Framer Motion.
-- **Aesthetic**: "Cyber-Forensic" (Bloomberg Terminal meets Mil-Spec HUD).
+- **Aesthetic**: "Newsroom War Room" (Monochrome, Red Accents, High Density).
 - **Features**:
-    - **Scanline & Glitch Effects**: Immersive tactical environment.
-    - **Bento-Grid Dashboard**: Modular visualization of intelligence data.
-    - **Real-Time Logs**: Visual feedback of the forensic scan process.
+    - **Live Intelligence Ticker**: Scrolling breaking news feed.
+    - **Global Defcon Status**: Real-time system monitoring indicators.
+    - **Tactical Map (MapHUD)**: Interactive vector-based world map for sector monitoring.
 
 ### 2. The Phantom Scraper (Stealth Extraction)
 - **Tech Stack**: Python, Playwright, BeautifulSoup, NumPy.
 - **Protocol**: `phantom_scraper.py`
 - **Core Capabilities**:
 
-    #### 🕵️‍♂️ Phase 1: CDP Evasion (The Mask)
-    Directly modifies the *Chrome DevTools Protocol* (CDP) to eliminate automation fingerprints before the page loads:
-    - **`navigator.webdriver`**: Spoofed to `undefined`.
-    - **WebGL Fingerprinting**: Injects fake GPU vendor info (Intel Iris/NVIDIA) to hide headless Linux servers.
-    - **Plugin Mocking**: Injects fake plugin arrays to mimic a consumer PC.
+    #### 🕵️‍♂️ Phase 1: Shapeshifter Protocol (The Mask)
+    Rotates through 3 distinct digital fingerprints to evade WAFs:
+    - **Profile Alpha**: Desktop Chrome (Windows).
+    - **Profile Beta**: iPhone 14 Pro (Mobile Evasion to bypass rigid desktop walls).
+    - **Profile Gamma**: Desktop Firefox (Alternative fingerprint).
+    - **Smart Retry**: Intelligent cool-down delays (3-7s) between profile shifts.
 
     #### 🧬 Phase 2: Bio-Mimicry (The Movement)
     Replicates human motor control to defeat heuristic analysis:
-    - **Bezier Mouse curves**: Mouse movements follow non-linear, randomized paths (no straight lines).
-    - **Smart Scroll**: Variable-speed scrolling with random pauses to trigger "Lazy Loading" images and content.
-    - **Human Dilation**: Artificial latency injected into interactions to match human reaction times (~1.2x).
+    - **Bezier Mouse curves**: Mouse movements follow non-linear, randomized paths.
+    - **Mobile Touch Emulation**: Simulates swipe gestures when engaging Profile Beta.
+    - **Smart Scroll**: Variable-speed scrolling with random pauses to trigger "Lazy Loading".
 
     #### 🎯 Phase 3: Target Resolution (The Breach)
     Advanced logic to handle hostile redirect chains (e.g., Google News RSS):
-    - **Consent Bypass**: Autonomously identifies and clicks "Accept/Agree" on cookie walls (GDPR/CMP).
-    - **Redirect Following**: Waits for the URL to evolve from the aggregator (Google) to the final publisher (Target).
-    - **Payload Extraction**: Surgical DOM cleaning to strip ads, scripts, and navigational noise, leaving only the narrative text.
+    - **Consent Bypass**: Autonomously identifies and clicks "Accept/Agree" on cookie walls.
+    - **Redirect Escrow**: Verifies breakout from aggregator domains (Google) before capturing content.
+    - **Payload Extraction**: Surgical DOM cleaning to strip ads, scripts, and noise.
 
 ### 3. Global Overwatch (GEOINT) [NEW]
 - **Tech Stack**: React Simple Maps, d3-geo, Google News RSS.

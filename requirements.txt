@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+requests
+beautifulsoup4
+openai
+python-dotenv
+playwright
+playwright-stealth
+numpy
+feedparser

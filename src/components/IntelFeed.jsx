@@ -18,14 +18,14 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
     }
 
     return (
-        <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-            <div className="sticky top-0 bg-white/95 backdrop-blur-sm pb-4 border-b border-slate-100 z-10">
+        <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 editorial-theme">
+            <div className="sticky top-0 bg-white/95 backdrop-blur-sm pb-4 border-b border-[#E5E5E5] z-10">
                 <div className="flex items-center gap-2.5">
-                    <div className="p-1.5 bg-indigo-50 rounded-lg">
-                        <Target className="w-4 h-4 text-primary" strokeWidth={2.5} />
+                    <div className="p-1.5 bg-gray-100 rounded-lg">
+                        <Target className="w-4 h-4 text-[#1A1A1A]" strokeWidth={2.5} />
                     </div>
-                    <span className="text-sm font-bold text-slate-900">{sectorName}</span>
-                    <span className="text-xs text-slate-500 font-semibold ml-auto bg-slate-100 px-2 py-1 rounded-md">{data.length}</span>
+                    <span className="text-sm font-bold text-[#1A1A1A] font-serif uppercase tracking-wider">{sectorName}</span>
+                    <span className="text-xs text-[#666666] font-semibold ml-auto bg-gray-100 px-2 py-1 rounded-md font-sans">{data.length}</span>
                 </div>
             </div>
 
@@ -35,43 +35,40 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className="group bg-slate-50 border border-slate-100 p-4 rounded-xl hover:border-indigo-200 hover:bg-white transition-all duration-200"
+                    className="group bg-white border border-[#E5E5E5] p-6 hover:border-[#DC2626] transition-all duration-300"
                 >
-                    <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-semibold text-slate-900 leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                                {item.title}
-                            </h4>
-                            <div className="flex items-center gap-3 mt-2.5">
-                                <span className="text-xs font-bold text-primary bg-indigo-50 px-2 py-0.5 rounded">
+                    <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center gap-3">
+                                <span className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest font-sans">
                                     {item.source}
                                 </span>
-                                <span className="flex items-center gap-1 text-xs text-slate-500 font-medium">
-                                    <Clock className="w-3.5 h-3.5" strokeWidth={2} />
+                                <span className="flex items-center gap-1 text-[10px] text-[#666666] font-medium uppercase tracking-wider font-sans">
+                                    <Clock className="w-3 h-3" strokeWidth={1.5} />
                                     {item.published?.split(',')[0] || 'Recent'}
                                 </span>
                             </div>
+                            <h4 className="text-lg font-serif font-medium text-[#1A1A1A] leading-snug group-hover:text-[#DC2626] transition-colors">
+                                {item.title}
+                            </h4>
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <button
-                                onClick={() => onAnalyze(item)}
-                                disabled={analyzingId === item.id}
-                                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-200
-                  ${analyzingId === item.id
-                                        ? 'bg-indigo-100 text-primary cursor-wait'
-                                        : 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white hover:shadow-md hover:shadow-indigo-500/25 hover:-translate-y-0.5'
-                                    }`}
-                            >
-                                {analyzingId === item.id ? 'Analyzing...' : 'Analyze'}
-                            </button>
+
+                        <div className="flex items-center justify-between pt-4 border-t border-[#E5E5E5] mt-2">
                             <a
                                 href={item.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-1 px-3 py-1.5 text-xs text-slate-500 hover:text-primary transition-colors rounded-lg hover:bg-slate-100"
+                                className="text-xs text-[#666666] hover:text-[#DC2626] uppercase tracking-wider font-sans flex items-center gap-1 transition-colors"
                             >
-                                <ExternalLink className="w-3.5 h-3.5" strokeWidth={2} />
+                                Read Source <ExternalLink className="w-3 h-3" strokeWidth={1.5} />
                             </a>
+                            <button
+                                onClick={() => onAnalyze(item)}
+                                disabled={analyzingId === item.id}
+                                className={`editorial-button text-xs py-2 px-4 ${analyzingId === item.id ? 'opacity-50 cursor-not-allowed' : 'editorial-button-accent'}`}
+                            >
+                                {analyzingId === item.id ? 'Analyzing...' : 'Analyze Bias'}
+                            </button>
                         </div>
                     </div>
                 </motion.div>

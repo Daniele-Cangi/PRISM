@@ -2,7 +2,7 @@ import requests
 import json
 
 url = "http://localhost:8000/analyze"
-payload = {"url": "https://www.bbc.com/news/world-europe-68214811"}
+payload = {"url": "https://it.wikipedia.org/wiki/Intelligenza_artificiale"}
 headers = {"Content-Type": "application/json"}
 
 try:
