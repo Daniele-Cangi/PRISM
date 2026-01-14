@@ -1,0 +1,315 @@
+/**
+ * RETRO TERMINAL THEME
+ * 1980s computing aesthetic (amber monitor, DOS, BBS)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+.retro-theme {
+  --amber: #FFB000;
+  --amber-glow: rgba(255, 176, 0, 0.8);
+  --screen-bg: #000000;
+
+  font-family: 'VT323', 'Courier New', monospace;
+  background: #1A1A1A;
+  color: var(--amber);
+  min-height: 100vh;
+  font-size: 20px;
+  line-height: 1.4;
+  overflow-x: hidden;
+}
+
+/* CRT Screen Container */
+.retro-screen {
+  position: relative;
+  background: var(--screen-bg);
+  border: 20px solid #333333;
+  border-radius: 20px;
+  box-shadow:
+    inset 0 0 100px rgba(255, 176, 0, 0.1),
+    0 0 80px rgba(0, 0, 0, 0.8);
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  min-height: 600px;
+}
+
+/* CRT Curvature Effect */
+.retro-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+  border-radius: 20px;
+}
+
+/* Scanlines */
+.retro-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  animation: scanlines 10s linear infinite;
+  border-radius: 20px;
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
+}
+
+/* Phosphor Glow */
+.retro-text {
+  text-shadow:
+    0 0 5px var(--amber-glow),
+    0 0 10px var(--amber-glow);
+  position: relative;
+  z-index: 1;
+}
+
+/* ASCII Box Drawing */
+.retro-box {
+  border: 2px solid var(--amber);
+  padding: 1rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.retro-box-title {
+  position: absolute;
+  top: -0.7rem;
+  left: 1rem;
+  background: var(--screen-bg);
+  padding: 0 0.5rem;
+  font-weight: bold;
+}
+
+/* Table */
+.retro-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.retro-table td,
+.retro-table th {
+  padding: 0.5rem 1rem;
+  text-align: left;
+  border: 1px solid var(--amber);
+}
+
+.retro-table th {
+  font-weight: bold;
+  background: rgba(255, 176, 0, 0.1);
+}
+
+/* Blinking Cursor */
+.retro-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  background: var(--amber);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Input */
+.retro-input {
+  font-family: inherit;
+  font-size: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--amber);
+  color: var(--amber);
+  padding: 0.5rem;
+  width: 100%;
+  outline: none;
+  text-shadow:
+    0 0 5px var(--amber-glow),
+    0 0 10px var(--amber-glow);
+}
+
+.retro-input::placeholder {
+  color: rgba(255, 176, 0, 0.5);
+}
+
+/* Button */
+.retro-button {
+  font-family: inherit;
+  font-size: inherit;
+  background: transparent;
+  border: 2px solid var(--amber);
+  color: var(--amber);
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  text-shadow:
+    0 0 5px var(--amber-glow),
+    0 0 10px var(--amber-glow);
+  transition: all 0.1s;
+}
+
+.retro-button:hover {
+  background: var(--amber);
+  color: #000000;
+  text-shadow: none;
+  box-shadow: 0 0 20px var(--amber-glow);
+}
+
+.retro-button:active {
+  transform: scale(0.98);
+}
+
+/* List */
+.retro-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.retro-list li {
+  padding: 0.25rem 0;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.retro-list li::before {
+  content: '>';
+  position: absolute;
+  left: 0.5rem;
+}
+
+/* Progress Bar */
+.retro-progress {
+  width: 100%;
+  height: 2rem;
+  border: 2px solid var(--amber);
+  position: relative;
+  overflow: hidden;
+}
+
+.retro-progress-fill {
+  height: 100%;
+  background: var(--amber);
+  box-shadow: 0 0 10px var(--amber-glow);
+  transition: width 0.3s;
+}
+
+.retro-progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--amber);
+  mix-blend-mode: difference;
+}
+
+/* Header */
+.retro-header {
+  border-bottom: 2px solid var(--amber);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.retro-title {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.retro-subtitle {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+/* Typing effect */
+.retro-typing {
+  overflow: hidden;
+  border-right: 0.15em solid var(--amber);
+  white-space: nowrap;
+  animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--amber); }
+}
+
+/* Status indicators */
+.retro-status {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.retro-status::before {
+  content: '[';
+}
+
+.retro-status::after {
+  content: ']';
+}
+
+.retro-status.ok::before {
+  content: '[ OK ] ';
+}
+
+.retro-status.error::before {
+  content: '[FAIL] ';
+}
+
+.retro-status.warn::before {
+  content: '[WARN] ';
+}
+
+/* Green variant (optional) */
+.retro-theme.green {
+  --amber: #00FF00;
+  --amber-glow: rgba(0, 255, 0, 0.8);
+}
+
+/* Flicker animation on load */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.retro-screen.loading {
+  animation: flicker 0.15s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .retro-theme {
+    font-size: 16px;
+  }
+
+  .retro-screen {
+    border-width: 10px;
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .retro-title {
+    font-size: 2rem;
+  }
+}

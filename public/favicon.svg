@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Background -->
+  <circle cx="16" cy="16" r="15" fill="#FFFFFF" stroke="#E5E5E5" stroke-width="1"/>
+
+  <!-- Outer ring -->
+  <circle cx="16" cy="16" r="12" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-dasharray="12 8" transform="rotate(-45 16 16)"/>
+
+  <!-- Inner ring -->
+  <circle cx="16" cy="16" r="7" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="4 8" transform="rotate(30 16 16)"/>
+
+  <!-- Center eye -->
+  <circle cx="16" cy="16" r="4" fill="#1A1A1A"/>
+  <circle cx="16" cy="16" r="2" fill="#DC2626"/>
+</svg>

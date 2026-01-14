@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1A1A1A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#FFFFFF" stroke="#E5E5E5" stroke-width="2"/>
+
+  <!-- Outer spinning ring -->
+  <circle cx="100" cy="100" r="80" fill="none" stroke="#DC2626" stroke-width="6" stroke-linecap="round" stroke-dasharray="80 40" filter="url(#shadow)" transform="rotate(-45 100 100)"/>
+
+  <!-- Middle ring -->
+  <circle cx="100" cy="100" r="60" fill="none" stroke="#666666" stroke-width="3" stroke-dasharray="30 20" opacity="0.6" transform="rotate(30 100 100)"/>
+
+  <!-- Inner spinning segments -->
+  <circle cx="100" cy="100" r="40" fill="none" stroke="#DC2626" stroke-width="8" stroke-linecap="round" stroke-dasharray="15 48" filter="url(#shadow)" transform="rotate(15 100 100)"/>
+
+  <!-- Center eye/scanner -->
+  <circle cx="100" cy="100" r="20" fill="#1A1A1A"/>
+  <circle cx="100" cy="100" r="12" fill="#DC2626"/>
+  <circle cx="100" cy="100" r="5" fill="#FFFFFF"/>
+
+  <!-- Scanning lines -->
+  <g opacity="0.6">
+    <line x1="100" y1="25" x2="100" y2="45" stroke="#DC2626" stroke-width="2"/>
+    <line x1="100" y1="155" x2="100" y2="175" stroke="#DC2626" stroke-width="2"/>
+    <line x1="25" y1="100" x2="45" y2="100" stroke="#DC2626" stroke-width="2"/>
+    <line x1="155" y1="100" x2="175" y2="100" stroke="#DC2626" stroke-width="2"/>
+  </g>
+</svg>

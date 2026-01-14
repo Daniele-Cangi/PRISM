@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@400;600;700;900&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    letter-spacing: -0.011em;
+  }
+}
+
+@layer utilities {
+  /* Premium Card System */
+  .premium-card {
+    @apply bg-white rounded-2xl border border-slate-200/60;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.02),
+      0 1px 2px -1px rgba(0, 0, 0, 0.04),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .premium-card:hover {
+    border-color: rgba(79, 70, 229, 0.2);
+    box-shadow:
+      0 0 0 1px rgba(79, 70, 229, 0.08),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 8px 16px -4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+
+  /* Elevated surfaces */
+  .surface-elevated {
+    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  /* Premium button */
+  .btn-premium {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    box-shadow:
+      0 1px 2px rgba(79, 70, 229, 0.2),
+      0 0 0 1px rgba(79, 70, 229, 0.1) inset;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-premium:hover {
+    box-shadow:
+      0 4px 12px rgba(79, 70, 229, 0.3),
+      0 0 0 1px rgba(79, 70, 229, 0.2) inset;
+    transform: translateY(-1px);
+  }
+
+  .btn-premium:active {
+    transform: translateY(0);
+  }
+
+  /* Typography scale */
+  .text-display {
+    @apply text-5xl font-bold tracking-tight;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .text-headline {
+    @apply text-3xl font-bold tracking-tight;
+    letter-spacing: -0.02em;
+  }
+
+  .text-title {
+    @apply text-xl font-semibold;
+    letter-spacing: -0.01em;
+  }
+
+  .text-body {
+    @apply text-base;
+    line-height: 1.6;
+  }
+
+  .text-caption {
+    @apply text-sm text-slate-600;
+    line-height: 1.5;
+  }
+
+  /* Premium badge */
+  .badge-premium {
+    @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(99, 102, 241, 0.08) 100%);
+    border: 1px solid rgba(79, 70, 229, 0.15);
+    color: #4338ca;
+  }
+
+  /* Smooth Animations */
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .scale-in {
+    animation: scale-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Progress bar premium */
+  .progress-premium {
+    background: linear-gradient(
+      90deg,
+      #4f46e5 0%,
+      #6366f1 25%,
+      #818cf8 50%,
+      #6366f1 75%,
+      #4f46e5 100%
+    );
+    background-size: 200% 100%;
+    animation: progress-flow 2s linear infinite;
+  }
+
+  @keyframes progress-flow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Input premium */
+  .input-premium {
+    @apply bg-white border border-slate-200 rounded-xl px-4 py-3;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .input-premium:focus {
+    @apply outline-none border-indigo-300;
+    box-shadow:
+      0 0 0 3px rgba(79, 70, 229, 0.08),
+      0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Divider premium */
+  .divider-premium {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08), transparent);
+  }
+}
+
+/* Premium scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300;
+}
+
+/* Selection */
+::selection {
+  background: rgba(79, 70, 229, 0.15);
+  color: #312e81;
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* Slow spin animation for landing page logo */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}

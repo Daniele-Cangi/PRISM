@@ -1,0 +1,296 @@
+/**
+ * EDITORIAL CLARITY THEME
+ * Premium publishing aesthetic (NYT, The Atlantic)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+.editorial-theme {
+  --editorial-bg: #FFFFFF;
+  --editorial-fg: #1A1A1A;
+  --editorial-accent: #DC2626;
+  --editorial-muted: #666666;
+  --editorial-border: #E5E5E5;
+
+  /* Typography */
+  --serif-display: 'Playfair Display', Georgia, serif;
+  --serif-body: 'Lora', Georgia, serif;
+  --sans-body: 'Inter', -apple-system, sans-serif;
+
+  /* Spacing - generous whitespace */
+  --spacing-unit: 24px;
+
+  background-color: var(--editorial-bg);
+  color: var(--editorial-fg);
+  min-height: 100vh;
+}
+
+/* Typography Hierarchy */
+.editorial-theme .headline-primary {
+  font-family: var(--serif-display);
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.editorial-theme .headline-secondary {
+  font-family: var(--serif-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+
+.editorial-theme .headline-tertiary {
+  font-family: var(--serif-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+.editorial-theme .byline {
+  font-family: var(--sans-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--editorial-muted);
+}
+
+.editorial-theme .body-text {
+  font-family: var(--serif-body);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--editorial-fg);
+  max-width: 65ch;
+}
+
+.editorial-theme .body-text-sans {
+  font-family: var(--sans-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--editorial-fg);
+}
+
+.editorial-theme .caption {
+  font-family: var(--sans-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--editorial-muted);
+  font-style: italic;
+}
+
+/* Layout */
+.editorial-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: calc(var(--spacing-unit) * 4) var(--spacing-unit);
+}
+
+.editorial-wide-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: calc(var(--spacing-unit) * 3) var(--spacing-unit);
+}
+
+/* Article Card */
+.editorial-card {
+  background: var(--editorial-bg);
+  border: 1px solid var(--editorial-border);
+  padding: calc(var(--spacing-unit) * 2);
+  margin-bottom: calc(var(--spacing-unit) * 2);
+  transition: box-shadow 0.3s ease;
+}
+
+.editorial-card:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* Score Badge */
+.editorial-score-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: var(--sans-body);
+  font-weight: 700;
+  border: 3px solid;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.editorial-score-badge.neutral {
+  border-color: #059669;
+  color: #059669;
+}
+
+.editorial-score-badge.leaning {
+  border-color: #d97706;
+  color: #d97706;
+}
+
+.editorial-score-badge.propaganda {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.editorial-score-badge .score-number {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.editorial-score-badge .score-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* Divider */
+.editorial-divider {
+  height: 1px;
+  background: var(--editorial-border);
+  margin: calc(var(--spacing-unit) * 2) 0;
+}
+
+.editorial-divider-thick {
+  height: 3px;
+  background: var(--editorial-fg);
+  margin: calc(var(--spacing-unit) * 3) 0;
+}
+
+/* Pull Quote */
+.editorial-pullquote {
+  font-family: var(--serif-display);
+  font-size: 1.75rem;
+  line-height: 1.4;
+  font-style: italic;
+  padding: calc(var(--spacing-unit) * 2) 0;
+  border-left: 4px solid var(--editorial-accent);
+  padding-left: calc(var(--spacing-unit) * 1.5);
+  margin: calc(var(--spacing-unit) * 2) 0;
+  color: var(--editorial-fg);
+}
+
+/* Button */
+.editorial-button {
+  font-family: var(--sans-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--editorial-fg);
+  background: transparent;
+  color: var(--editorial-fg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editorial-button:hover {
+  background: var(--editorial-fg);
+  color: var(--editorial-bg);
+}
+
+.editorial-button-accent {
+  border-color: var(--editorial-accent);
+  color: var(--editorial-accent);
+}
+
+.editorial-button-accent:hover {
+  background: var(--editorial-accent);
+  color: white;
+}
+
+/* List Styles */
+.editorial-list {
+  font-family: var(--serif-body);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  list-style: none;
+  padding: 0;
+}
+
+.editorial-list li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.editorial-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0.5rem;
+  color: var(--editorial-accent);
+  font-weight: bold;
+}
+
+/* Meta Information */
+.editorial-meta {
+  font-family: var(--sans-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--editorial-muted);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.editorial-meta-divider {
+  width: 4px;
+  height: 4px;
+  background: var(--editorial-muted);
+  border-radius: 50%;
+}
+
+/* Analysis Panel */
+.editorial-analysis-panel {
+  background: #FAFAFA;
+  border-top: 1px solid var(--editorial-border);
+  padding: calc(var(--spacing-unit) * 3) 0;
+  margin-top: calc(var(--spacing-unit) * 4);
+}
+
+/* Smooth Scroll */
+.editorial-theme {
+  scroll-behavior: smooth;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .editorial-theme .headline-primary {
+    font-size: 2.5rem;
+  }
+
+  .editorial-theme .headline-secondary {
+    font-size: 1.75rem;
+  }
+
+  .editorial-theme .body-text {
+    font-size: 1rem;
+  }
+
+  .editorial-container {
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 0.75);
+  }
+
+  .editorial-score-badge {
+    width: 60px;
+    height: 60px;
+  }
+
+  .editorial-score-badge .score-number {
+    font-size: 1.5rem;
+  }
+}
