@@ -4,6 +4,7 @@ import { Zap, RefreshCw } from 'lucide-react';
 import useAnalysisStore from '../../store/analysisStore';
 import ParticleField from './components/ParticleField';
 import { scoreToHue } from '../../utils/formatAnalysis';
+import API_ENDPOINTS from '../../utils/api';
 import './generative.css';
 
 const GenerativeTheme = () => {
@@ -23,7 +24,7 @@ const GenerativeTheme = () => {
     updateStatus('scanning');
 
     try {
-      const response = await fetch('http://localhost:8001/analyze', {
+      const response = await fetch(API_ENDPOINTS.analyze, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: targetUrl }),

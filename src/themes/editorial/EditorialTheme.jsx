@@ -7,6 +7,7 @@ import AnalysisPanel from './components/AnalysisPanel';
 import MapHUD from '../../components/MapHUD';
 import IntelFeed from '../../components/IntelFeed';
 import TrendingTicker from './components/TrendingTicker';
+import API_ENDPOINTS from '../../utils/api';
 import './editorial.css';
 
 const EditorialTheme = () => {
@@ -40,7 +41,7 @@ const EditorialTheme = () => {
     updateStatus('scanning');
 
     try {
-      const response = await fetch('http://localhost:8001/analyze', {
+      const response = await fetch(API_ENDPOINTS.analyze, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: targetUrl }),
@@ -135,7 +136,7 @@ const EditorialTheme = () => {
                   setGeoIntel([]);
 
                   try {
-                    const response = await fetch(`http://localhost:8001/recon/geo?country_code=${countryCode}`);
+                    const response = await fetch(API_ENDPOINTS.geoRecon(countryCode));
                     const data = await response.json();
 
                     if (data.status === 'TARGETS_ACQUIRED') {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useAnalysisStore from '../../store/analysisStore';
 import { getScoreBand } from '../../utils/formatAnalysis';
+import API_ENDPOINTS from '../../utils/api';
 import './brutalist.css';
 
 /**
@@ -29,7 +30,7 @@ const BrutalistTheme = () => {
     updateStatus('scanning');
 
     try {
-      const response = await fetch('http://localhost:8001/analyze', {
+      const response = await fetch(API_ENDPOINTS.analyze, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: targetUrl }),

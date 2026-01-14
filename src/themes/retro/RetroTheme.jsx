@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useAnalysisStore from '../../store/analysisStore';
 import TypewriterText from './components/TypewriterText';
 import { getScoreBand } from '../../utils/formatAnalysis';
+import API_ENDPOINTS from '../../utils/api';
 import './retro.css';
 
 const RetroTheme = () => {
@@ -45,7 +46,7 @@ const RetroTheme = () => {
     updateStatus('scanning');
 
     try {
-      const response = await fetch('http://localhost:8001/analyze', {
+      const response = await fetch(API_ENDPOINTS.analyze, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: targetUrl }),

@@ -5,6 +5,7 @@ import useAnalysisStore from '../../store/analysisStore';
 import BlobBackground from './components/BlobBackground';
 import FloatingCard from './components/FloatingCard';
 import { getScoreBand } from '../../utils/formatAnalysis';
+import API_ENDPOINTS from '../../utils/api';
 import './organic.css';
 
 const OrganicTheme = () => {
@@ -24,7 +25,7 @@ const OrganicTheme = () => {
     updateStatus('scanning');
 
     try {
-      const response = await fetch('http://localhost:8001/analyze', {
+      const response = await fetch(API_ENDPOINTS.analyze, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: targetUrl }),

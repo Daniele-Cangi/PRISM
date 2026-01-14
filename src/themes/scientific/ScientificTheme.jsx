@@ -5,6 +5,7 @@ import useAnalysisStore from '../../store/analysisStore';
 import DistributionChart from './components/DistributionChart';
 import DataGrid from './components/DataGrid';
 import StatsSidebar from './components/StatsSidebar';
+import API_ENDPOINTS from '../../utils/api';
 import './scientific.css';
 
 const ScientificTheme = () => {
@@ -24,7 +25,7 @@ const ScientificTheme = () => {
     updateStatus('scanning');
 
     try {
-      const response = await fetch('http://localhost:8001/analyze', {
+      const response = await fetch(API_ENDPOINTS.analyze, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: targetUrl }),
