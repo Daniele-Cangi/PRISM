@@ -906,25 +906,19 @@ const LandingPage = ({ onLogin }) => {
           {/* Footer */}
           <div className="pt-12 border-t border-white/10">
             <div className="flex flex-col items-center">
-              {/* Unity Loop Logo */}
-              <div className="mb-6">
+              {/* PRISM Logo */}
+              <div className="mb-6 text-center">
                 <Loader className="w-10 h-10 text-[#DC2626] animate-spin mx-auto mb-3" />
-                <a
-                  href="https://unityloop.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-2xl font-bold text-white hover:text-[#DC2626] transition-colors"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
-                >
-                  unityloop.ai
-                </a>
-                <p className="text-gray-500 text-sm mt-1">{t.aiLab}</p>
+                <h3 className="text-2xl font-bold text-white" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  PRISM
+                </h3>
+                <p className="text-gray-500 text-sm mt-1">{t.cognitiveGrid}</p>
               </div>
 
               {/* Copyright */}
               <div className="text-center">
                 <p className="text-gray-600 text-sm">
-                  unityloop.ai - 2025 DK
+                  PRISM - 2025
                 </p>
                 <p className="text-gray-700 text-xs mt-2 italic">
                   "Democracy Dies in Darkness • Logic Survives in Light"
