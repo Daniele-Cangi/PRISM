@@ -5,6 +5,7 @@ import { Loader, ChevronDown } from 'lucide-react';
 const LandingPage = ({ onLogin }) => {
   const [language, setLanguage] = useState('en');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   // Traduzioni
   const translations = {
@@ -52,7 +53,22 @@ const LandingPage = ({ onLogin }) => {
       codeAndCoffee: 'Code & coffee',
       letsTalk: "Let's talk",
       houston: 'Houston, we have a problem',
-      aiLab: 'Artificial Intelligence Laboratory'
+      aiLab: 'Artificial Intelligence Laboratory',
+      // Join Team
+      joinTeam: 'Join the Team',
+      joinSlogan: 'Be part of the change',
+      joinModalTitle: 'Join Our Mission',
+      joinModalText: 'We are looking for passionate experts in journalism, AI, and cybersecurity. Fill out the form to apply.',
+      joinName: 'Full Name',
+      joinEmail: 'Email',
+      joinRole: 'Area of Expertise',
+      joinRoleJournalism: 'Journalism',
+      joinRoleAI: 'Artificial Intelligence',
+      joinRoleCyber: 'Cybersecurity',
+      joinRoleOther: 'Other',
+      joinMessage: 'Why do you want to join?',
+      joinSubmit: 'Send Application',
+      joinClose: 'Close'
     },
     da: {
       code: 'DK',
@@ -92,7 +108,21 @@ const LandingPage = ({ onLogin }) => {
       codeAndCoffee: 'Kode & kaffe',
       letsTalk: 'Lad os tale',
       houston: 'Houston, vi har et problem',
-      aiLab: 'Laboratorium for Kunstig Intelligens'
+      aiLab: 'Laboratorium for Kunstig Intelligens',
+      joinTeam: 'Bliv en del af teamet',
+      joinSlogan: 'Vær med til forandringen',
+      joinModalTitle: 'Deltag i vores mission',
+      joinModalText: 'Vi søger passionerede eksperter inden for journalistik, AI og cybersikkerhed. Udfyld formularen for at ansøge.',
+      joinName: 'Fulde navn',
+      joinEmail: 'E-mail',
+      joinRole: 'Ekspertiseområde',
+      joinRoleJournalism: 'Journalistik',
+      joinRoleAI: 'Kunstig intelligens',
+      joinRoleCyber: 'Cybersikkerhed',
+      joinRoleOther: 'Andet',
+      joinMessage: 'Hvorfor vil du være med?',
+      joinSubmit: 'Send ansøgning',
+      joinClose: 'Luk'
     },
     sv: {
       code: 'SE',
@@ -132,7 +162,21 @@ const LandingPage = ({ onLogin }) => {
       codeAndCoffee: 'Kod & kaffe',
       letsTalk: 'Låt oss prata',
       houston: 'Houston, vi har ett problem',
-      aiLab: 'Laboratorium för Artificiell Intelligens'
+      aiLab: 'Laboratorium för Artificiell Intelligens',
+      joinTeam: 'Gå med i teamet',
+      joinSlogan: 'Var en del av förändringen',
+      joinModalTitle: 'Delta i vårt uppdrag',
+      joinModalText: 'Vi söker passionerade experter inom journalistik, AI och cybersäkerhet. Fyll i formuläret för att ansöka.',
+      joinName: 'Fullständigt namn',
+      joinEmail: 'E-post',
+      joinRole: 'Expertisområde',
+      joinRoleJournalism: 'Journalistik',
+      joinRoleAI: 'Artificiell intelligens',
+      joinRoleCyber: 'Cybersäkerhet',
+      joinRoleOther: 'Annat',
+      joinMessage: 'Varför vill du vara med?',
+      joinSubmit: 'Skicka ansökan',
+      joinClose: 'Stäng'
     },
     no: {
       code: 'NO',
@@ -172,7 +216,21 @@ const LandingPage = ({ onLogin }) => {
       codeAndCoffee: 'Kode & kaffe',
       letsTalk: 'La oss snakke',
       houston: 'Houston, vi har et problem',
-      aiLab: 'Laboratorium for Kunstig Intelligens'
+      aiLab: 'Laboratorium for Kunstig Intelligens',
+      joinTeam: 'Bli med i teamet',
+      joinSlogan: 'Vær en del av endringen',
+      joinModalTitle: 'Delta i vårt oppdrag',
+      joinModalText: 'Vi søker lidenskapelige eksperter innen journalistikk, AI og cybersikkerhet. Fyll ut skjemaet for å søke.',
+      joinName: 'Fullt navn',
+      joinEmail: 'E-post',
+      joinRole: 'Ekspertiseområde',
+      joinRoleJournalism: 'Journalistikk',
+      joinRoleAI: 'Kunstig intelligens',
+      joinRoleCyber: 'Cybersikkerhet',
+      joinRoleOther: 'Annet',
+      joinMessage: 'Hvorfor vil du bli med?',
+      joinSubmit: 'Send søknad',
+      joinClose: 'Lukk'
     },
     it: {
       code: 'IT',
@@ -212,7 +270,21 @@ const LandingPage = ({ onLogin }) => {
       codeAndCoffee: 'Codice & caffè',
       letsTalk: 'Parliamone',
       houston: 'Houston, abbiamo un problema',
-      aiLab: 'Laboratorio di Intelligenza Artificiale'
+      aiLab: 'Laboratorio di Intelligenza Artificiale',
+      joinTeam: 'Unisciti al Team',
+      joinSlogan: 'Fai parte del cambiamento',
+      joinModalTitle: 'Unisciti alla Nostra Missione',
+      joinModalText: 'Cerchiamo esperti appassionati in giornalismo, AI e cybersecurity. Compila il form per candidarti.',
+      joinName: 'Nome completo',
+      joinEmail: 'Email',
+      joinRole: 'Area di competenza',
+      joinRoleJournalism: 'Giornalismo',
+      joinRoleAI: 'Intelligenza Artificiale',
+      joinRoleCyber: 'Cybersecurity',
+      joinRoleOther: 'Altro',
+      joinMessage: 'Perché vuoi unirti a noi?',
+      joinSubmit: 'Invia Candidatura',
+      joinClose: 'Chiudi'
     }
   };
 
@@ -468,6 +540,22 @@ const LandingPage = ({ onLogin }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
               </motion.div>
+
+              {/* Join Team Card - Quadrato cliccabile */}
+              <motion.button
+                onClick={() => setIsJoinModalOpen(true)}
+                className="absolute bottom-10 left-10 w-40 h-40 rounded-2xl bg-gradient-to-br from-[#DC2626] to-[#991b1b] border-2 border-[#DC2626] shadow-2xl z-20 flex flex-col items-center justify-center cursor-pointer overflow-hidden group"
+                whileHover={{ scale: 1.08, zIndex: 40 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                <svg className="w-10 h-10 text-white mb-2 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+                <span className="text-white font-bold text-sm text-center px-2 relative z-10">{t.joinTeam}</span>
+                <span className="text-white/70 text-xs text-center px-2 mt-1 relative z-10">{t.joinSlogan}</span>
+              </motion.button>
 
               {/* Elementi decorativi */}
               <div className="absolute top-10 right-10 w-32 h-32 border-2 border-[#DC2626]/20 rounded-full"></div>
@@ -822,6 +910,122 @@ const LandingPage = ({ onLogin }) => {
           </div>
         </div>
       </div>
+
+      {/* JOIN TEAM MODAL */}
+      <AnimatePresence>
+        {isJoinModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setIsJoinModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-[#DC2626]/30 rounded-2xl p-8 w-full max-w-md relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setIsJoinModalOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Header */}
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#DC2626]/20 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-[#DC2626]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  {t.joinModalTitle}
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  {t.joinModalText}
+                </p>
+              </div>
+
+              {/* Form */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  const data = Object.fromEntries(formData);
+                  window.open(`mailto:contact@unityloop.ai?subject=Join Team Application&body=Name: ${data.name}%0AEmail: ${data.email}%0ARole: ${data.role}%0AMessage: ${data.message}`, '_blank');
+                  setIsJoinModalOpen(false);
+                }}
+                className="space-y-4"
+              >
+                {/* Name */}
+                <div>
+                  <label className="block text-gray-400 text-sm mb-1">{t.joinName}</label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-gray-400 text-sm mb-1">{t.joinEmail}</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors"
+                  />
+                </div>
+
+                {/* Role */}
+                <div>
+                  <label className="block text-gray-400 text-sm mb-1">{t.joinRole}</label>
+                  <select
+                    name="role"
+                    required
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#DC2626] focus:outline-none transition-colors"
+                  >
+                    <option value="">{t.joinRole}</option>
+                    <option value="journalism">{t.joinRoleJournalism}</option>
+                    <option value="ai">{t.joinRoleAI}</option>
+                    <option value="cybersecurity">{t.joinRoleCyber}</option>
+                    <option value="other">{t.joinRoleOther}</option>
+                  </select>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label className="block text-gray-400 text-sm mb-1">{t.joinMessage}</label>
+                  <textarea
+                    name="message"
+                    rows={3}
+                    required
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors resize-none"
+                  ></textarea>
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="w-full bg-[#DC2626] hover:bg-[#b91c1c] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-[1.02]"
+                >
+                  {t.joinSubmit}
+                </button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
