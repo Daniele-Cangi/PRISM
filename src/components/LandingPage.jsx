@@ -61,17 +61,11 @@ const LandingPage = ({ onLogin }) => {
       joinTeam: 'Join the Team',
       joinSlogan: 'Be part of the change',
       joinModalTitle: 'Join Our Mission',
-      joinModalText: 'We are looking for passionate experts in journalism, AI, and cybersecurity. Fill out the form to apply.',
-      joinName: 'Full Name',
-      joinEmail: 'Email',
-      joinRole: 'Area of Expertise',
-      joinRoleJournalism: 'Journalism',
-      joinRoleAI: 'Artificial Intelligence',
-      joinRoleCyber: 'Cybersecurity',
-      joinRoleOther: 'Other',
-      joinMessage: 'Why do you want to join?',
-      joinSubmit: 'Send Application',
-      joinClose: 'Close'
+      joinModalText: 'Connect with us to join the team',
+      joinViaGithub: 'Apply via GitHub',
+      joinViaLinkedin: 'Connect on LinkedIn',
+      joinOptionalNote: 'or leave a note',
+      joinNotePlaceholder: 'Tell us about yourself (optional)'
     },
     da: {
       code: 'DK',
@@ -118,17 +112,11 @@ const LandingPage = ({ onLogin }) => {
       joinTeam: 'Bliv en del af teamet',
       joinSlogan: 'Vær med til forandringen',
       joinModalTitle: 'Deltag i vores mission',
-      joinModalText: 'Vi søger passionerede eksperter inden for journalistik, AI og cybersikkerhed. Udfyld formularen for at ansøge.',
-      joinName: 'Fulde navn',
-      joinEmail: 'E-mail',
-      joinRole: 'Ekspertiseområde',
-      joinRoleJournalism: 'Journalistik',
-      joinRoleAI: 'Kunstig intelligens',
-      joinRoleCyber: 'Cybersikkerhed',
-      joinRoleOther: 'Andet',
-      joinMessage: 'Hvorfor vil du være med?',
-      joinSubmit: 'Send ansøgning',
-      joinClose: 'Luk'
+      joinModalText: 'Forbind med os for at blive en del af teamet',
+      joinViaGithub: 'Ansøg via GitHub',
+      joinViaLinkedin: 'Forbind på LinkedIn',
+      joinOptionalNote: 'eller efterlad en note',
+      joinNotePlaceholder: 'Fortæl os om dig selv (valgfrit)'
     },
     sv: {
       code: 'SE',
@@ -175,17 +163,11 @@ const LandingPage = ({ onLogin }) => {
       joinTeam: 'Gå med i teamet',
       joinSlogan: 'Var en del av förändringen',
       joinModalTitle: 'Delta i vårt uppdrag',
-      joinModalText: 'Vi söker passionerade experter inom journalistik, AI och cybersäkerhet. Fyll i formuläret för att ansöka.',
-      joinName: 'Fullständigt namn',
-      joinEmail: 'E-post',
-      joinRole: 'Expertisområde',
-      joinRoleJournalism: 'Journalistik',
-      joinRoleAI: 'Artificiell intelligens',
-      joinRoleCyber: 'Cybersäkerhet',
-      joinRoleOther: 'Annat',
-      joinMessage: 'Varför vill du vara med?',
-      joinSubmit: 'Skicka ansökan',
-      joinClose: 'Stäng'
+      joinModalText: 'Anslut med oss för att gå med i teamet',
+      joinViaGithub: 'Ansök via GitHub',
+      joinViaLinkedin: 'Anslut på LinkedIn',
+      joinOptionalNote: 'eller lämna en anteckning',
+      joinNotePlaceholder: 'Berätta om dig själv (valfritt)'
     },
     no: {
       code: 'NO',
@@ -232,17 +214,11 @@ const LandingPage = ({ onLogin }) => {
       joinTeam: 'Bli med i teamet',
       joinSlogan: 'Vær en del av endringen',
       joinModalTitle: 'Delta i vårt oppdrag',
-      joinModalText: 'Vi søker lidenskapelige eksperter innen journalistikk, AI og cybersikkerhet. Fyll ut skjemaet for å søke.',
-      joinName: 'Fullt navn',
-      joinEmail: 'E-post',
-      joinRole: 'Ekspertiseområde',
-      joinRoleJournalism: 'Journalistikk',
-      joinRoleAI: 'Kunstig intelligens',
-      joinRoleCyber: 'Cybersikkerhet',
-      joinRoleOther: 'Annet',
-      joinMessage: 'Hvorfor vil du bli med?',
-      joinSubmit: 'Send søknad',
-      joinClose: 'Lukk'
+      joinModalText: 'Koble til med oss for å bli med i teamet',
+      joinViaGithub: 'Søk via GitHub',
+      joinViaLinkedin: 'Koble til på LinkedIn',
+      joinOptionalNote: 'eller legg igjen en melding',
+      joinNotePlaceholder: 'Fortell oss om deg selv (valgfritt)'
     },
     it: {
       code: 'IT',
@@ -289,17 +265,11 @@ const LandingPage = ({ onLogin }) => {
       joinTeam: 'Unisciti al Team',
       joinSlogan: 'Fai parte del cambiamento',
       joinModalTitle: 'Unisciti alla Nostra Missione',
-      joinModalText: 'Cerchiamo esperti appassionati in giornalismo, AI e cybersecurity. Compila il form per candidarti.',
-      joinName: 'Nome completo',
-      joinEmail: 'Email',
-      joinRole: 'Area di competenza',
-      joinRoleJournalism: 'Giornalismo',
-      joinRoleAI: 'Intelligenza Artificiale',
-      joinRoleCyber: 'Cybersecurity',
-      joinRoleOther: 'Altro',
-      joinMessage: 'Perché vuoi unirti a noi?',
-      joinSubmit: 'Invia Candidatura',
-      joinClose: 'Chiudi'
+      joinModalText: 'Connettiti con noi per entrare nel team',
+      joinViaGithub: 'Candidati via GitHub',
+      joinViaLinkedin: 'Connettiti su LinkedIn',
+      joinOptionalNote: 'oppure lascia una nota',
+      joinNotePlaceholder: 'Parlaci di te (opzionale)'
     }
   };
 
@@ -972,74 +942,51 @@ const LandingPage = ({ onLogin }) => {
                 </p>
               </div>
 
-              {/* Form */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.target);
-                  const data = Object.fromEntries(formData);
-                  window.open(`mailto:contact@unityloop.ai?subject=Join Team Application&body=Name: ${data.name}%0AEmail: ${data.email}%0ARole: ${data.role}%0AMessage: ${data.message}`, '_blank');
-                  setIsJoinModalOpen(false);
-                }}
-                className="space-y-4"
-              >
-                {/* Name */}
-                <div>
-                  <label className="block text-gray-400 text-sm mb-1">{t.joinName}</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors"
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label className="block text-gray-400 text-sm mb-1">{t.joinEmail}</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors"
-                  />
-                </div>
-
-                {/* Role */}
-                <div>
-                  <label className="block text-gray-400 text-sm mb-1">{t.joinRole}</label>
-                  <select
-                    name="role"
-                    required
-                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#DC2626] focus:outline-none transition-colors"
-                  >
-                    <option value="">{t.joinRole}</option>
-                    <option value="journalism">{t.joinRoleJournalism}</option>
-                    <option value="ai">{t.joinRoleAI}</option>
-                    <option value="cybersecurity">{t.joinRoleCyber}</option>
-                    <option value="other">{t.joinRoleOther}</option>
-                  </select>
-                </div>
-
-                {/* Message */}
-                <div>
-                  <label className="block text-gray-400 text-sm mb-1">{t.joinMessage}</label>
-                  <textarea
-                    name="message"
-                    rows={3}
-                    required
-                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors resize-none"
-                  ></textarea>
-                </div>
-
-                {/* Submit */}
-                <button
-                  type="submit"
-                  className="w-full bg-[#DC2626] hover:bg-[#b91c1c] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-[1.02]"
+              {/* Quick Apply Buttons */}
+              <div className="space-y-3 mb-6">
+                {/* GitHub Button */}
+                <a
+                  href="https://github.com/UnityLoop-official/SHADOW-ANALYZER/issues/new?template=join-team.md&title=Join+Team+Application"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-3 bg-[#24292e] hover:bg-[#2f363d] text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02]"
                 >
-                  {t.joinSubmit}
-                </button>
-              </form>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  {t.joinViaGithub}
+                </a>
+
+                {/* LinkedIn Button */}
+                <a
+                  href="https://www.linkedin.com/company/unityloop"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-3 bg-[#0A66C2] hover:bg-[#004182] text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  {t.joinViaLinkedin}
+                </a>
+              </div>
+
+              {/* Divider */}
+              <div className="flex items-center my-4">
+                <div className="flex-1 border-t border-white/10"></div>
+                <span className="px-3 text-gray-500 text-xs">{t.joinOptionalNote}</span>
+                <div className="flex-1 border-t border-white/10"></div>
+              </div>
+
+              {/* Optional Note */}
+              <div>
+                <textarea
+                  id="joinNote"
+                  rows={2}
+                  placeholder={t.joinNotePlaceholder}
+                  className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors resize-none text-sm"
+                ></textarea>
+              </div>
             </motion.div>
           </motion.div>
         )}
