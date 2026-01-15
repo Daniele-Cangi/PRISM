@@ -6,6 +6,7 @@ const LandingPage = ({ onLogin }) => {
   const [language, setLanguage] = useState('en');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
 
   // Traduzioni
   const translations = {
@@ -65,7 +66,10 @@ const LandingPage = ({ onLogin }) => {
       joinViaGithub: 'Apply via GitHub',
       joinViaLinkedin: 'Connect on LinkedIn',
       joinOptionalNote: 'or leave a note',
-      joinNotePlaceholder: 'Tell us about yourself (optional)'
+      joinNotePlaceholder: 'Tell us about yourself (optional)',
+      comingSoonTitle: 'Coming Soon',
+      comingSoonText: 'We are working to activate sponsorship options. Soon you will be able to support the project!',
+      comingSoonClose: 'Got it'
     },
     da: {
       code: 'DK',
@@ -116,7 +120,10 @@ const LandingPage = ({ onLogin }) => {
       joinViaGithub: 'Ansøg via GitHub',
       joinViaLinkedin: 'Forbind på LinkedIn',
       joinOptionalNote: 'eller efterlad en note',
-      joinNotePlaceholder: 'Fortæl os om dig selv (valgfrit)'
+      joinNotePlaceholder: 'Fortæl os om dig selv (valgfrit)',
+      comingSoonTitle: 'Kommer snart',
+      comingSoonText: 'Vi arbejder på at aktivere sponsormuligheder. Snart vil du kunne støtte projektet!',
+      comingSoonClose: 'Forstået'
     },
     sv: {
       code: 'SE',
@@ -167,7 +174,10 @@ const LandingPage = ({ onLogin }) => {
       joinViaGithub: 'Ansök via GitHub',
       joinViaLinkedin: 'Anslut på LinkedIn',
       joinOptionalNote: 'eller lämna en anteckning',
-      joinNotePlaceholder: 'Berätta om dig själv (valfritt)'
+      joinNotePlaceholder: 'Berätta om dig själv (valfritt)',
+      comingSoonTitle: 'Kommer snart',
+      comingSoonText: 'Vi arbetar med att aktivera sponsringsmöjligheter. Snart kommer du att kunna stödja projektet!',
+      comingSoonClose: 'Uppfattat'
     },
     no: {
       code: 'NO',
@@ -218,7 +228,10 @@ const LandingPage = ({ onLogin }) => {
       joinViaGithub: 'Søk via GitHub',
       joinViaLinkedin: 'Koble til på LinkedIn',
       joinOptionalNote: 'eller legg igjen en melding',
-      joinNotePlaceholder: 'Fortell oss om deg selv (valgfritt)'
+      joinNotePlaceholder: 'Fortell oss om deg selv (valgfritt)',
+      comingSoonTitle: 'Kommer snart',
+      comingSoonText: 'Vi jobber med å aktivere sponsormuligheter. Snart vil du kunne støtte prosjektet!',
+      comingSoonClose: 'Forstått'
     },
     it: {
       code: 'IT',
@@ -269,7 +282,10 @@ const LandingPage = ({ onLogin }) => {
       joinViaGithub: 'Candidati via GitHub',
       joinViaLinkedin: 'Connettiti su LinkedIn',
       joinOptionalNote: 'oppure lascia una nota',
-      joinNotePlaceholder: 'Parlaci di te (opzionale)'
+      joinNotePlaceholder: 'Parlaci di te (opzionale)',
+      comingSoonTitle: 'Prossimamente',
+      comingSoonText: 'Stiamo lavorando per attivare le opzioni di sponsorizzazione. Presto potrai supportare il progetto!',
+      comingSoonClose: 'Ho capito'
     }
   };
 
@@ -585,15 +601,13 @@ const LandingPage = ({ onLogin }) => {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
 
               {/* GitHub Sponsors */}
-              <motion.a
-                href="https://github.com/sponsors/unityloop"
-                target="_blank"
-                rel="noopener noreferrer"
+              <motion.button
+                onClick={() => setIsComingSoonOpen(true)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#DC2626]/50 hover:scale-105 transition-all duration-300 group text-center"
+                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#DC2626]/50 hover:scale-105 transition-all duration-300 group text-center cursor-pointer"
               >
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#DC2626]/20 transition-colors">
                   <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -605,18 +619,16 @@ const LandingPage = ({ onLogin }) => {
                 <span className="inline-block px-4 py-2 bg-[#DC2626]/20 text-[#DC2626] rounded-full text-sm font-medium">
                   {t.sponsor}
                 </span>
-              </motion.a>
+              </motion.button>
 
               {/* Patreon */}
-              <motion.a
-                href="https://patreon.com/unityloop"
-                target="_blank"
-                rel="noopener noreferrer"
+              <motion.button
+                onClick={() => setIsComingSoonOpen(true)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#f96854]/50 hover:scale-105 transition-all duration-300 group text-center"
+                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#f96854]/50 hover:scale-105 transition-all duration-300 group text-center cursor-pointer"
               >
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#f96854]/20 transition-colors">
                   <svg className="w-8 h-8 text-[#f96854]" fill="currentColor" viewBox="0 0 24 24">
@@ -628,18 +640,16 @@ const LandingPage = ({ onLogin }) => {
                 <span className="inline-block px-4 py-2 bg-[#f96854]/20 text-[#f96854] rounded-full text-sm font-medium">
                   {t.patron}
                 </span>
-              </motion.a>
+              </motion.button>
 
               {/* Buy Me a Coffee */}
-              <motion.a
-                href="https://buymeacoffee.com/unityloop"
-                target="_blank"
-                rel="noopener noreferrer"
+              <motion.button
+                onClick={() => setIsComingSoonOpen(true)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#FFDD00]/50 hover:scale-105 transition-all duration-300 group text-center"
+                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#FFDD00]/50 hover:scale-105 transition-all duration-300 group text-center cursor-pointer"
               >
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#FFDD00]/20 transition-colors">
                   <svg className="w-8 h-8 text-[#FFDD00]" viewBox="0 0 24 24" fill="currentColor">
@@ -651,18 +661,16 @@ const LandingPage = ({ onLogin }) => {
                 <span className="inline-block px-4 py-2 bg-[#FFDD00]/20 text-[#FFDD00] rounded-full text-sm font-medium">
                   {t.coffee}
                 </span>
-              </motion.a>
+              </motion.button>
 
               {/* Ko-fi */}
-              <motion.a
-                href="https://ko-fi.com/unityloop"
-                target="_blank"
-                rel="noopener noreferrer"
+              <motion.button
+                onClick={() => setIsComingSoonOpen(true)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#FF5E5B]/50 hover:scale-105 transition-all duration-300 group text-center"
+                className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-white/10 rounded-2xl p-6 hover:border-[#FF5E5B]/50 hover:scale-105 transition-all duration-300 group text-center cursor-pointer"
               >
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#FF5E5B]/20 transition-colors">
                   <svg className="w-8 h-8 text-[#FF5E5B]" viewBox="0 0 24 24" fill="currentColor">
@@ -674,7 +682,7 @@ const LandingPage = ({ onLogin }) => {
                 <span className="inline-block px-4 py-2 bg-[#FF5E5B]/20 text-[#FF5E5B] rounded-full text-sm font-medium">
                   {t.kofiBtn}
                 </span>
-              </motion.a>
+              </motion.button>
             </div>
 
             {/* Messaggio aggiuntivo */}
@@ -985,6 +993,44 @@ const LandingPage = ({ onLogin }) => {
                   className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#DC2626] focus:outline-none transition-colors resize-none text-sm"
                 ></textarea>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* COMING SOON MODAL */}
+      <AnimatePresence>
+        {isComingSoonOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setIsComingSoonOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="bg-gradient-to-br from-[#1a1a2e] to-[#0d0d1a] border border-[#DC2626]/30 rounded-2xl p-6 w-full max-w-sm text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="w-14 h-14 mx-auto mb-4 flex items-center justify-center">
+                <Loader className="w-10 h-10 text-[#DC2626] animate-spin" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                {t.comingSoonTitle}
+              </h3>
+              <p className="text-gray-400 text-sm mb-5">
+                {t.comingSoonText}
+              </p>
+              <button
+                onClick={() => setIsComingSoonOpen(false)}
+                className="bg-[#DC2626] hover:bg-[#b91c1c] text-white font-medium py-2 px-6 rounded-lg transition-all duration-200"
+              >
+                {t.comingSoonClose}
+              </button>
             </motion.div>
           </motion.div>
         )}
