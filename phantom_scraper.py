@@ -143,14 +143,8 @@ class PhantomScraper:
                 if "google.com" in page.url or "consent.google" in page.url:
                     print("   >>> GOOGLE INTERCEPT DETECTED. Engaging Evasion Protocol...")
                     await self._handle_google_consent(page)
-                    
-                    # CRITICAL: Wait for redirect to leave Google dominion
-                    try:
-                        await page.wait_for_function("!window.location.href.includes('google.com')", timeout=15000)
-                        print(f"   >>> BREAKOUT SUCCESSFUL. Reached: {page.url}")
-                    except:
-                        print(f"   !!! BREAKOUT FAILED. Still trapped in Google Consent: {page.url}")
-                        return None # Abort profile to trigger retry/next profile
+                    # Relaxed: We don't block on URL anymore, we trust the extraction filter
+                    await page.wait_for_timeout(3000) 
                 
                 # 3. Bio-Mimicry
                 await self._human_interaction(page, profile)
@@ -168,10 +162,23 @@ class PhantomScraper:
                 clean_lines = [line.strip() for line in text.splitlines() if len(line.strip()) > 30]
                 full_text = "\\n".join(clean_lines)
                 
-                # Validation
+                # Validation - Content Based
+                junk_signatures = [
+                    "accetta tutto", "accept all", "cookie policy", "privacy checkup",
+                    "quando usi i nostri servizi", "scopri di più", "before you continue",
+                    "tutto quello che devi sapere", "personalizza", "gestisci opzioni"
+                ]
+                
+                # Check 1: Length
                 if len(full_text) < 500:
                     print(f"   !!! CONTENT TOO SHORT ({len(full_text)} chars). Likely CAPTCHA or JS Wall.")
                     return None
+                
+                # Check 2: Junk Content (Consent Wall Leak)
+                sample = full_text[:1000].lower()
+                if any(sig in sample for sig in junk_signatures):
+                     print(f"   !!! JUNK CONTENT DETECTED (Consent Wall): {sample[:100]}...")
+                     return None
                     
                 return full_text[:25000]
 
@@ -182,14 +189,43 @@ class PhantomScraper:
                 await browser.close()
 
     async def _handle_google_consent(self, page: Page):
-        # Simplified consent handler
+        """
+        Gestisce sia il banner dei consensi che eventuali interstitial di redirect.
+        """
+        print("      > SCANNING FOR GOOGLE TRAPS...")
         try:
-            btn = page.locator("button[aria-label='Accetta tutto'], button:has-text('Accetta tutto'), button:has-text('I agree')").first
-            if await btn.is_visible(timeout=3000):
-                await btn.click()
-                await page.wait_for_load_state('networkidle', timeout=5000)
-        except:
-            pass
+            # 1. Give it a moment to settle/redirect naturally
+            await page.wait_for_timeout(2000)
+            
+            # 2. Consent Buttons (Broad Selectors)
+            consent_selectors = [
+                 "button[aria-label='Accetta tutto']", 
+                 "button:has-text('Accetta tutto')", 
+                 "button:has-text('I agree')", 
+                 "button:has-text('Accept all')",
+                 "form[action*='consent'] button",
+                 "div[role='button']:has-text('Accetta')"
+            ]
+            
+            for selector in consent_selectors:
+                if await page.locator(selector).first.is_visible(timeout=500):
+                    print(f"      > CONSENT BUTTON FOUND: {selector}")
+                    await page.click(selector, timeout=1000)
+                    await page.wait_for_load_state('networkidle', timeout=3000)
+                    return # Assuming click triggers the next phase
+            
+            # 3. "Click here if not redirected" (News Interstitial)
+            # Sometimes Google News shows a link "Redirecting..." or just the article title link
+            if "news.google.com" in page.url:
+                print("      > CHECKING FOR STUCK REDIRECT...")
+                # Try clicking the main link if visible
+                article_link = page.locator("a[href^='http']").first
+                if await article_link.is_visible():
+                    print("      > CLICKING MANUAL REDIRECT LINK")
+                    await article_link.click(timeout=1000)
+                    
+        except Exception as e:
+            print(f"      ! TRAP EVASION ERROR: {str(e)}")
 
     async def scrape(self, url: str):
         # SHAPESHIFTER LOOP
@@ -203,10 +239,10 @@ class PhantomScraper:
             if result:
                 print(f">>> EXTRACTION SUCCESSFUL via {profile['name']}")
                 return result
-            
+             
             # If failed, wait before shapeshifting
             if i < len(PROFILES) - 1:
-                wait_time = random.uniform(3, 7)
+                wait_time = random.uniform(2, 5) # Slightly reduced cooldown
                 print(f">>> EVASION MANEUVER: Cooling down for {wait_time:.1f}s...")
                 await asyncio.sleep(wait_time)
         
@@ -219,4 +255,6 @@ async def run_phantom(url):
     return await scraper.scrape(url)
 
 if __name__ == "__main__":
-    print(asyncio.run(run_phantom("https://www.bloomberg.com/asia")))
+    # Test with a real Google News redirect link
+    test_url = "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5zOFp1V0t3am5oVlJQZVl2TTEwWlVqV0J6Y3Fkc09XUjFhWkZ3T3J0dUVwS1FzX3B5VFpHTlNFWnpEUU15ZG1wQW5iRjN5WkpaQmVuR1E?oc=5"
+    print(asyncio.run(run_phantom(test_url)))
