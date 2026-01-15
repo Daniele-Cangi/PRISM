@@ -389,7 +389,7 @@ const LandingPage = ({ onLogin }) => {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-              PRISM
+              PRISM <span className="text-lg md:text-xl font-light italic text-[#DC2626] align-top">beta</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 font-light italic" style={{ fontFamily: 'Lora, serif' }}>
               {t.cognitiveGrid}
