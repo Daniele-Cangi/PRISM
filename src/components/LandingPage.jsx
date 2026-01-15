@@ -48,9 +48,13 @@ const LandingPage = ({ onLogin }) => {
       // Legal Transparency
       legalTitle: 'Transparency & Compliance',
       legalText: 'Prism is committed to full transparency. Our entire project database will undergo independent legal review every 15 days to ensure compliance with all applicable laws and regulations. (Coming Soon)',
-      legalMonitored: 'Monitored by',
+      legalMonitored: 'Infrastructure supported by',
       legalVerified: 'Legal compliance planned',
-      legalBtn: 'View Compliance Status',
+      legalBtn: 'Visit Lab',
+      legalLabName: 'AI Research Laboratory',
+      legalBecomeSupporter: 'Become a Supporter',
+      legalSupporterText: 'Is your organization interested in supporting the project?',
+      legalSupporterBtn: 'Join as Partner',
       // Contact
       contactTitle: 'Follow and Contact Us',
       contactText: 'Stay updated on our projects and AI innovations',
@@ -104,9 +108,13 @@ const LandingPage = ({ onLogin }) => {
       thanksHeart: '❤️ Tak for din støtte!',
       legalTitle: 'Gennemsigtighed & Overholdelse',
       legalText: 'Prism er forpligtet til fuld gennemsigtighed. Hele vores projektdatabase vil gennemgå en uafhængig juridisk gennemgang hver 15. dag for at sikre overholdelse af alle gældende love og regler. (Kommer snart)',
-      legalMonitored: 'Overvåget af',
+      legalMonitored: 'Infrastruktur understøttet af',
       legalVerified: 'Juridisk overholdelse planlagt',
-      legalBtn: 'Se Overholdelsesstatus',
+      legalBtn: 'Besøg Lab',
+      legalLabName: 'AI Forskningslaboratorium',
+      legalBecomeSupporter: 'Bliv Supporter',
+      legalSupporterText: 'Er din organisation interesseret i at støtte projektet?',
+      legalSupporterBtn: 'Deltag som Partner',
       contactTitle: 'Følg og Kontakt Os',
       contactText: 'Hold dig opdateret om vores projekter og AI-innovationer',
       codeAndCoffee: 'Kode & kaffe',
@@ -158,9 +166,13 @@ const LandingPage = ({ onLogin }) => {
       thanksHeart: '❤️ Tack för ditt stöd!',
       legalTitle: 'Transparens & Efterlevnad',
       legalText: 'Prism är engagerat i full transparens. Hela vår projektdatabas kommer att genomgå oberoende juridisk granskning var 15:e dag för att säkerställa efterlevnad av alla tillämpliga lagar och förordningar. (Kommer snart)',
-      legalMonitored: 'Övervakat av',
+      legalMonitored: 'Infrastruktur stödd av',
       legalVerified: 'Juridisk efterlevnad planerad',
-      legalBtn: 'Visa Efterlevnadsstatus',
+      legalBtn: 'Besök Lab',
+      legalLabName: 'AI-forskningslaboratorium',
+      legalBecomeSupporter: 'Bli Supporter',
+      legalSupporterText: 'Är din organisation intresserad av att stödja projektet?',
+      legalSupporterBtn: 'Gå med som Partner',
       contactTitle: 'Följ och Kontakta Oss',
       contactText: 'Håll dig uppdaterad om våra projekt och AI-innovationer',
       codeAndCoffee: 'Kod & kaffe',
@@ -212,9 +224,13 @@ const LandingPage = ({ onLogin }) => {
       thanksHeart: '❤️ Takk for din støtte!',
       legalTitle: 'Åpenhet & Etterlevelse',
       legalText: 'Prism er forpliktet til full åpenhet. Hele prosjektdatabasen vår vil gjennomgå uavhengig juridisk gjennomgang hver 15. dag for å sikre etterlevelse av alle gjeldende lover og forskrifter. (Kommer snart)',
-      legalMonitored: 'Overvåket av',
+      legalMonitored: 'Infrastruktur støttet av',
       legalVerified: 'Juridisk etterlevelse planlagt',
-      legalBtn: 'Se Etterlevelsestatus',
+      legalBtn: 'Besøk Lab',
+      legalLabName: 'AI-forskningslaboratorium',
+      legalBecomeSupporter: 'Bli Supporter',
+      legalSupporterText: 'Er din organisasjon interessert i å støtte prosjektet?',
+      legalSupporterBtn: 'Bli med som Partner',
       contactTitle: 'Følg og Kontakt Oss',
       contactText: 'Hold deg oppdatert om våre prosjekter og AI-innovasjoner',
       codeAndCoffee: 'Kode & kaffe',
@@ -266,9 +282,13 @@ const LandingPage = ({ onLogin }) => {
       thanksHeart: '❤️ Grazie per il tuo supporto!',
       legalTitle: 'Trasparenza & Conformità',
       legalText: "Prism si impegna per la massima trasparenza. L'intero database del progetto sarà sottoposto a revisione legale indipendente ogni 15 giorni per garantire la conformità a tutte le leggi e normative applicabili. (Prossimamente)",
-      legalMonitored: 'Monitorato da',
+      legalMonitored: 'Infrastruttura supportata da',
       legalVerified: 'Conformità legale pianificata',
-      legalBtn: 'Visualizza Stato Conformità',
+      legalBtn: 'Visita il Lab',
+      legalLabName: 'Laboratorio di Ricerca AI',
+      legalBecomeSupporter: 'Diventa Supporter',
+      legalSupporterText: 'La tua organizzazione è interessata a supportare il progetto?',
+      legalSupporterBtn: 'Unisciti come Partner',
       contactTitle: 'Seguici e Contattaci',
       contactText: 'Resta aggiornato sui nostri progetti e innovazioni AI',
       codeAndCoffee: 'Codice & caffè',
@@ -746,41 +766,46 @@ const LandingPage = ({ onLogin }) => {
                   </div>
                 </div>
 
-                {/* Right - Card with link */}
-                <div className="flex flex-col items-center">
-                  <div className="bg-black/40 border border-white/10 rounded-2xl p-6 text-center w-full max-w-sm">
-                    <p className="text-gray-400 text-sm mb-3">{t.legalMonitored}</p>
+                {/* Right - Two Cards */}
+                <div className="flex flex-col gap-4">
+                  {/* UnityLoop Card */}
+                  <div className="bg-black/40 border border-white/10 rounded-2xl p-5 text-center">
+                    <p className="text-gray-400 text-xs mb-2 uppercase tracking-wider">{t.legalMonitored}</p>
 
-                    {/* LLegal Logo */}
-                    <div className="mb-4">
-                      <img
-                        src="/llegal-logo.svg"
-                        alt="LLegal"
-                        className="h-16 mx-auto"
-                      />
+                    <div className="mb-3">
+                      <Loader className="w-10 h-10 text-[#DC2626] animate-spin mx-auto" />
                     </div>
 
-                    <p className="text-white font-semibold mb-4">llegal.unityloop.ai</p>
+                    <p className="text-white font-bold text-lg mb-1">unityloop.ai</p>
+                    <p className="text-gray-500 text-xs mb-3">{t.legalLabName}</p>
 
                     <a
-                      href="http://llegal.unityloop.ai/"
+                      href="https://www.unityloop.ai/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-[#DC2626] hover:bg-[#b91c1c] text-white font-medium px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105"
+                      className="inline-flex items-center gap-2 bg-[#DC2626] hover:bg-[#b91c1c] text-white font-medium px-4 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
                       {t.legalBtn}
                     </a>
                   </div>
 
-                  {/* 15 days badge */}
-                  <div className="mt-4 flex items-center gap-2 text-sm text-gray-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Audit cycle: 15 days</span>
+                  {/* Become Supporter Card */}
+                  <div className="bg-black/40 border border-[#DC2626]/20 rounded-2xl p-5 text-center">
+                    <p className="text-[#DC2626] text-xs mb-2 uppercase tracking-wider font-semibold">{t.legalBecomeSupporter}</p>
+                    <p className="text-gray-400 text-sm mb-3">{t.legalSupporterText}</p>
+
+                    <a
+                      href="mailto:contact@unityloop.ai?subject=Partnership%20Inquiry%20-%20Prism"
+                      className="inline-flex items-center gap-2 bg-transparent border border-[#DC2626] hover:bg-[#DC2626]/10 text-[#DC2626] font-medium px-4 py-2 rounded-lg text-sm transition-all duration-300"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                      {t.legalSupporterBtn}
+                    </a>
                   </div>
                 </div>
               </div>
