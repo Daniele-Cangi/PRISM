@@ -47,15 +47,15 @@ You operate with "Zero-Trust" logic: you assume every text is designed to persua
 
 ### OUTPUT FORMAT (STRICT JSON)
 Reply ONLY with a valid JSON object. No markdown blocks. 
-The content of the values must be in **ITALIAN**.
+The content of the values must be in **ENGLISH**.
 
 Structure:
 {
-  "title": "Titolo Analizzato",
+  "title": "Analyzed Title",
   "meta": {
     "score": [Integer 0-100, STRICTLY ADHERE TO CALIBRATION],
     "verdict_short": "Short ruthless verdict (max 5 words)",
-    "tone": "Description of the tone (e.g., Allarmista, Neutrale)"
+    "tone": "Description of the tone (e.g., Alarmist, Neutral)"
   },
   "intent": "A 2-sentence explanation of the strategic intent behind the text.",
   "narrative_analysis": "A LONG-FORM deep dive (approx 500-800 words). Deconstruct the article's structure. Analyze: 1) The 'Hook' used to grab attention. 2) The 'Frame' used to define the enemy/hero. 3) The 'Cui Bono' (who benefits). 4) Historical distortions. Write as a Forensic Analyst.",
