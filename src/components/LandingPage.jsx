@@ -772,10 +772,6 @@ const LandingPage = ({ onLogin }) => {
                   <div className="bg-black/40 border border-white/10 rounded-2xl p-5 text-center">
                     <p className="text-gray-400 text-xs mb-2 uppercase tracking-wider">{t.legalMonitored}</p>
 
-                    <div className="mb-3">
-                      <Loader className="w-10 h-10 text-[#DC2626] animate-spin mx-auto" />
-                    </div>
-
                     <p className="text-white font-bold text-lg mb-1">unityloop.ai</p>
                     <p className="text-gray-500 text-xs mb-3">{t.legalLabName}</p>
 
