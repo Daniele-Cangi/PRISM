@@ -544,7 +544,7 @@ const LandingPage = ({ onLogin }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
-                  <span className="text-[#DC2626] text-xs uppercase tracking-widest font-semibold">{t.roleAIDev}</span>
+                  <span className="text-[#DC2626] text-xs uppercase tracking-widest font-semibold">{t.roleDev}</span>
                 </div>
               </motion.div>
 
@@ -561,7 +561,7 @@ const LandingPage = ({ onLogin }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-4 left-0 right-0 text-center">
-                  <span className="text-[#DC2626] text-[10px] uppercase tracking-widest font-semibold">{t.roleDev}</span>
+                  <span className="text-[#DC2626] text-[10px] uppercase tracking-widest font-semibold">{t.roleAIDev}</span>
                 </div>
               </motion.div>
 
