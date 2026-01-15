@@ -62,7 +62,7 @@ const OrganicTheme = () => {
           transition={{ type: 'spring', stiffness: 100 }}
           className="text-center mb-16"
         >
-          <h1 className="organic-heading mb-4">Shadow Analyzer</h1>
+          <h1 className="organic-heading mb-4">Prism</h1>
           <p className="organic-body text-white">
             Flowing through media narratives with fluid intelligence
           </p>

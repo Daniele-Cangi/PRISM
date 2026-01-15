@@ -73,7 +73,7 @@ const RetroTheme = () => {
       <div className="retro-theme">
         <div className="retro-screen loading">
           <div className="retro-text">
-            <TypewriterText text="SHADOW ANALYZER v3.0" speed={50} />
+            <TypewriterText text="PRISM v3.0" speed={50} />
             <br />
             <TypewriterText text="INITIALIZING SYSTEM..." speed={40} />
             <br />
@@ -90,7 +90,7 @@ const RetroTheme = () => {
       <div className="retro-screen">
         {/* Header */}
         <header className="retro-header">
-          <h1 className="retro-title retro-text">SHADOW ANALYZER</h1>
+          <h1 className="retro-title retro-text">PRISM</h1>
           <div className="retro-subtitle retro-text">
             ════════ MEDIA BIAS DETECTION SYSTEM v3.0 ════════
           </div>
@@ -248,7 +248,7 @@ const RetroTheme = () => {
         <footer style={{ marginTop: '3rem', paddingTop: '1rem', borderTop: '2px solid var(--amber)' }}>
           <div className="retro-text" style={{ textAlign: 'center' }}>
             <p>════════════════════════════════════════════════════════</p>
-            <p>(C) 2024 SHADOW ANALYZER • ALL RIGHTS RESERVED</p>
+            <p>(C) 2024 PRISM • ALL RIGHTS RESERVED</p>
           </div>
         </footer>
       </div>

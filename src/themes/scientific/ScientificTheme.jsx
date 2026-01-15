@@ -70,7 +70,7 @@ const ScientificTheme = () => {
         <div className="sci-container">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="sci-title">Shadow Analyzer</h1>
+              <h1 className="sci-title">Prism</h1>
               <p className="sci-caption mt-1">Computational Analysis of Media Bias</p>
             </div>
             <div className="flex items-center gap-2">

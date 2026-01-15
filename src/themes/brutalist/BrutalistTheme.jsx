@@ -51,7 +51,7 @@ const BrutalistTheme = () => {
     <div className="brutalist-theme">
       {/* Header */}
       <header>
-        <h1>SHADOW ANALYZER</h1>
+        <h1>PRISM</h1>
         <p>Media Bias Detection System</p>
         <hr />
       </header>
@@ -213,7 +213,7 @@ const BrutalistTheme = () => {
         <hr />
         <p>
           <small>
-            Shadow Analyzer v3.0 | <a href="#about">About</a> | <a href="#help">Help</a> | <a href="#api">API</a>
+            Prism v3.0 | <a href="#about">About</a> | <a href="#help">Help</a> | <a href="#api">API</a>
           </small>
         </p>
       </footer>

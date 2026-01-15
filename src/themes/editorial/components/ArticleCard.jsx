@@ -24,7 +24,7 @@ const ArticleCard = ({ data, onClick }) => {
       <div className="pr-24">
         {/* Byline */}
         <div className="editorial-meta mb-4">
-          <span>Shadow Analyzer</span>
+          <span>Prism</span>
           <div className="editorial-meta-divider" />
           <span>{date}</span>
         </div>

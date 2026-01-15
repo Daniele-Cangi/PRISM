@@ -57,7 +57,7 @@ const GenerativeTheme = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="gen-title">SHADOW ANALYZER</h1>
+          <h1 className="gen-title">PRISM</h1>
           <p className="gen-subtitle">Generative Media Analysis</p>
         </motion.header>
 

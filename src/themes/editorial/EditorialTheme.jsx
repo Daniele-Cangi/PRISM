@@ -85,7 +85,7 @@ const EditorialTheme = () => {
             {/* Center: Title */}
             <div className="text-center flex-1">
               <h1 className="font-serif text-5xl md:text-7xl font-black tracking-tight leading-none mb-2">
-                SHADOW ANALYZER
+                PRISM
               </h1>
               <div className="flex items-center justify-center gap-3 text-sm font-medium text-[#DC2626] tracking-widest uppercase">
                 <span className="w-2 h-2 bg-[#DC2626] rounded-full" />
