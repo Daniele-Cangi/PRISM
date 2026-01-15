@@ -28,6 +28,9 @@ const LandingPage = ({ onLogin }) => {
       missionText1: 'In an era of information overload, distinguishing truth from manipulation has become essential for democracy.',
       missionText2: 'Shadow Analyzer was created to give citizens the power to see beyond the narrative. We are building a team of experts in journalism, artificial intelligence and cybersecurity united by a common vision.',
       theFounders: 'The Founders',
+      roleEvangelist: 'Project Evangelist',
+      roleAIDev: 'AI Developer',
+      roleDev: 'Full Stack Developer',
       // Sponsorship
       supportTitle: 'Support the Project',
       supportText: 'Shadow Analyzer is an open source project. Your support helps us continue development and maintenance of this tool for information democracy.',
@@ -86,6 +89,9 @@ const LandingPage = ({ onLogin }) => {
       missionText1: 'I en tid med informationsoverbelastning er det blevet afgørende for demokratiet at skelne sandhed fra manipulation.',
       missionText2: 'Shadow Analyzer blev skabt for at give borgerne magten til at se ud over narrativet. Vi er ved at opbygge et team af eksperter inden for journalistik, kunstig intelligens og cybersikkerhed forenet af en fælles vision.',
       theFounders: 'Grundlæggerne',
+      roleEvangelist: 'Projektevangelist',
+      roleAIDev: 'AI-udvikler',
+      roleDev: 'Full Stack Udvikler',
       supportTitle: 'Støt Projektet',
       supportText: 'Shadow Analyzer er et open source-projekt. Din støtte hjælper os med at fortsætte udviklingen og vedligeholdelsen af dette værktøj for informationsdemokrati.',
       sponsorGithub: 'Sponsor direkte på GitHub',
@@ -140,6 +146,9 @@ const LandingPage = ({ onLogin }) => {
       missionText1: 'I en tid av informationsöverflöd har det blivit avgörande för demokratin att skilja sanning från manipulation.',
       missionText2: 'Shadow Analyzer skapades för att ge medborgarna makten att se bortom narrativet. Vi bygger ett team av experter inom journalistik, artificiell intelligens och cybersäkerhet förenade av en gemensam vision.',
       theFounders: 'Grundarna',
+      roleEvangelist: 'Projektevangelist',
+      roleAIDev: 'AI-utvecklare',
+      roleDev: 'Full Stack Utvecklare',
       supportTitle: 'Stöd Projektet',
       supportText: 'Shadow Analyzer är ett open source-projekt. Ditt stöd hjälper oss att fortsätta utvecklingen och underhållet av detta verktyg för informationsdemokrati.',
       sponsorGithub: 'Sponsra direkt på GitHub',
@@ -194,6 +203,9 @@ const LandingPage = ({ onLogin }) => {
       missionText1: 'I en tid med informasjonsoverbelastning har det blitt avgjørende for demokratiet å skille sannhet fra manipulasjon.',
       missionText2: 'Shadow Analyzer ble skapt for å gi borgerne makten til å se forbi narrativet. Vi bygger et team av eksperter innen journalistikk, kunstig intelligens og cybersikkerhet forent av en felles visjon.',
       theFounders: 'Grunnleggerne',
+      roleEvangelist: 'Prosjektevangelist',
+      roleAIDev: 'AI-utvikler',
+      roleDev: 'Full Stack Utvikler',
       supportTitle: 'Støtt Prosjektet',
       supportText: 'Shadow Analyzer er et open source-prosjekt. Din støtte hjelper oss å fortsette utviklingen og vedlikeholdet av dette verktøyet for informasjonsdemokrati.',
       sponsorGithub: 'Sponsor direkte på GitHub',
@@ -248,6 +260,9 @@ const LandingPage = ({ onLogin }) => {
       missionText1: "In un'era di sovraccarico informativo, distinguere la verità dalla manipolazione è diventato essenziale per la democrazia.",
       missionText2: 'Shadow Analyzer è stato creato per dare ai cittadini il potere di vedere oltre la narrativa. Stiamo costruendo un team di esperti in giornalismo, intelligenza artificiale e cybersecurity uniti da una visione comune.',
       theFounders: 'I Fondatori',
+      roleEvangelist: 'Evangelista del Progetto',
+      roleAIDev: 'Sviluppatore AI',
+      roleDev: 'Full Stack Developer',
       supportTitle: 'Supporta il Progetto',
       supportText: 'Shadow Analyzer è un progetto open source. Il tuo supporto ci aiuta a continuare lo sviluppo e la manutenzione di questo strumento per la democrazia informativa.',
       sponsorGithub: 'Sponsorizza direttamente su GitHub',
@@ -499,7 +514,7 @@ const LandingPage = ({ onLogin }) => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative h-[500px]"
             >
-              {/* Foto 1 - Grande in alto a sinistra */}
+              {/* Foto 1 - Grande in alto a sinistra - Evangelista */}
               <motion.div
                 className="absolute top-0 left-0 w-64 h-64 rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl z-10"
                 whileHover={{ scale: 1.05, zIndex: 30 }}
@@ -507,13 +522,16 @@ const LandingPage = ({ onLogin }) => {
               >
                 <img
                   src="/1516274888460.jpeg"
-                  alt="Founder 1"
+                  alt="Project Evangelist"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
+                  <span className="text-[#DC2626] text-xs uppercase tracking-widest font-semibold">{t.roleEvangelist}</span>
+                </div>
               </motion.div>
 
-              {/* Foto 2 - Media in basso a destra */}
+              {/* Foto 2 - Media in basso a destra - AI Developer */}
               <motion.div
                 className="absolute bottom-0 right-0 w-56 h-56 rounded-2xl overflow-hidden border-4 border-[#DC2626]/30 shadow-2xl z-20"
                 whileHover={{ scale: 1.05, zIndex: 30 }}
@@ -521,13 +539,16 @@ const LandingPage = ({ onLogin }) => {
               >
                 <img
                   src="/1684496683015.jpeg"
-                  alt="Founder 2"
+                  alt="AI Developer"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
+                  <span className="text-[#DC2626] text-xs uppercase tracking-widest font-semibold">{t.roleAIDev}</span>
+                </div>
               </motion.div>
 
-              {/* Foto 3 - Piccola al centro */}
+              {/* Foto 3 - Piccola al centro - Full Stack Developer */}
               <motion.div
                 className="absolute top-1/2 right-1/4 transform -translate-y-1/2 w-48 h-48 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl z-30"
                 whileHover={{ scale: 1.1, zIndex: 40 }}
@@ -535,10 +556,13 @@ const LandingPage = ({ onLogin }) => {
               >
                 <img
                   src="/1758023934673.jpeg"
-                  alt="Founder 3"
+                  alt="Full Stack Developer"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-4 left-0 right-0 text-center">
+                  <span className="text-[#DC2626] text-[10px] uppercase tracking-widest font-semibold">{t.roleDev}</span>
+                </div>
               </motion.div>
 
               {/* Join Team Card - Quadrato cliccabile */}
