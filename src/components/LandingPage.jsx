@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader, Globe, ChevronDown } from 'lucide-react';
+import { Loader, ChevronDown } from 'lucide-react';
 
 const LandingPage = ({ onLogin }) => {
   const [language, setLanguage] = useState('en');
@@ -42,9 +42,9 @@ const LandingPage = ({ onLogin }) => {
       thanksHeart: '❤️ Thank you for your support!',
       // Legal Transparency
       legalTitle: 'Transparency & Compliance',
-      legalText: 'Shadow Analyzer is committed to full transparency. Our entire project database undergoes independent legal review every 15 days to ensure compliance with all applicable laws and regulations.',
+      legalText: 'Shadow Analyzer is committed to full transparency. Our entire project database will undergo independent legal review every 15 days to ensure compliance with all applicable laws and regulations. (Coming Soon)',
       legalMonitored: 'Monitored by',
-      legalVerified: 'Legal compliance verified',
+      legalVerified: 'Legal compliance planned',
       legalBtn: 'View Compliance Status',
       // Contact
       contactTitle: 'Follow and Contact Us',
@@ -83,9 +83,9 @@ const LandingPage = ({ onLogin }) => {
       supportThanks: 'Hvert bidrag, stort som lille, hjælper os med at holde Shadow Analyzer gratis og open source.',
       thanksHeart: '❤️ Tak for din støtte!',
       legalTitle: 'Gennemsigtighed & Overholdelse',
-      legalText: 'Shadow Analyzer er forpligtet til fuld gennemsigtighed. Hele vores projektdatabase gennemgår en uafhængig juridisk gennemgang hver 15. dag for at sikre overholdelse af alle gældende love og regler.',
+      legalText: 'Shadow Analyzer er forpligtet til fuld gennemsigtighed. Hele vores projektdatabase vil gennemgå en uafhængig juridisk gennemgang hver 15. dag for at sikre overholdelse af alle gældende love og regler. (Kommer snart)',
       legalMonitored: 'Overvåget af',
-      legalVerified: 'Juridisk overholdelse verificeret',
+      legalVerified: 'Juridisk overholdelse planlagt',
       legalBtn: 'Se Overholdelsesstatus',
       contactTitle: 'Følg og Kontakt Os',
       contactText: 'Hold dig opdateret om vores projekter og AI-innovationer',
@@ -123,9 +123,9 @@ const LandingPage = ({ onLogin }) => {
       supportThanks: 'Varje bidrag, stort som litet, hjälper oss att hålla Shadow Analyzer gratis och open source.',
       thanksHeart: '❤️ Tack för ditt stöd!',
       legalTitle: 'Transparens & Efterlevnad',
-      legalText: 'Shadow Analyzer är engagerat i full transparens. Hela vår projektdatabas genomgår oberoende juridisk granskning var 15:e dag för att säkerställa efterlevnad av alla tillämpliga lagar och förordningar.',
+      legalText: 'Shadow Analyzer är engagerat i full transparens. Hela vår projektdatabas kommer att genomgå oberoende juridisk granskning var 15:e dag för att säkerställa efterlevnad av alla tillämpliga lagar och förordningar. (Kommer snart)',
       legalMonitored: 'Övervakat av',
-      legalVerified: 'Juridisk efterlevnad verifierad',
+      legalVerified: 'Juridisk efterlevnad planerad',
       legalBtn: 'Visa Efterlevnadsstatus',
       contactTitle: 'Följ och Kontakta Oss',
       contactText: 'Håll dig uppdaterad om våra projekt och AI-innovationer',
@@ -163,9 +163,9 @@ const LandingPage = ({ onLogin }) => {
       supportThanks: 'Hvert bidrag, stort som lite, hjelper oss å holde Shadow Analyzer gratis og open source.',
       thanksHeart: '❤️ Takk for din støtte!',
       legalTitle: 'Åpenhet & Etterlevelse',
-      legalText: 'Shadow Analyzer er forpliktet til full åpenhet. Hele prosjektdatabasen vår gjennomgår uavhengig juridisk gjennomgang hver 15. dag for å sikre etterlevelse av alle gjeldende lover og forskrifter.',
+      legalText: 'Shadow Analyzer er forpliktet til full åpenhet. Hele prosjektdatabasen vår vil gjennomgå uavhengig juridisk gjennomgang hver 15. dag for å sikre etterlevelse av alle gjeldende lover og forskrifter. (Kommer snart)',
       legalMonitored: 'Overvåket av',
-      legalVerified: 'Juridisk etterlevelse verifisert',
+      legalVerified: 'Juridisk etterlevelse planlagt',
       legalBtn: 'Se Etterlevelsestatus',
       contactTitle: 'Følg og Kontakt Oss',
       contactText: 'Hold deg oppdatert om våre prosjekter og AI-innovasjoner',
@@ -173,12 +173,53 @@ const LandingPage = ({ onLogin }) => {
       letsTalk: 'La oss snakke',
       houston: 'Houston, vi har et problem',
       aiLab: 'Laboratorium for Kunstig Intelligens'
+    },
+    it: {
+      code: 'IT',
+      flag: '🇮🇹',
+      name: 'Italiano',
+      cognitiveGrid: 'Griglia di Sicurezza Cognitiva',
+      loginTitle: 'Accedi per continuare',
+      continueGoogle: 'Continua con Google',
+      continueMicrosoft: 'Continua con Microsoft',
+      or: 'oppure',
+      guestAccess: 'Entra come Ospite',
+      termsText: 'Accedendo accetti i nostri Termini di Servizio e la Privacy Policy',
+      scrollMore: 'Scopri di più',
+      missionTitle: 'La Nostra Missione',
+      missionText1: "In un'era di sovraccarico informativo, distinguere la verità dalla manipolazione è diventato essenziale per la democrazia.",
+      missionText2: 'Shadow Analyzer è stato creato per dare ai cittadini il potere di vedere oltre la narrativa. Un team di esperti in giornalismo, intelligenza artificiale e cybersecurity uniti da una visione comune.',
+      theFounders: 'I Fondatori',
+      supportTitle: 'Supporta il Progetto',
+      supportText: 'Shadow Analyzer è un progetto open source. Il tuo supporto ci aiuta a continuare lo sviluppo e la manutenzione di questo strumento per la democrazia informativa.',
+      sponsorGithub: 'Sponsorizza direttamente su GitHub',
+      sponsor: 'Sponsorizza',
+      becomePatron: 'Diventa un patron mensile',
+      patron: 'Diventa Patron',
+      buyCoffee: 'Offrici un caffè',
+      coffee: 'Offri un Caffè',
+      kofiSupport: 'Supporto una tantum o mensile',
+      kofiBtn: 'Supporta su Ko-fi',
+      supportThanks: 'Ogni contributo, grande o piccolo, ci aiuta a mantenere Shadow Analyzer gratuito e open source.',
+      thanksHeart: '❤️ Grazie per il tuo supporto!',
+      legalTitle: 'Trasparenza & Conformità',
+      legalText: "Shadow Analyzer si impegna per la massima trasparenza. L'intero database del progetto sarà sottoposto a revisione legale indipendente ogni 15 giorni per garantire la conformità a tutte le leggi e normative applicabili. (Prossimamente)",
+      legalMonitored: 'Monitorato da',
+      legalVerified: 'Conformità legale pianificata',
+      legalBtn: 'Visualizza Stato Conformità',
+      contactTitle: 'Seguici e Contattaci',
+      contactText: 'Resta aggiornato sui nostri progetti e innovazioni AI',
+      codeAndCoffee: 'Codice & caffè',
+      letsTalk: 'Parliamone',
+      houston: 'Houston, abbiamo un problema',
+      aiLab: 'Laboratorio di Intelligenza Artificiale'
     }
   };
 
   const t = translations[language];
   const languages = [
     { code: 'en', flag: '🇬🇧', name: 'English' },
+    { code: 'it', flag: '🇮🇹', name: 'Italiano' },
     { code: 'da', flag: '🇩🇰', name: 'Dansk' },
     { code: 'sv', flag: '🇸🇪', name: 'Svenska' },
     { code: 'no', flag: '🇳🇴', name: 'Norsk' }
@@ -194,33 +235,27 @@ const LandingPage = ({ onLogin }) => {
         {/* Overlay scuro per leggibilità */}
         <div className="absolute inset-0 bg-black/60" />
 
-        {/* MENU LINGUE - Fisso a sinistra */}
-        <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50">
-          <motion.div
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="relative"
-          >
-            {/* Toggle Button */}
+        {/* MENU LINGUE - Fisso in alto a destra, minimalista */}
+        <div className="fixed top-4 right-4 z-50">
+          <div className="relative">
+            {/* Toggle Button - Solo bandiera */}
             <button
               onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-              className="flex items-center gap-2 bg-[#DC2626] hover:bg-[#b91c1c] text-white px-4 py-3 rounded-r-xl shadow-lg transition-all duration-300"
+              className="flex items-center gap-1 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg transition-all duration-200"
             >
-              <Globe className="w-5 h-5" />
-              <span className="font-bold">{translations[language].flag} {translations[language].code}</span>
-              <ChevronDown className={`w-4 h-4 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
+              <span className="text-lg">{translations[language].flag}</span>
+              <ChevronDown className={`w-3 h-3 opacity-60 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
-            {/* Dropdown Menu */}
+            {/* Dropdown Menu - Minimalista */}
             <AnimatePresence>
               {isLangMenuOpen && (
                 <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute top-full left-0 mt-2 bg-black/90 backdrop-blur-md border border-[#DC2626]/30 rounded-r-xl overflow-hidden shadow-xl"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full right-0 mt-1 bg-black/80 backdrop-blur-md border border-white/10 rounded-lg overflow-hidden shadow-lg"
                 >
                   {languages.map((lang) => (
                     <button
@@ -229,20 +264,20 @@ const LandingPage = ({ onLogin }) => {
                         setLanguage(lang.code);
                         setIsLangMenuOpen(false);
                       }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 ${
+                      className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-all duration-150 ${
                         language === lang.code
-                          ? 'bg-[#DC2626] text-white'
-                          : 'text-gray-300 hover:bg-[#DC2626]/20 hover:text-white'
+                          ? 'bg-white/10 text-white'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-white'
                       }`}
                     >
-                      <span className="text-xl">{lang.flag}</span>
-                      <span className="font-medium">{lang.name}</span>
+                      <span className="text-base">{lang.flag}</span>
+                      <span className="text-sm">{lang.code}</span>
                     </button>
                   ))}
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </div>
         </div>
 
         {/* Contenuto Hero */}
