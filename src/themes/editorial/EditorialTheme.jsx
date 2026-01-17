@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Globe, Loader } from 'lucide-react';
+import { Search, Globe, Loader, MapPin } from 'lucide-react';
 import useAnalysisStore from '../../store/analysisStore';
 import ArticleCard from './components/ArticleCard';
 import AnalysisPanel from './components/AnalysisPanel';
 import MapHUD from '../../components/MapHUD';
 import IntelFeed from '../../components/IntelFeed';
+import MobileArticleSheet from '../../components/MobileArticleSheet';
 import TrendingTicker from './components/TrendingTicker';
 import API_ENDPOINTS from '../../utils/api';
 import './editorial.css';
@@ -33,6 +34,16 @@ const EditorialTheme = () => {
   } = useAnalysisStore();
 
   const [showFullAnalysis, setShowFullAnalysis] = useState(false);
+  const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Handle URL analysis
   const handleAnalyze = async () => {
@@ -68,12 +79,28 @@ const EditorialTheme = () => {
       {/* Live Ticker */}
       <TrendingTicker />
 
-      {/* Enhanced Masthead */}
+      {/* Enhanced Masthead - Mobile Optimized */}
       <header className="border-b border-[#E5E5E5] bg-white">
-        <div className="editorial-wide-container py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center border-b-2 border-black pb-4 mb-4">
+        <div className="editorial-wide-container py-4 lg:py-8">
+          {/* Mobile Header */}
+          <div className="lg:hidden text-center mb-3">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Loader className="w-8 h-8 text-[#DC2626] animate-spin" />
+              <h1 className="font-serif text-4xl font-black tracking-tight leading-none">
+                PRISM
+              </h1>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs font-medium text-[#DC2626] tracking-wider uppercase">
+              <span className="w-1.5 h-1.5 bg-[#DC2626] rounded-full" />
+              <span>Cognitive Security</span>
+              <span className="w-1.5 h-1.5 bg-[#DC2626] rounded-full" />
+            </div>
+          </div>
+
+          {/* Desktop Header */}
+          <div className="hidden lg:flex flex-row justify-between items-center border-b-2 border-black pb-4 mb-4">
             {/* Left: Logo + Meta Data */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="flex items-center gap-4">
               <Loader className="w-14 h-14 text-[#DC2626] animate-spin" />
               <div className="text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
                 <div>Vol. 24 • No. 118</div>
@@ -84,7 +111,7 @@ const EditorialTheme = () => {
 
             {/* Center: Title */}
             <div className="text-center flex-1">
-              <h1 className="font-serif text-5xl md:text-7xl font-black tracking-tight leading-none mb-2">
+              <h1 className="font-serif text-7xl font-black tracking-tight leading-none mb-2">
                 PRISM
               </h1>
               <div className="flex items-center justify-center gap-3 text-sm font-medium text-[#DC2626] tracking-widest uppercase">
@@ -95,7 +122,7 @@ const EditorialTheme = () => {
             </div>
 
             {/* Right: System Status */}
-            <div className="hidden md:block text-right text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
+            <div className="text-right text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
               <div className="flex items-center justify-end gap-2">
                 <span>Global Bias Index</span>
                 <span className="text-[#DC2626] font-bold">CRITICAL</span>
@@ -105,9 +132,9 @@ const EditorialTheme = () => {
             </div>
           </div>
 
-          {/* Tagline */}
-          <p className="text-center font-serif italic text-gray-500 text-lg">
-            "Democracy Dies in Darkness • logic Survives in Light"
+          {/* Tagline - Desktop only */}
+          <p className="hidden lg:block text-center font-serif italic text-gray-500 text-lg">
+            "Democracy Dies in Darkness • Logic Survives in Light"
           </p>
         </div>
       </header>
@@ -150,15 +177,23 @@ const EditorialTheme = () => {
 
         {/* GLOBAL MONITOR */}
         <div className="mb-10">
-          <h2 className="headline-secondary text-center mb-8">Global News Monitor</h2>
+          <h2 className="headline-secondary text-center mb-6 lg:mb-8">Global News Monitor</h2>
+
+          {/* Mobile hint */}
+          <p className="text-center text-slate-400 text-sm mb-4 lg:hidden flex items-center justify-center gap-2">
+            <MapPin className="w-4 h-4" />
+            Tap a country to see articles
+          </p>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
-            <div className="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] relative">
+            {/* Map Container - Full width on mobile */}
+            <div className="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[55vh] lg:min-h-[70vh] relative">
               {/* Scanning Overlay */}
               {scrapingStatus === 'scanning' && (
-                <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center">
-                  <Loader className="w-16 h-16 text-[#DC2626] animate-spin mb-4" />
-                  <h3 className="headline-tertiary">Analyzing Narrative...</h3>
-                  <p className="text-[#666666]">Extracting bias patterns and hidden axioms</p>
+                <div className="absolute inset-0 z-40 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center">
+                  <Loader className="w-12 h-12 lg:w-16 lg:h-16 text-[#DC2626] animate-spin mb-4" />
+                  <h3 className="headline-tertiary text-base lg:text-xl">Analyzing Narrative...</h3>
+                  <p className="text-[#666666] text-sm">Extracting bias patterns</p>
                 </div>
               )}
 
@@ -167,6 +202,11 @@ const EditorialTheme = () => {
                   setSelectedSector(countryCode);
                   setIsLoadingFeed(true);
                   setGeoIntel([]);
+
+                  // Open mobile sheet on mobile devices
+                  if (isMobile) {
+                    setIsMobileSheetOpen(true);
+                  }
 
                   try {
                     const response = await fetch(API_ENDPOINTS.geoRecon(countryCode));
@@ -189,7 +229,9 @@ const EditorialTheme = () => {
                 isLoading={isLoadingFeed}
               />
             </div>
-            <div className="bg-white border border-slate-200 rounded-xl p-4 h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden flex flex-col">
+
+            {/* Desktop: Side panel for articles */}
+            <div className="hidden lg:flex bg-white border border-slate-200 rounded-xl p-4 h-[70vh] overflow-hidden flex-col">
               <IntelFeed
                 data={geoIntel}
                 sectorName={sectorName}
@@ -203,6 +245,21 @@ const EditorialTheme = () => {
           </div>
         </div>
       </main>
+
+      {/* Mobile Article Sheet */}
+      <MobileArticleSheet
+        isOpen={isMobileSheetOpen}
+        onClose={() => setIsMobileSheetOpen(false)}
+        data={geoIntel}
+        sectorName={sectorName}
+        isLoading={isLoadingFeed}
+        analyzingId={analyzingId}
+        onAnalyze={(item) => {
+          setTargetUrl(item.url);
+          setIsMobileSheetOpen(false);
+          handleAnalyze();
+        }}
+      />
 
       {/* Full Analysis Modal */}
       <AnimatePresence>
