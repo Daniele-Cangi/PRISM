@@ -115,8 +115,41 @@ const EditorialTheme = () => {
       {/* Main Content */}
       <main className="editorial-wide-container max-w-[95vw]">
 
+        {/* URL Search Bar */}
+        <div className="mt-8 mb-10 max-w-2xl mx-auto">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (targetUrl.trim()) handleAnalyze();
+            }}
+            className="relative"
+          >
+            <input
+              type="url"
+              value={targetUrl}
+              onChange={(e) => setTargetUrl(e.target.value)}
+              placeholder="Paste article URL to analyze..."
+              className="w-full px-5 py-4 pr-14 text-lg border border-slate-200 rounded-full shadow-sm focus:outline-none focus:border-slate-400 focus:shadow-md transition-all bg-white"
+            />
+            <button
+              type="submit"
+              disabled={!targetUrl.trim() || scrapingStatus === 'scanning'}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-[#1A1A1A] hover:bg-[#DC2626] disabled:bg-slate-300 text-white rounded-full transition-all"
+            >
+              {scrapingStatus === 'scanning' ? (
+                <Loader className="w-5 h-5 animate-spin" />
+              ) : (
+                <Search className="w-5 h-5" />
+              )}
+            </button>
+          </form>
+          <p className="text-center text-slate-400 text-sm mt-3">
+            Paste any news URL or select an article from the map below
+          </p>
+        </div>
+
         {/* GLOBAL MONITOR */}
-        <div className="mt-6 mb-10">
+        <div className="mb-10">
           <h2 className="headline-secondary text-center mb-8">Global News Monitor</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[70vh] relative">
