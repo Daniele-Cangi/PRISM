@@ -1407,303 +1407,287 @@ const LandingPage = ({ onLogin }) => {
         )}
       </AnimatePresence>
 
-      {/* DOCS MODAL - Technical Documentation */}
+      {/* DOCS MODAL - Minimal Editorial Style */}
       <AnimatePresence>
         {isDocsModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+            className="fixed inset-0 bg-[#0d0d0d] z-50 overflow-hidden"
             onClick={() => setIsDocsModalOpen(false)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.3 }}
-              className="bg-[#0a0a0f] border border-[#DC2626]/30 rounded-2xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto relative my-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="h-full w-full flex"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header with close and language selector */}
-              <div className="flex items-center justify-between mb-6">
+              {/* Sidebar Navigation */}
+              <aside className="hidden md:flex flex-col w-56 border-r border-white/5 bg-[#0a0a0a] p-6">
+                {/* Logo */}
+                <div className="mb-8">
+                  <h1 className="text-white text-lg tracking-wider" style={{ fontFamily: 'Georgia, serif' }}>PRISM</h1>
+                  <p className="text-gray-600 text-xs mt-1">v1.0.0</p>
+                </div>
+
                 {/* Language Selector */}
-                <div className="flex items-center gap-1">
+                <div className="flex gap-1 mb-8 flex-wrap">
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => setLanguage(lang.code)}
-                      className={`px-2 py-1 text-xs font-medium rounded transition-all ${
+                      className={`px-2 py-1 text-xs transition-all ${
                         language === lang.code
-                          ? 'bg-[#DC2626] text-white'
-                          : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                          ? 'text-white border-b border-white'
+                          : 'text-gray-500 hover:text-gray-300'
                       }`}
                     >
                       {lang.code.toUpperCase()}
                     </button>
                   ))}
                 </div>
-                {/* Close button */}
-                <button
-                  onClick={() => setIsDocsModalOpen(false)}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
 
-              {/* Header */}
-              <div className="mb-8 border-b border-white/10 pb-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-[#DC2626]/20 flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-[#DC2626]" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-white font-mono">PRISM // {t.docsTitle}</h2>
-                </div>
-                <p className="text-gray-500 text-sm font-mono">v1.0.0 | {t.docsVersion}</p>
-              </div>
-
-              {/* Content */}
-              <div className="space-y-8 text-gray-300 text-sm leading-relaxed">
-
-                {/* FOR EVERYONE - Non-technical explanation */}
-                <section className="bg-gradient-to-br from-[#DC2626]/10 to-transparent border border-[#DC2626]/20 rounded-xl p-6">
-                  <h3 className="text-white text-xl font-bold mb-4 flex items-center gap-2">
-                    <span className="text-2xl">🔍</span> {t.docsWhatIs}
-                  </h3>
-                  <div className="space-y-4 text-gray-300 font-sans">
-                    <p className="text-base leading-relaxed">
-                      <span className="text-white font-semibold">{t.docsIntro}</span> {t.docsIntroText}
-                    </p>
-
-                    <div className="grid md:grid-cols-3 gap-4 my-6">
-                      <div className="bg-black/30 rounded-lg p-4 text-center">
-                        <div className="text-3xl mb-2">📰</div>
-                        <h4 className="text-white font-semibold mb-1">{t.docsStep1Title}</h4>
-                        <p className="text-gray-400 text-xs">{t.docsStep1Text}</p>
-                      </div>
-                      <div className="bg-black/30 rounded-lg p-4 text-center">
-                        <div className="text-3xl mb-2">🧠</div>
-                        <h4 className="text-white font-semibold mb-1">{t.docsStep2Title}</h4>
-                        <p className="text-gray-400 text-xs">{t.docsStep2Text}</p>
-                      </div>
-                      <div className="bg-black/30 rounded-lg p-4 text-center">
-                        <div className="text-3xl mb-2">📊</div>
-                        <h4 className="text-white font-semibold mb-1">{t.docsStep3Title}</h4>
-                        <p className="text-gray-400 text-xs">{t.docsStep3Text}</p>
-                      </div>
-                    </div>
-
-                    <div className="bg-black/40 rounded-lg p-4 border-l-4 border-[#DC2626]">
-                      <h4 className="text-white font-semibold mb-2">🎯 {t.docsReveals}</h4>
-                      <ul className="space-y-2 text-gray-300">
-                        <li className="flex items-start gap-2">
-                          <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">{t.docsBiasScore}</strong> {t.docsBiasText}</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">{t.docsHiddenInt}</strong> {t.docsHiddenText}</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">{t.docsVerifiedFacts}</strong> {t.docsVerifiedText}</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">{t.docsManipulation}</strong> {t.docsManipText}</span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <p className="text-gray-400 text-sm italic mt-4">
-                      {t.docsMetaphor}
-                    </p>
-                  </div>
-                </section>
-
-                {/* Divider */}
-                <div className="flex items-center gap-4 py-2">
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-                  <span className="text-gray-500 text-xs uppercase tracking-widest font-mono">{t.docsTechDetails}</span>
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-                </div>
-
-                {/* System Overview */}
-                <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2 font-mono">
-                    <span className="text-white/30">//</span> SYSTEM OVERVIEW
-                  </h3>
-                  <div className="bg-black/50 border border-white/5 rounded-lg p-4">
-                    <p className="mb-3">
-                      <span className="text-[#DC2626]">PRISM</span> is a cognitive security platform designed for
-                      <span className="text-white"> adversarial text analysis</span> and
-                      <span className="text-white"> narrative deconstruction</span>.
-                    </p>
-                    <p>
-                      Operating on a <span className="text-yellow-500">Zero-Trust Logic</span> framework, the system assumes
-                      every text input is potentially designed to persuade, manipulate, or obscure reality.
-                    </p>
-                  </div>
-                </section>
-
-                {/* Architecture */}
-                <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
-                    <span className="text-white/30">//</span> ARCHITECTURE
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-black/50 border border-white/5 rounded-lg p-4">
-                      <h4 className="text-white font-bold mb-2">Frontend Layer</h4>
-                      <ul className="space-y-1 text-gray-400">
-                        <li>• React 19 + Vite 7</li>
-                        <li>• Framer Motion (animations)</li>
-                        <li>• TailwindCSS (styling)</li>
-                        <li>• Zustand (state management)</li>
-                        <li>• React Three Fiber (3D visualizations)</li>
-                      </ul>
-                    </div>
-                    <div className="bg-black/50 border border-white/5 rounded-lg p-4">
-                      <h4 className="text-white font-bold mb-2">Backend Layer</h4>
-                      <ul className="space-y-1 text-gray-400">
-                        <li>• FastAPI (Python async server)</li>
-                        <li>• Playwright (headless browser)</li>
-                        <li>• BeautifulSoup4 (HTML parsing)</li>
-                        <li>• OpenAI GPT-4o (inference engine)</li>
-                        <li>• Google News RSS (GEOINT feed)</li>
-                      </ul>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Operational Protocol */}
-                <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
-                    <span className="text-white/30">//</span> OPERATIONAL PROTOCOL
-                  </h3>
-                  <div className="bg-black/50 border border-white/5 rounded-lg p-4 space-y-4">
-                    <div>
-                      <h4 className="text-white font-bold mb-1">1. SEMANTIC STRIPPING</h4>
-                      <p className="text-gray-400">Isolate hard facts from emotional framing. Extract objective data points from subjective narrative layers.</p>
-                    </div>
-                    <div>
-                      <h4 className="text-white font-bold mb-1">2. NARRATIVE DECODING</h4>
-                      <p className="text-gray-400">Identify logical fallacies, hidden axioms, and manipulative tones. Map rhetorical devices and propaganda patterns.</p>
-                    </div>
-                    <div>
-                      <h4 className="text-white font-bold mb-1">3. INTENT INFERENCE</h4>
-                      <p className="text-gray-400">Determine strategic intent: Why is this being published now? Cui Bono analysis (who benefits).</p>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Scoring Calibration */}
-                <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
-                    <span className="text-white/30">//</span> SCORING CALIBRATION
-                  </h3>
-                  <div className="space-y-2">
-                    <div className="bg-black/50 border border-green-500/20 rounded-lg p-3 flex items-center gap-4">
-                      <span className="text-green-500 font-bold w-20">0-20</span>
-                      <span className="text-white font-bold">NEUTRAL</span>
-                      <span className="text-gray-400">Dry reporting, factual, verified sources (AP/Reuters Wire)</span>
-                    </div>
-                    <div className="bg-black/50 border border-yellow-500/20 rounded-lg p-3 flex items-center gap-4">
-                      <span className="text-yellow-500 font-bold w-20">21-50</span>
-                      <span className="text-white font-bold">LEANING</span>
-                      <span className="text-gray-400">Editorialized, slight bias, persuasive adjectives</span>
-                    </div>
-                    <div className="bg-black/50 border border-orange-500/20 rounded-lg p-3 flex items-center gap-4">
-                      <span className="text-orange-500 font-bold w-20">51-79</span>
-                      <span className="text-white font-bold">PROPAGANDA</span>
-                      <span className="text-gray-400">Heavy emotional framing, logical fallacies, clear agenda</span>
-                    </div>
-                    <div className="bg-black/50 border border-red-500/20 rounded-lg p-3 flex items-center gap-4">
-                      <span className="text-red-500 font-bold w-20">80-100</span>
-                      <span className="text-white font-bold">WEAPONIZED</span>
-                      <span className="text-gray-400">Disinformation, psychological warfare, fabrication</span>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Phantom Scraper */}
-                <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
-                    <span className="text-white/30">//</span> PHANTOM SCRAPER MODULE
-                  </h3>
-                  <div className="bg-black/50 border border-white/5 rounded-lg p-4">
-                    <p className="mb-3">
-                      Advanced web extraction engine using <span className="text-white">Playwright</span> headless browser
-                      with anti-detection capabilities:
-                    </p>
-                    <ul className="space-y-2 text-gray-400">
-                      <li>• <span className="text-white">Shapeshifter Profiles:</span> Rotates between Desktop Chrome, iPhone 14 Pro, Desktop Firefox</li>
-                      <li>• <span className="text-white">Stealth Injection:</span> Overwrites navigator.webdriver, WebGL fingerprint spoofing</li>
-                      <li>• <span className="text-white">Bio-Mimicry:</span> Human-like mouse movements, scroll patterns, touch gestures</li>
-                      <li>• <span className="text-white">Google Consent Bypass:</span> Automatic handling of cookie walls and interstitials</li>
-                    </ul>
-                  </div>
-                </section>
-
-                {/* GEOINT Module */}
-                <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
-                    <span className="text-white/30">//</span> GLOBAL OVERWATCH (GEOINT)
-                  </h3>
-                  <div className="bg-black/50 border border-white/5 rounded-lg p-4">
-                    <p className="mb-3">
-                      Real-time intelligence gathering from <span className="text-white">35+ geographic sectors</span> via
-                      Google News RSS with localized perspectives:
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                      <span className="bg-white/5 px-2 py-1 rounded">North America</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Europe</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Asia Pacific</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Middle East</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Latin America</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Africa</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Scandinavia</span>
-                      <span className="bg-white/5 px-2 py-1 rounded">Baltic States</span>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Output Schema */}
-                <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
-                    <span className="text-white/30">//</span> OUTPUT SCHEMA
-                  </h3>
-                  <div className="bg-black/50 border border-white/5 rounded-lg p-4 overflow-x-auto">
-                    <pre className="text-xs text-gray-400">
-{`{
-  "title": "Analyzed Title",
-  "meta": {
-    "score": Integer 0-100,
-    "verdict_short": "Max 5 words verdict",
-    "tone": "Alarmist | Neutral | Persuasive | ..."
-  },
-  "intent": "Strategic intent explanation (2 sentences)",
-  "narrative_analysis": "Long-form forensic analysis (500-800 words)",
-  "facts": ["Extracted fact 1", "Extracted fact 2", ...],
-  "axioms": ["Hidden premise 1", "Omitted context 1", ...]
-}`}
-                    </pre>
-                  </div>
-                </section>
+                {/* Navigation */}
+                <nav className="space-y-1 flex-1">
+                  <a href="#overview" className="block text-gray-400 hover:text-white text-sm py-2 transition-colors">{t.docsWhatIs}</a>
+                  <a href="#how-it-works" className="block text-gray-400 hover:text-white text-sm py-2 transition-colors">How it works</a>
+                  <div className="h-px bg-white/5 my-3"></div>
+                  <p className="text-gray-600 text-xs uppercase tracking-wider mb-2">Technical</p>
+                  <a href="#architecture" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Architecture</a>
+                  <a href="#protocol" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Protocol</a>
+                  <a href="#scoring" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Scoring</a>
+                  <a href="#scraper" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Scraper</a>
+                  <a href="#geoint" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">GEOINT</a>
+                  <a href="#output" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Output</a>
+                </nav>
 
                 {/* Footer */}
-                <div className="pt-6 border-t border-white/10 text-center">
-                  <p className="text-gray-500 text-xs">
-                    PRISM Cognitive Security Engine | Open Source Project
-                  </p>
-                  <p className="text-[#DC2626] text-xs mt-1 italic">
-                    "Democracy Dies in Darkness. Logic Survives in Light."
-                  </p>
+                <div className="text-gray-600 text-xs">
+                  Open Source
+                </div>
+              </aside>
+
+              {/* Main Content */}
+              <main className="flex-1 overflow-y-auto">
+                {/* Mobile Header */}
+                <div className="md:hidden flex items-center justify-between p-4 border-b border-white/5">
+                  <h1 className="text-white text-lg" style={{ fontFamily: 'Georgia, serif' }}>PRISM</h1>
+                  <div className="flex items-center gap-4">
+                    <div className="flex gap-1">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => setLanguage(lang.code)}
+                          className={`px-1.5 py-0.5 text-xs ${
+                            language === lang.code ? 'text-white' : 'text-gray-500'
+                          }`}
+                        >
+                          {lang.code.toUpperCase()}
+                        </button>
+                      ))}
+                    </div>
+                    <button onClick={() => setIsDocsModalOpen(false)} className="text-gray-400">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
 
-              </div>
+                {/* Close button desktop */}
+                <button
+                  onClick={() => setIsDocsModalOpen(false)}
+                  className="hidden md:block absolute top-6 right-6 text-gray-500 hover:text-white transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+
+                {/* Content */}
+                <div className="max-w-2xl mx-auto px-6 py-12 md:py-16">
+
+                  {/* Overview Section */}
+                  <section id="overview" className="mb-16">
+                    <h2 className="text-white text-3xl md:text-4xl font-light mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                      {t.docsWhatIs}
+                    </h2>
+                    <p className="text-gray-400 text-lg leading-relaxed mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                      {t.docsIntro}
+                    </p>
+                    <p className="text-gray-500 leading-relaxed">
+                      {t.docsIntroText}
+                    </p>
+                  </section>
+
+                  {/* How it works */}
+                  <section id="how-it-works" className="mb-16">
+                    <h3 className="text-gray-300 text-sm uppercase tracking-widest mb-8">How it works</h3>
+
+                    <div className="space-y-8">
+                      <div className="flex gap-6">
+                        <div className="text-gray-600 text-sm w-8 shrink-0">01</div>
+                        <div>
+                          <h4 className="text-white mb-2">{t.docsStep1Title}</h4>
+                          <p className="text-gray-500 text-sm">{t.docsStep1Text}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-6">
+                        <div className="text-gray-600 text-sm w-8 shrink-0">02</div>
+                        <div>
+                          <h4 className="text-white mb-2">{t.docsStep2Title}</h4>
+                          <p className="text-gray-500 text-sm">{t.docsStep2Text}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-6">
+                        <div className="text-gray-600 text-sm w-8 shrink-0">03</div>
+                        <div>
+                          <h4 className="text-white mb-2">{t.docsStep3Title}</h4>
+                          <p className="text-gray-500 text-sm">{t.docsStep3Text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* What PRISM Reveals */}
+                  <section className="mb-16 border-l border-white/10 pl-6">
+                    <h3 className="text-gray-300 text-sm uppercase tracking-widest mb-6">{t.docsReveals}</h3>
+                    <ul className="space-y-4 text-gray-400">
+                      <li><span className="text-white">{t.docsBiasScore}</span> {t.docsBiasText}</li>
+                      <li><span className="text-white">{t.docsHiddenInt}</span> {t.docsHiddenText}</li>
+                      <li><span className="text-white">{t.docsVerifiedFacts}</span> {t.docsVerifiedText}</li>
+                      <li><span className="text-white">{t.docsManipulation}</span> {t.docsManipText}</li>
+                    </ul>
+                    <p className="text-gray-600 text-sm italic mt-6">{t.docsMetaphor}</p>
+                  </section>
+
+                  {/* Divider */}
+                  <div className="h-px bg-white/5 my-16"></div>
+
+                  {/* Technical Details Header */}
+                  <p className="text-gray-600 text-xs uppercase tracking-widest mb-12">{t.docsTechDetails}</p>
+
+                  {/* Architecture */}
+                  <section id="architecture" className="mb-12">
+                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Architecture</h3>
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <div>
+                        <h4 className="text-gray-400 text-xs uppercase tracking-wider mb-3">Frontend</h4>
+                        <ul className="text-gray-500 text-sm space-y-1">
+                          <li>React 19 + Vite 7</li>
+                          <li>Framer Motion</li>
+                          <li>TailwindCSS</li>
+                          <li>Zustand</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="text-gray-400 text-xs uppercase tracking-wider mb-3">Backend</h4>
+                        <ul className="text-gray-500 text-sm space-y-1">
+                          <li>FastAPI</li>
+                          <li>Playwright</li>
+                          <li>BeautifulSoup4</li>
+                          <li>OpenAI GPT-4o</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Protocol */}
+                  <section id="protocol" className="mb-12">
+                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Operational Protocol</h3>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-gray-300 text-sm mb-1">Semantic Stripping</h4>
+                        <p className="text-gray-500 text-sm">Isolate hard facts from emotional framing.</p>
+                      </div>
+                      <div>
+                        <h4 className="text-gray-300 text-sm mb-1">Narrative Decoding</h4>
+                        <p className="text-gray-500 text-sm">Identify logical fallacies and hidden axioms.</p>
+                      </div>
+                      <div>
+                        <h4 className="text-gray-300 text-sm mb-1">Intent Inference</h4>
+                        <p className="text-gray-500 text-sm">Cui Bono analysis — who benefits.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Scoring */}
+                  <section id="scoring" className="mb-12">
+                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Scoring</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-green-500/70 w-16">0–20</span>
+                        <span className="text-gray-400">Neutral — factual reporting</span>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-yellow-500/70 w-16">21–50</span>
+                        <span className="text-gray-400">Leaning — slight editorial bias</span>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-orange-500/70 w-16">51–79</span>
+                        <span className="text-gray-400">Propaganda — clear agenda</span>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-red-500/70 w-16">80–100</span>
+                        <span className="text-gray-400">Weaponized — disinformation</span>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Scraper */}
+                  <section id="scraper" className="mb-12">
+                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Phantom Scraper</h3>
+                    <p className="text-gray-500 text-sm mb-4">Web extraction engine with anti-detection:</p>
+                    <ul className="text-gray-500 text-sm space-y-2">
+                      <li><span className="text-gray-400">Shapeshifter</span> — rotates browser profiles</li>
+                      <li><span className="text-gray-400">Stealth</span> — fingerprint spoofing</li>
+                      <li><span className="text-gray-400">Bio-Mimicry</span> — human-like behavior</li>
+                    </ul>
+                  </section>
+
+                  {/* GEOINT */}
+                  <section id="geoint" className="mb-12">
+                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Global Overwatch</h3>
+                    <p className="text-gray-500 text-sm mb-4">Real-time intelligence from 35+ geographic sectors via Google News RSS.</p>
+                    <div className="flex flex-wrap gap-2">
+                      {['North America', 'Europe', 'Asia Pacific', 'Middle East', 'Latin America', 'Africa', 'Scandinavia', 'Baltic'].map(region => (
+                        <span key={region} className="text-gray-600 text-xs border border-white/5 px-2 py-1">{region}</span>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* Output */}
+                  <section id="output" className="mb-16">
+                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Output Schema</h3>
+                    <pre className="text-gray-500 text-xs bg-black/30 p-4 overflow-x-auto border border-white/5">
+{`{
+  "title": "string",
+  "meta": {
+    "score": 0-100,
+    "verdict_short": "string",
+    "tone": "string"
+  },
+  "intent": "string",
+  "narrative_analysis": "string",
+  "facts": ["string"],
+  "axioms": ["string"]
+}`}
+                    </pre>
+                  </section>
+
+                  {/* Footer */}
+                  <footer className="text-center pt-8 border-t border-white/5">
+                    <p className="text-gray-600 text-xs">PRISM — Open Source Project</p>
+                    <p className="text-gray-700 text-xs mt-2 italic" style={{ fontFamily: 'Georgia, serif' }}>
+                      "Democracy dies in darkness. Logic survives in light."
+                    </p>
+                  </footer>
+
+                </div>
+              </main>
             </motion.div>
           </motion.div>
         )}
