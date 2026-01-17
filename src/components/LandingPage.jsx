@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader, ChevronDown } from 'lucide-react';
+import { Loader, ChevronDown, FileText } from 'lucide-react';
 
 const LandingPage = ({ onLogin }) => {
   const [language, setLanguage] = useState('en');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
+  const [isDocsModalOpen, setIsDocsModalOpen] = useState(false);
 
   // Traduzioni
   const translations = {
@@ -328,8 +329,18 @@ const LandingPage = ({ onLogin }) => {
         {/* Overlay scuro per leggibilità */}
         <div className="absolute inset-0 bg-black/60" />
 
-        {/* MENU LINGUE - Fisso in alto a destra, minimalista bianco */}
-        <div className="fixed top-4 right-4 z-50">
+        {/* HEADER - Fisso in alto a destra, minimalista bianco */}
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+          {/* Docs Button */}
+          <button
+            onClick={() => setIsDocsModalOpen(true)}
+            className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-3 py-2 rounded-lg transition-all duration-200 border border-white/10"
+          >
+            <FileText className="w-4 h-4 opacity-70" />
+            <span className="text-sm font-medium tracking-wide">Docs</span>
+          </button>
+
+          {/* Language Menu */}
           <div className="relative">
             {/* Toggle Button - Solo codice lingua */}
             <button
@@ -1051,6 +1062,226 @@ const LandingPage = ({ onLogin }) => {
               >
                 {t.comingSoonClose}
               </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* DOCS MODAL - Technical Documentation */}
+      <AnimatePresence>
+        {isDocsModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+            onClick={() => setIsDocsModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="bg-[#0a0a0f] border border-[#DC2626]/30 rounded-2xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto relative my-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setIsDocsModalOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Header */}
+              <div className="mb-8 border-b border-white/10 pb-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-[#DC2626]/20 flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-[#DC2626]" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-white font-mono">PRISM // Technical Documentation</h2>
+                </div>
+                <p className="text-gray-500 text-sm font-mono">v1.0.0 | Cognitive Security Engine</p>
+              </div>
+
+              {/* Content */}
+              <div className="space-y-8 text-gray-300 font-mono text-sm leading-relaxed">
+
+                {/* System Overview */}
+                <section>
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                    <span className="text-white/30">//</span> SYSTEM OVERVIEW
+                  </h3>
+                  <div className="bg-black/50 border border-white/5 rounded-lg p-4">
+                    <p className="mb-3">
+                      <span className="text-[#DC2626]">PRISM</span> is a cognitive security platform designed for
+                      <span className="text-white"> adversarial text analysis</span> and
+                      <span className="text-white"> narrative deconstruction</span>.
+                    </p>
+                    <p>
+                      Operating on a <span className="text-yellow-500">Zero-Trust Logic</span> framework, the system assumes
+                      every text input is potentially designed to persuade, manipulate, or obscure reality.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Architecture */}
+                <section>
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                    <span className="text-white/30">//</span> ARCHITECTURE
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-black/50 border border-white/5 rounded-lg p-4">
+                      <h4 className="text-white font-bold mb-2">Frontend Layer</h4>
+                      <ul className="space-y-1 text-gray-400">
+                        <li>• React 19 + Vite 7</li>
+                        <li>• Framer Motion (animations)</li>
+                        <li>• TailwindCSS (styling)</li>
+                        <li>• Zustand (state management)</li>
+                        <li>• React Three Fiber (3D visualizations)</li>
+                      </ul>
+                    </div>
+                    <div className="bg-black/50 border border-white/5 rounded-lg p-4">
+                      <h4 className="text-white font-bold mb-2">Backend Layer</h4>
+                      <ul className="space-y-1 text-gray-400">
+                        <li>• FastAPI (Python async server)</li>
+                        <li>• Playwright (headless browser)</li>
+                        <li>• BeautifulSoup4 (HTML parsing)</li>
+                        <li>• OpenAI GPT-4o (inference engine)</li>
+                        <li>• Google News RSS (GEOINT feed)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Operational Protocol */}
+                <section>
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                    <span className="text-white/30">//</span> OPERATIONAL PROTOCOL
+                  </h3>
+                  <div className="bg-black/50 border border-white/5 rounded-lg p-4 space-y-4">
+                    <div>
+                      <h4 className="text-white font-bold mb-1">1. SEMANTIC STRIPPING</h4>
+                      <p className="text-gray-400">Isolate hard facts from emotional framing. Extract objective data points from subjective narrative layers.</p>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-bold mb-1">2. NARRATIVE DECODING</h4>
+                      <p className="text-gray-400">Identify logical fallacies, hidden axioms, and manipulative tones. Map rhetorical devices and propaganda patterns.</p>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-bold mb-1">3. INTENT INFERENCE</h4>
+                      <p className="text-gray-400">Determine strategic intent: Why is this being published now? Cui Bono analysis (who benefits).</p>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Scoring Calibration */}
+                <section>
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                    <span className="text-white/30">//</span> SCORING CALIBRATION
+                  </h3>
+                  <div className="space-y-2">
+                    <div className="bg-black/50 border border-green-500/20 rounded-lg p-3 flex items-center gap-4">
+                      <span className="text-green-500 font-bold w-20">0-20</span>
+                      <span className="text-white font-bold">NEUTRAL</span>
+                      <span className="text-gray-400">Dry reporting, factual, verified sources (AP/Reuters Wire)</span>
+                    </div>
+                    <div className="bg-black/50 border border-yellow-500/20 rounded-lg p-3 flex items-center gap-4">
+                      <span className="text-yellow-500 font-bold w-20">21-50</span>
+                      <span className="text-white font-bold">LEANING</span>
+                      <span className="text-gray-400">Editorialized, slight bias, persuasive adjectives</span>
+                    </div>
+                    <div className="bg-black/50 border border-orange-500/20 rounded-lg p-3 flex items-center gap-4">
+                      <span className="text-orange-500 font-bold w-20">51-79</span>
+                      <span className="text-white font-bold">PROPAGANDA</span>
+                      <span className="text-gray-400">Heavy emotional framing, logical fallacies, clear agenda</span>
+                    </div>
+                    <div className="bg-black/50 border border-red-500/20 rounded-lg p-3 flex items-center gap-4">
+                      <span className="text-red-500 font-bold w-20">80-100</span>
+                      <span className="text-white font-bold">WEAPONIZED</span>
+                      <span className="text-gray-400">Disinformation, psychological warfare, fabrication</span>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Phantom Scraper */}
+                <section>
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                    <span className="text-white/30">//</span> PHANTOM SCRAPER MODULE
+                  </h3>
+                  <div className="bg-black/50 border border-white/5 rounded-lg p-4">
+                    <p className="mb-3">
+                      Advanced web extraction engine using <span className="text-white">Playwright</span> headless browser
+                      with anti-detection capabilities:
+                    </p>
+                    <ul className="space-y-2 text-gray-400">
+                      <li>• <span className="text-white">Shapeshifter Profiles:</span> Rotates between Desktop Chrome, iPhone 14 Pro, Desktop Firefox</li>
+                      <li>• <span className="text-white">Stealth Injection:</span> Overwrites navigator.webdriver, WebGL fingerprint spoofing</li>
+                      <li>• <span className="text-white">Bio-Mimicry:</span> Human-like mouse movements, scroll patterns, touch gestures</li>
+                      <li>• <span className="text-white">Google Consent Bypass:</span> Automatic handling of cookie walls and interstitials</li>
+                    </ul>
+                  </div>
+                </section>
+
+                {/* GEOINT Module */}
+                <section>
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                    <span className="text-white/30">//</span> GLOBAL OVERWATCH (GEOINT)
+                  </h3>
+                  <div className="bg-black/50 border border-white/5 rounded-lg p-4">
+                    <p className="mb-3">
+                      Real-time intelligence gathering from <span className="text-white">35+ geographic sectors</span> via
+                      Google News RSS with localized perspectives:
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                      <span className="bg-white/5 px-2 py-1 rounded">North America</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">Europe</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">Asia Pacific</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">Middle East</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">Latin America</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">Africa</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">Scandinavia</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">Baltic States</span>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Output Schema */}
+                <section>
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                    <span className="text-white/30">//</span> OUTPUT SCHEMA
+                  </h3>
+                  <div className="bg-black/50 border border-white/5 rounded-lg p-4 overflow-x-auto">
+                    <pre className="text-xs text-gray-400">
+{`{
+  "title": "Analyzed Title",
+  "meta": {
+    "score": Integer 0-100,
+    "verdict_short": "Max 5 words verdict",
+    "tone": "Alarmist | Neutral | Persuasive | ..."
+  },
+  "intent": "Strategic intent explanation (2 sentences)",
+  "narrative_analysis": "Long-form forensic analysis (500-800 words)",
+  "facts": ["Extracted fact 1", "Extracted fact 2", ...],
+  "axioms": ["Hidden premise 1", "Omitted context 1", ...]
+}`}
+                    </pre>
+                  </div>
+                </section>
+
+                {/* Footer */}
+                <div className="pt-6 border-t border-white/10 text-center">
+                  <p className="text-gray-500 text-xs">
+                    PRISM Cognitive Security Engine | Open Source Project
+                  </p>
+                  <p className="text-[#DC2626] text-xs mt-1 italic">
+                    "Democracy Dies in Darkness. Logic Survives in Light."
+                  </p>
+                </div>
+
+              </div>
             </motion.div>
           </motion.div>
         )}
