@@ -36,44 +36,15 @@ const AnalysisPanel = ({ data, onClose }) => {
       exit={{ opacity: 0 }}
       className={`fixed inset-0 bg-white z-50 overflow-y-auto ${mode === 'scientific' ? 'scientific-theme' : 'editorial-theme'}`}
     >
-      {/* Floating Header Actions */}
-      <div className="fixed top-0 left-0 right-0 p-6 flex items-start justify-between z-50 pointer-events-none">
-
-        {/* Left: Back Button */}
+      {/* Fixed Back Button */}
+      <div className="fixed top-0 left-0 p-6 z-50">
         <button
           onClick={onClose}
-          className="pointer-events-auto flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg shadow-sm transition-all group"
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg shadow-sm transition-all group"
         >
           <X className="w-5 h-5 text-slate-500 group-hover:text-[#DC2626]" />
           <span className="text-sm font-semibold text-slate-700 group-hover:text-[#1A1A1A]">Back to Monitor</span>
         </button>
-
-        {/* Center: Mode Toggle Switch */}
-        <div className="pointer-events-auto bg-white border border-slate-200 rounded-lg p-1 flex shadow-sm transform translate-y-0">
-          <button
-            onClick={() => setMode('editorial')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${mode === 'editorial'
-              ? 'bg-[#1A1A1A] text-white shadow-sm'
-              : 'text-slate-500 hover:text-slate-900'
-              }`}
-          >
-            <FileText className="w-4 h-4" />
-            Editorial
-          </button>
-          <button
-            onClick={() => setMode('scientific')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${mode === 'scientific'
-              ? 'bg-[#DC2626] text-white shadow-sm'
-              : 'text-slate-500 hover:text-slate-900'
-              }`}
-          >
-            <BarChart3 className="w-4 h-4" />
-            Scientific
-          </button>
-        </div>
-
-        {/* Right: Empty placeholder to balance flex */}
-        <div className="w-[140px] pointer-events-none"></div>
       </div>
 
       {mode === 'editorial' ? (
@@ -95,6 +66,32 @@ const AnalysisPanel = ({ data, onClose }) => {
               <span>Tone: {meta?.tone}</span>
               <div className="editorial-meta-divider" />
               <span>Verdict: {meta?.verdict_short}</span>
+            </div>
+
+            {/* Mode Toggle - Below Title */}
+            <div className="flex justify-center mt-8">
+              <div className="bg-slate-100 border border-slate-200 rounded-lg p-1 flex">
+                <button
+                  onClick={() => setMode('editorial')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${mode === 'editorial'
+                    ? 'bg-[#1A1A1A] text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900'
+                    }`}
+                >
+                  <FileText className="w-4 h-4" />
+                  Editorial
+                </button>
+                <button
+                  onClick={() => setMode('scientific')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${mode === 'scientific'
+                    ? 'bg-[#DC2626] text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900'
+                    }`}
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  Scientific
+                </button>
+              </div>
             </div>
           </header>
 
@@ -167,6 +164,32 @@ const AnalysisPanel = ({ data, onClose }) => {
                 <Download className="w-4 h-4" />
                 Export Data
               </button>
+            </div>
+
+            {/* Mode Toggle - Below Title */}
+            <div className="flex justify-center mt-6">
+              <div className="bg-slate-100 border border-slate-200 rounded-lg p-1 flex">
+                <button
+                  onClick={() => setMode('editorial')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${mode === 'editorial'
+                    ? 'bg-[#1A1A1A] text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900'
+                    }`}
+                >
+                  <FileText className="w-4 h-4" />
+                  Editorial
+                </button>
+                <button
+                  onClick={() => setMode('scientific')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${mode === 'scientific'
+                    ? 'bg-[#DC2626] text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900'
+                    }`}
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  Scientific
+                </button>
+              </div>
             </div>
           </header>
 
