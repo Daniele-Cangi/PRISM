@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: shadow-analyzer-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PORT
+        value: 8001
+    healthCheckPath: /docs
