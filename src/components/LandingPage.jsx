@@ -74,7 +74,75 @@ const LandingPage = ({ onLogin }) => {
       joinNotePlaceholder: 'Tell us about yourself (optional)',
       comingSoonTitle: 'Coming Soon',
       comingSoonText: 'We are working to activate sponsorship options. Soon you will be able to support the project!',
-      comingSoonClose: 'Got it'
+      comingSoonClose: 'Got it',
+      // Docs Modal
+      docsTitle: 'Technical Documentation',
+      docsVersion: 'Cognitive Security Engine',
+      docsWhatIs: 'What is PRISM?',
+      docsIntro: 'PRISM is your digital truth detector.',
+      docsIntroText: "In a world flooded with news, opinions, and propaganda, it's increasingly difficult to distinguish facts from manipulation.",
+      docsStep1Title: 'Paste an Article',
+      docsStep1Text: 'Copy any news URL from any source worldwide',
+      docsStep2Title: 'AI Analysis',
+      docsStep2Text: 'Our engine reads and deconstructs the narrative',
+      docsStep3Title: 'Get the Truth',
+      docsStep3Text: 'Receive a bias score, hidden agendas, and verified facts',
+      docsReveals: 'What PRISM Reveals:',
+      docsBiasScore: 'Bias Score (0-100):',
+      docsBiasText: 'How manipulative is the article? 0 = neutral journalism, 100 = pure propaganda',
+      docsHiddenInt: 'Hidden Intentions:',
+      docsHiddenText: 'Why was this published? Who benefits from you believing this?',
+      docsVerifiedFacts: 'Verified Facts:',
+      docsVerifiedText: "What's actually true vs what's opinion or spin",
+      docsManipulation: 'Manipulation Tactics:',
+      docsManipText: 'Emotional triggers, logical fallacies, and rhetorical tricks used',
+      docsMetaphor: "Think of PRISM as X-ray vision for news. We don't tell you what to think — we show you how others are trying to make you think.",
+      docsTechDetails: 'Technical Details',
+      docsSystemOverview: 'SYSTEM OVERVIEW',
+      docsSystemText1: 'is a cognitive security platform designed for',
+      docsSystemText2: 'adversarial text analysis',
+      docsSystemText3: 'and',
+      docsSystemText4: 'narrative deconstruction',
+      docsSystemText5: 'Operating on a',
+      docsZeroTrust: 'Zero-Trust Logic',
+      docsSystemText6: 'framework, the system assumes every text input is potentially designed to persuade, manipulate, or obscure reality.',
+      docsArchitecture: 'ARCHITECTURE',
+      docsFrontend: 'Frontend Layer',
+      docsBackend: 'Backend Layer',
+      docsProtocol: 'OPERATIONAL PROTOCOL',
+      docsSemantic: 'SEMANTIC STRIPPING',
+      docsSemanticText: 'Isolate hard facts from emotional framing. Extract objective data points from subjective narrative layers.',
+      docsNarrative: 'NARRATIVE DECODING',
+      docsNarrativeText: 'Identify logical fallacies, hidden axioms, and manipulative tones. Map rhetorical devices and propaganda patterns.',
+      docsIntent: 'INTENT INFERENCE',
+      docsIntentText: 'Determine strategic intent: Why is this being published now? Cui Bono analysis (who benefits).',
+      docsScoring: 'SCORING CALIBRATION',
+      docsNeutral: 'NEUTRAL',
+      docsNeutralText: 'Dry reporting, factual, verified sources (AP/Reuters Wire)',
+      docsLeaning: 'LEANING',
+      docsLeaningText: 'Editorialized, slight bias, persuasive adjectives',
+      docsPropaganda: 'PROPAGANDA',
+      docsPropagandaText: 'Heavy emotional framing, logical fallacies, clear agenda',
+      docsWeaponized: 'WEAPONIZED',
+      docsWeaponizedText: 'Disinformation, psychological warfare, fabrication',
+      docsPhantom: 'PHANTOM SCRAPER MODULE',
+      docsPhantomText: 'Advanced web extraction engine using',
+      docsPhantomText2: 'headless browser with anti-detection capabilities:',
+      docsShapeshifter: 'Shapeshifter Profiles:',
+      docsShapeshifterText: 'Rotates between Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
+      docsStealth: 'Stealth Injection:',
+      docsStealthText: 'Overwrites navigator.webdriver, WebGL fingerprint spoofing',
+      docsBioMimicry: 'Bio-Mimicry:',
+      docsBioMimicryText: 'Human-like mouse movements, scroll patterns, touch gestures',
+      docsGoogleBypass: 'Google Consent Bypass:',
+      docsGoogleBypassText: 'Automatic handling of cookie walls and interstitials',
+      docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
+      docsGeointText: 'Real-time intelligence gathering from',
+      docsGeointText2: '35+ geographic sectors',
+      docsGeointText3: 'via Google News RSS with localized perspectives:',
+      docsOutput: 'OUTPUT SCHEMA',
+      docsFooter: 'PRISM Cognitive Security Engine | Open Source Project',
+      docsQuote: 'Democracy Dies in Darkness. Logic Survives in Light.'
     },
     da: {
       code: 'DK',
@@ -132,7 +200,75 @@ const LandingPage = ({ onLogin }) => {
       joinNotePlaceholder: 'Fortæl os om dig selv (valgfrit)',
       comingSoonTitle: 'Kommer snart',
       comingSoonText: 'Vi arbejder på at aktivere sponsormuligheder. Snart vil du kunne støtte projektet!',
-      comingSoonClose: 'Forstået'
+      comingSoonClose: 'Forstået',
+      // Docs Modal
+      docsTitle: 'Teknisk Dokumentation',
+      docsVersion: 'Kognitiv Sikkerhedsmotor',
+      docsWhatIs: 'Hvad er PRISM?',
+      docsIntro: 'PRISM er din digitale sandhedsdetektor.',
+      docsIntroText: 'I en verden oversvømmet af nyheder, meninger og propaganda er det stadig sværere at skelne fakta fra manipulation.',
+      docsStep1Title: 'Indsæt en Artikel',
+      docsStep1Text: 'Kopiér enhver nyheds-URL fra enhver kilde verden over',
+      docsStep2Title: 'AI-Analyse',
+      docsStep2Text: 'Vores motor læser og dekonstruerer narrativet',
+      docsStep3Title: 'Få Sandheden',
+      docsStep3Text: 'Modtag en bias-score, skjulte dagsordener og verificerede fakta',
+      docsReveals: 'Hvad PRISM Afslører:',
+      docsBiasScore: 'Bias-Score (0-100):',
+      docsBiasText: 'Hvor manipulerende er artiklen? 0 = neutral journalistik, 100 = ren propaganda',
+      docsHiddenInt: 'Skjulte Intentioner:',
+      docsHiddenText: 'Hvorfor blev dette publiceret? Hvem drager fordel af at du tror på dette?',
+      docsVerifiedFacts: 'Verificerede Fakta:',
+      docsVerifiedText: 'Hvad er faktisk sandt vs hvad er mening eller spin',
+      docsManipulation: 'Manipulationstaktikker:',
+      docsManipText: 'Emotionelle triggere, logiske fejlslutninger og retoriske tricks anvendt',
+      docsMetaphor: 'Tænk på PRISM som røntgensyn for nyheder. Vi fortæller dig ikke hvad du skal tænke — vi viser dig hvordan andre forsøger at få dig til at tænke.',
+      docsTechDetails: 'Tekniske Detaljer',
+      docsSystemOverview: 'SYSTEMOVERSIGT',
+      docsSystemText1: 'er en kognitiv sikkerhedsplatform designet til',
+      docsSystemText2: 'modstandsdygtig tekstanalyse',
+      docsSystemText3: 'og',
+      docsSystemText4: 'narrativ dekonstruktion',
+      docsSystemText5: 'Opererer på et',
+      docsZeroTrust: 'Zero-Trust Logic',
+      docsSystemText6: 'framework, systemet antager at hvert tekstinput potentielt er designet til at overbevise, manipulere eller tilsløre virkeligheden.',
+      docsArchitecture: 'ARKITEKTUR',
+      docsFrontend: 'Frontend Lag',
+      docsBackend: 'Backend Lag',
+      docsProtocol: 'OPERATIONEL PROTOKOL',
+      docsSemantic: 'SEMANTISK STRIPPING',
+      docsSemanticText: 'Isolér hårde fakta fra emotionel ramme. Udtræk objektive datapunkter fra subjektive narrative lag.',
+      docsNarrative: 'NARRATIV AFKODNING',
+      docsNarrativeText: 'Identificér logiske fejlslutninger, skjulte aksiomer og manipulative toner. Kortlæg retoriske virkemidler og propagandamønstre.',
+      docsIntent: 'INTENTIONSINFERENS',
+      docsIntentText: 'Bestem strategisk intention: Hvorfor publiceres dette nu? Cui Bono analyse (hvem drager fordel).',
+      docsScoring: 'SCORE KALIBRERING',
+      docsNeutral: 'NEUTRAL',
+      docsNeutralText: 'Tør reportage, faktuel, verificerede kilder (AP/Reuters Wire)',
+      docsLeaning: 'HÆLDENDE',
+      docsLeaningText: 'Redigeret, let bias, overbevisende adjektiver',
+      docsPropaganda: 'PROPAGANDA',
+      docsPropagandaText: 'Tung emotionel ramme, logiske fejlslutninger, klar dagsorden',
+      docsWeaponized: 'VÅBENGJORT',
+      docsWeaponizedText: 'Desinformation, psykologisk krigsførelse, fabrikation',
+      docsPhantom: 'PHANTOM SCRAPER MODUL',
+      docsPhantomText: 'Avanceret web-ekstraktionsmotor bruger',
+      docsPhantomText2: 'headless browser med anti-detektionsevner:',
+      docsShapeshifter: 'Shapeshifter Profiler:',
+      docsShapeshifterText: 'Roterer mellem Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
+      docsStealth: 'Stealth Injektion:',
+      docsStealthText: 'Overskriver navigator.webdriver, WebGL fingeraftryk spoofing',
+      docsBioMimicry: 'Bio-Mimicry:',
+      docsBioMimicryText: 'Menneskelignende musebevægelser, scrollmønstre, touch-gestikker',
+      docsGoogleBypass: 'Google Consent Bypass:',
+      docsGoogleBypassText: 'Automatisk håndtering af cookie-vægge og interstitials',
+      docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
+      docsGeointText: 'Real-time efterretningsindsamling fra',
+      docsGeointText2: '35+ geografiske sektorer',
+      docsGeointText3: 'via Google News RSS med lokaliserede perspektiver:',
+      docsOutput: 'OUTPUT SKEMA',
+      docsFooter: 'PRISM Kognitiv Sikkerhedsmotor | Open Source Projekt',
+      docsQuote: 'Demokrati Dør i Mørke. Logik Overlever i Lyset.'
     },
     sv: {
       code: 'SE',
@@ -190,7 +326,75 @@ const LandingPage = ({ onLogin }) => {
       joinNotePlaceholder: 'Berätta om dig själv (valfritt)',
       comingSoonTitle: 'Kommer snart',
       comingSoonText: 'Vi arbetar med att aktivera sponsringsmöjligheter. Snart kommer du att kunna stödja projektet!',
-      comingSoonClose: 'Uppfattat'
+      comingSoonClose: 'Uppfattat',
+      // Docs Modal
+      docsTitle: 'Teknisk Dokumentation',
+      docsVersion: 'Kognitiv Säkerhetsmotor',
+      docsWhatIs: 'Vad är PRISM?',
+      docsIntro: 'PRISM är din digitala sanningsdetektor.',
+      docsIntroText: 'I en värld översvämmad av nyheter, åsikter och propaganda är det allt svårare att skilja fakta från manipulation.',
+      docsStep1Title: 'Klistra in en Artikel',
+      docsStep1Text: 'Kopiera valfri nyhets-URL från vilken källa som helst i världen',
+      docsStep2Title: 'AI-Analys',
+      docsStep2Text: 'Vår motor läser och dekonstruerar narrativet',
+      docsStep3Title: 'Få Sanningen',
+      docsStep3Text: 'Få en bias-poäng, dolda agendor och verifierade fakta',
+      docsReveals: 'Vad PRISM Avslöjar:',
+      docsBiasScore: 'Bias-Poäng (0-100):',
+      docsBiasText: 'Hur manipulativ är artikeln? 0 = neutral journalistik, 100 = ren propaganda',
+      docsHiddenInt: 'Dolda Intentioner:',
+      docsHiddenText: 'Varför publicerades detta? Vem gynnas av att du tror på detta?',
+      docsVerifiedFacts: 'Verifierade Fakta:',
+      docsVerifiedText: 'Vad är faktiskt sant vs vad är åsikt eller spin',
+      docsManipulation: 'Manipulationstaktiker:',
+      docsManipText: 'Emotionella triggers, logiska felslut och retoriska trick som används',
+      docsMetaphor: 'Tänk på PRISM som röntgensyn för nyheter. Vi berättar inte vad du ska tänka — vi visar dig hur andra försöker få dig att tänka.',
+      docsTechDetails: 'Tekniska Detaljer',
+      docsSystemOverview: 'SYSTEMÖVERSIKT',
+      docsSystemText1: 'är en kognitiv säkerhetsplattform designad för',
+      docsSystemText2: 'motståndskraftig textanalys',
+      docsSystemText3: 'och',
+      docsSystemText4: 'narrativ dekonstruktion',
+      docsSystemText5: 'Opererar på ett',
+      docsZeroTrust: 'Zero-Trust Logic',
+      docsSystemText6: 'ramverk, systemet antar att varje textinput potentiellt är designat för att övertyga, manipulera eller dölja verkligheten.',
+      docsArchitecture: 'ARKITEKTUR',
+      docsFrontend: 'Frontend-Lager',
+      docsBackend: 'Backend-Lager',
+      docsProtocol: 'OPERATIONELLT PROTOKOLL',
+      docsSemantic: 'SEMANTISK STRIPPING',
+      docsSemanticText: 'Isolera hårda fakta från emotionell inramning. Extrahera objektiva datapunkter från subjektiva narrativa lager.',
+      docsNarrative: 'NARRATIV AVKODNING',
+      docsNarrativeText: 'Identifiera logiska felslut, dolda axiom och manipulativa toner. Kartlägg retoriska verktyg och propagandamönster.',
+      docsIntent: 'INTENTIONSINFERENS',
+      docsIntentText: 'Bestäm strategisk intention: Varför publiceras detta nu? Cui Bono-analys (vem gynnas).',
+      docsScoring: 'POÄNGKALIBRERING',
+      docsNeutral: 'NEUTRAL',
+      docsNeutralText: 'Torr rapportering, faktabaserad, verifierade källor (AP/Reuters Wire)',
+      docsLeaning: 'LUTANDE',
+      docsLeaningText: 'Redigerad, lätt bias, övertygande adjektiv',
+      docsPropaganda: 'PROPAGANDA',
+      docsPropagandaText: 'Tung emotionell inramning, logiska felslut, tydlig agenda',
+      docsWeaponized: 'VAPENISERAD',
+      docsWeaponizedText: 'Desinformation, psykologisk krigföring, fabricering',
+      docsPhantom: 'PHANTOM SCRAPER MODUL',
+      docsPhantomText: 'Avancerad webbextraktionsmotor använder',
+      docsPhantomText2: 'headless webbläsare med anti-detektionsförmågor:',
+      docsShapeshifter: 'Shapeshifter Profiler:',
+      docsShapeshifterText: 'Roterar mellan Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
+      docsStealth: 'Stealth Injektion:',
+      docsStealthText: 'Skriver över navigator.webdriver, WebGL fingeravtrycksspoofing',
+      docsBioMimicry: 'Bio-Mimicry:',
+      docsBioMimicryText: 'Människoliknande musrörelser, scrollmönster, touch-gester',
+      docsGoogleBypass: 'Google Consent Bypass:',
+      docsGoogleBypassText: 'Automatisk hantering av cookieväggar och interstitials',
+      docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
+      docsGeointText: 'Realtidsinsamling av underrättelser från',
+      docsGeointText2: '35+ geografiska sektorer',
+      docsGeointText3: 'via Google News RSS med lokaliserade perspektiv:',
+      docsOutput: 'OUTPUT-SCHEMA',
+      docsFooter: 'PRISM Kognitiv Säkerhetsmotor | Open Source Projekt',
+      docsQuote: 'Demokrati Dör i Mörker. Logik Överlever i Ljuset.'
     },
     no: {
       code: 'NO',
@@ -248,7 +452,75 @@ const LandingPage = ({ onLogin }) => {
       joinNotePlaceholder: 'Fortell oss om deg selv (valgfritt)',
       comingSoonTitle: 'Kommer snart',
       comingSoonText: 'Vi jobber med å aktivere sponsormuligheter. Snart vil du kunne støtte prosjektet!',
-      comingSoonClose: 'Forstått'
+      comingSoonClose: 'Forstått',
+      // Docs Modal
+      docsTitle: 'Teknisk Dokumentasjon',
+      docsVersion: 'Kognitiv Sikkerhetsmotor',
+      docsWhatIs: 'Hva er PRISM?',
+      docsIntro: 'PRISM er din digitale sannhetsdetektor.',
+      docsIntroText: 'I en verden oversvømmet av nyheter, meninger og propaganda er det stadig vanskeligere å skille fakta fra manipulasjon.',
+      docsStep1Title: 'Lim inn en Artikkel',
+      docsStep1Text: 'Kopier hvilken som helst nyhets-URL fra hvilken som helst kilde i verden',
+      docsStep2Title: 'AI-Analyse',
+      docsStep2Text: 'Vår motor leser og dekonstruerer narrativet',
+      docsStep3Title: 'Få Sannheten',
+      docsStep3Text: 'Motta en bias-score, skjulte agendaer og verifiserte fakta',
+      docsReveals: 'Hva PRISM Avslører:',
+      docsBiasScore: 'Bias-Score (0-100):',
+      docsBiasText: 'Hvor manipulativ er artikkelen? 0 = nøytral journalistikk, 100 = ren propaganda',
+      docsHiddenInt: 'Skjulte Intensjoner:',
+      docsHiddenText: 'Hvorfor ble dette publisert? Hvem drar nytte av at du tror på dette?',
+      docsVerifiedFacts: 'Verifiserte Fakta:',
+      docsVerifiedText: 'Hva er faktisk sant vs hva er mening eller spin',
+      docsManipulation: 'Manipulasjonstaktikker:',
+      docsManipText: 'Emosjonelle triggere, logiske feilslutninger og retoriske triks som brukes',
+      docsMetaphor: 'Tenk på PRISM som røntgensyn for nyheter. Vi forteller deg ikke hva du skal tenke — vi viser deg hvordan andre prøver å få deg til å tenke.',
+      docsTechDetails: 'Tekniske Detaljer',
+      docsSystemOverview: 'SYSTEMOVERSIKT',
+      docsSystemText1: 'er en kognitiv sikkerhetsplattform designet for',
+      docsSystemText2: 'motstandsdyktig tekstanalyse',
+      docsSystemText3: 'og',
+      docsSystemText4: 'narrativ dekonstruksjon',
+      docsSystemText5: 'Opererer på et',
+      docsZeroTrust: 'Zero-Trust Logic',
+      docsSystemText6: 'rammeverk, systemet antar at hver tekstinput potensielt er designet for å overbevise, manipulere eller tilsløre virkeligheten.',
+      docsArchitecture: 'ARKITEKTUR',
+      docsFrontend: 'Frontend-Lag',
+      docsBackend: 'Backend-Lag',
+      docsProtocol: 'OPERASJONELL PROTOKOLL',
+      docsSemantic: 'SEMANTISK STRIPPING',
+      docsSemanticText: 'Isoler harde fakta fra emosjonell innramming. Trekk ut objektive datapunkter fra subjektive narrative lag.',
+      docsNarrative: 'NARRATIV AVKODING',
+      docsNarrativeText: 'Identifiser logiske feilslutninger, skjulte aksiomer og manipulative toner. Kartlegg retoriske virkemidler og propagandamønstre.',
+      docsIntent: 'INTENSJONSINFERENS',
+      docsIntentText: 'Bestem strategisk intensjon: Hvorfor publiseres dette nå? Cui Bono-analyse (hvem drar nytte).',
+      docsScoring: 'POENGKALIBRERING',
+      docsNeutral: 'NØYTRAL',
+      docsNeutralText: 'Tørr rapportering, faktuell, verifiserte kilder (AP/Reuters Wire)',
+      docsLeaning: 'HELLENDE',
+      docsLeaningText: 'Redigert, lett bias, overbevisende adjektiver',
+      docsPropaganda: 'PROPAGANDA',
+      docsPropagandaText: 'Tung emosjonell innramming, logiske feilslutninger, tydelig agenda',
+      docsWeaponized: 'VÅPENISERT',
+      docsWeaponizedText: 'Desinformasjon, psykologisk krigføring, fabrikasjon',
+      docsPhantom: 'PHANTOM SCRAPER MODUL',
+      docsPhantomText: 'Avansert webuttrekkingsmotor bruker',
+      docsPhantomText2: 'headless nettleser med anti-deteksjonsevner:',
+      docsShapeshifter: 'Shapeshifter Profiler:',
+      docsShapeshifterText: 'Roterer mellom Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
+      docsStealth: 'Stealth Injeksjon:',
+      docsStealthText: 'Overskriver navigator.webdriver, WebGL fingeravtrykkspoofing',
+      docsBioMimicry: 'Bio-Mimicry:',
+      docsBioMimicryText: 'Menneskelignende musebevegelser, scrollmønstre, touch-gester',
+      docsGoogleBypass: 'Google Consent Bypass:',
+      docsGoogleBypassText: 'Automatisk håndtering av cookievegger og interstitials',
+      docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
+      docsGeointText: 'Sanntidsinnsamling av etterretning fra',
+      docsGeointText2: '35+ geografiske sektorer',
+      docsGeointText3: 'via Google News RSS med lokaliserte perspektiver:',
+      docsOutput: 'OUTPUT-SKJEMA',
+      docsFooter: 'PRISM Kognitiv Sikkerhetsmotor | Open Source Prosjekt',
+      docsQuote: 'Demokrati Dør i Mørke. Logikk Overlever i Lyset.'
     },
     it: {
       code: 'IT',
@@ -306,7 +578,75 @@ const LandingPage = ({ onLogin }) => {
       joinNotePlaceholder: 'Parlaci di te (opzionale)',
       comingSoonTitle: 'Prossimamente',
       comingSoonText: 'Stiamo lavorando per attivare le opzioni di sponsorizzazione. Presto potrai supportare il progetto!',
-      comingSoonClose: 'Ho capito'
+      comingSoonClose: 'Ho capito',
+      // Docs Modal
+      docsTitle: 'Documentazione Tecnica',
+      docsVersion: 'Motore di Sicurezza Cognitiva',
+      docsWhatIs: "Cos'è PRISM?",
+      docsIntro: 'PRISM è il tuo rilevatore digitale di verità.',
+      docsIntroText: "In un mondo inondato di notizie, opinioni e propaganda, è sempre più difficile distinguere i fatti dalla manipolazione.",
+      docsStep1Title: 'Incolla un Articolo',
+      docsStep1Text: 'Copia qualsiasi URL di notizie da qualsiasi fonte nel mondo',
+      docsStep2Title: 'Analisi AI',
+      docsStep2Text: 'Il nostro motore legge e decostruisce la narrativa',
+      docsStep3Title: 'Ottieni la Verità',
+      docsStep3Text: 'Ricevi un punteggio di bias, agende nascoste e fatti verificati',
+      docsReveals: 'Cosa Rivela PRISM:',
+      docsBiasScore: 'Punteggio Bias (0-100):',
+      docsBiasText: "Quanto è manipolativo l'articolo? 0 = giornalismo neutrale, 100 = pura propaganda",
+      docsHiddenInt: 'Intenzioni Nascoste:',
+      docsHiddenText: 'Perché è stato pubblicato? Chi beneficia dal fatto che tu creda a questo?',
+      docsVerifiedFacts: 'Fatti Verificati:',
+      docsVerifiedText: "Cosa è veramente vero rispetto a cosa è opinione o spin",
+      docsManipulation: 'Tattiche di Manipolazione:',
+      docsManipText: 'Trigger emotivi, fallacie logiche e trucchi retorici utilizzati',
+      docsMetaphor: "Pensa a PRISM come una visione a raggi X per le notizie. Non ti diciamo cosa pensare — ti mostriamo come altri stanno cercando di farti pensare.",
+      docsTechDetails: 'Dettagli Tecnici',
+      docsSystemOverview: 'PANORAMICA DEL SISTEMA',
+      docsSystemText1: 'è una piattaforma di sicurezza cognitiva progettata per',
+      docsSystemText2: "l'analisi testuale avversariale",
+      docsSystemText3: 'e',
+      docsSystemText4: 'la decostruzione narrativa',
+      docsSystemText5: 'Operando su un framework',
+      docsZeroTrust: 'Zero-Trust Logic',
+      docsSystemText6: 'il sistema assume che ogni input testuale sia potenzialmente progettato per persuadere, manipolare o oscurare la realtà.',
+      docsArchitecture: 'ARCHITETTURA',
+      docsFrontend: 'Layer Frontend',
+      docsBackend: 'Layer Backend',
+      docsProtocol: 'PROTOCOLLO OPERATIVO',
+      docsSemantic: 'STRIPPING SEMANTICO',
+      docsSemanticText: 'Isola i fatti concreti dal framing emotivo. Estrae punti dati oggettivi dai layer narrativi soggettivi.',
+      docsNarrative: 'DECODIFICA NARRATIVA',
+      docsNarrativeText: 'Identifica fallacie logiche, assiomi nascosti e toni manipolativi. Mappa dispositivi retorici e pattern di propaganda.',
+      docsIntent: 'INFERENZA DI INTENTO',
+      docsIntentText: "Determina l'intento strategico: Perché viene pubblicato ora? Analisi Cui Bono (chi ne beneficia).",
+      docsScoring: 'CALIBRAZIONE PUNTEGGIO',
+      docsNeutral: 'NEUTRALE',
+      docsNeutralText: 'Reportage asciutto, fattuale, fonti verificate (AP/Reuters Wire)',
+      docsLeaning: 'TENDENZIOSO',
+      docsLeaningText: 'Editorializzato, leggero bias, aggettivi persuasivi',
+      docsPropaganda: 'PROPAGANDA',
+      docsPropagandaText: 'Forte framing emotivo, fallacie logiche, agenda chiara',
+      docsWeaponized: 'WEAPONIZED',
+      docsWeaponizedText: 'Disinformazione, guerra psicologica, fabbricazione',
+      docsPhantom: 'MODULO PHANTOM SCRAPER',
+      docsPhantomText: 'Motore avanzato di estrazione web usando',
+      docsPhantomText2: 'browser headless con capacità anti-rilevamento:',
+      docsShapeshifter: 'Profili Shapeshifter:',
+      docsShapeshifterText: 'Ruota tra Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
+      docsStealth: 'Stealth Injection:',
+      docsStealthText: 'Sovrascrive navigator.webdriver, spoofing fingerprint WebGL',
+      docsBioMimicry: 'Bio-Mimicry:',
+      docsBioMimicryText: 'Movimenti mouse simil-umani, pattern di scroll, gesture touch',
+      docsGoogleBypass: 'Google Consent Bypass:',
+      docsGoogleBypassText: 'Gestione automatica di cookie wall e interstitial',
+      docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
+      docsGeointText: 'Raccolta intelligence in tempo reale da',
+      docsGeointText2: '35+ settori geografici',
+      docsGeointText3: 'via Google News RSS con prospettive localizzate:',
+      docsOutput: 'SCHEMA OUTPUT',
+      docsFooter: 'PRISM Cognitive Security Engine | Progetto Open Source',
+      docsQuote: 'La Democrazia Muore nel Buio. La Logica Sopravvive nella Luce.'
     }
   };
 
@@ -1085,15 +1425,34 @@ const LandingPage = ({ onLogin }) => {
               className="bg-[#0a0a0f] border border-[#DC2626]/30 rounded-2xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto relative my-8"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close button */}
-              <button
-                onClick={() => setIsDocsModalOpen(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              {/* Header with close and language selector */}
+              <div className="flex items-center justify-between mb-6">
+                {/* Language Selector */}
+                <div className="flex items-center gap-1">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => setLanguage(lang.code)}
+                      className={`px-2 py-1 text-xs font-medium rounded transition-all ${
+                        language === lang.code
+                          ? 'bg-[#DC2626] text-white'
+                          : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      {lang.code.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+                {/* Close button */}
+                <button
+                  onClick={() => setIsDocsModalOpen(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
 
               {/* Header */}
               <div className="mb-8 border-b border-white/10 pb-6">
@@ -1101,9 +1460,9 @@ const LandingPage = ({ onLogin }) => {
                   <div className="w-10 h-10 rounded-lg bg-[#DC2626]/20 flex items-center justify-center">
                     <FileText className="w-5 h-5 text-[#DC2626]" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white font-mono">PRISM // Technical Documentation</h2>
+                  <h2 className="text-2xl font-bold text-white font-mono">PRISM // {t.docsTitle}</h2>
                 </div>
-                <p className="text-gray-500 text-sm font-mono">v1.0.0 | Cognitive Security Engine</p>
+                <p className="text-gray-500 text-sm font-mono">v1.0.0 | {t.docsVersion}</p>
               </div>
 
               {/* Content */}
@@ -1112,55 +1471,55 @@ const LandingPage = ({ onLogin }) => {
                 {/* FOR EVERYONE - Non-technical explanation */}
                 <section className="bg-gradient-to-br from-[#DC2626]/10 to-transparent border border-[#DC2626]/20 rounded-xl p-6">
                   <h3 className="text-white text-xl font-bold mb-4 flex items-center gap-2">
-                    <span className="text-2xl">🔍</span> What is PRISM?
+                    <span className="text-2xl">🔍</span> {t.docsWhatIs}
                   </h3>
                   <div className="space-y-4 text-gray-300 font-sans">
                     <p className="text-base leading-relaxed">
-                      <span className="text-white font-semibold">PRISM is your digital truth detector.</span> In a world flooded with news, opinions, and propaganda, it's increasingly difficult to distinguish facts from manipulation.
+                      <span className="text-white font-semibold">{t.docsIntro}</span> {t.docsIntroText}
                     </p>
 
                     <div className="grid md:grid-cols-3 gap-4 my-6">
                       <div className="bg-black/30 rounded-lg p-4 text-center">
                         <div className="text-3xl mb-2">📰</div>
-                        <h4 className="text-white font-semibold mb-1">Paste an Article</h4>
-                        <p className="text-gray-400 text-xs">Copy any news URL from any source worldwide</p>
+                        <h4 className="text-white font-semibold mb-1">{t.docsStep1Title}</h4>
+                        <p className="text-gray-400 text-xs">{t.docsStep1Text}</p>
                       </div>
                       <div className="bg-black/30 rounded-lg p-4 text-center">
                         <div className="text-3xl mb-2">🧠</div>
-                        <h4 className="text-white font-semibold mb-1">AI Analysis</h4>
-                        <p className="text-gray-400 text-xs">Our engine reads and deconstructs the narrative</p>
+                        <h4 className="text-white font-semibold mb-1">{t.docsStep2Title}</h4>
+                        <p className="text-gray-400 text-xs">{t.docsStep2Text}</p>
                       </div>
                       <div className="bg-black/30 rounded-lg p-4 text-center">
                         <div className="text-3xl mb-2">📊</div>
-                        <h4 className="text-white font-semibold mb-1">Get the Truth</h4>
-                        <p className="text-gray-400 text-xs">Receive a bias score, hidden agendas, and verified facts</p>
+                        <h4 className="text-white font-semibold mb-1">{t.docsStep3Title}</h4>
+                        <p className="text-gray-400 text-xs">{t.docsStep3Text}</p>
                       </div>
                     </div>
 
                     <div className="bg-black/40 rounded-lg p-4 border-l-4 border-[#DC2626]">
-                      <h4 className="text-white font-semibold mb-2">🎯 What PRISM Reveals:</h4>
+                      <h4 className="text-white font-semibold mb-2">🎯 {t.docsReveals}</h4>
                       <ul className="space-y-2 text-gray-300">
                         <li className="flex items-start gap-2">
                           <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">Bias Score (0-100):</strong> How manipulative is the article? 0 = neutral journalism, 100 = pure propaganda</span>
+                          <span><strong className="text-white">{t.docsBiasScore}</strong> {t.docsBiasText}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">Hidden Intentions:</strong> Why was this published? Who benefits from you believing this?</span>
+                          <span><strong className="text-white">{t.docsHiddenInt}</strong> {t.docsHiddenText}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">Verified Facts:</strong> What's actually true vs what's opinion or spin</span>
+                          <span><strong className="text-white">{t.docsVerifiedFacts}</strong> {t.docsVerifiedText}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-[#DC2626]">•</span>
-                          <span><strong className="text-white">Manipulation Tactics:</strong> Emotional triggers, logical fallacies, and rhetorical tricks used</span>
+                          <span><strong className="text-white">{t.docsManipulation}</strong> {t.docsManipText}</span>
                         </li>
                       </ul>
                     </div>
 
                     <p className="text-gray-400 text-sm italic mt-4">
-                      Think of PRISM as X-ray vision for news. We don't tell you what to think — we show you how others are trying to make you think.
+                      {t.docsMetaphor}
                     </p>
                   </div>
                 </section>
@@ -1168,7 +1527,7 @@ const LandingPage = ({ onLogin }) => {
                 {/* Divider */}
                 <div className="flex items-center gap-4 py-2">
                   <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-                  <span className="text-gray-500 text-xs uppercase tracking-widest font-mono">Technical Details</span>
+                  <span className="text-gray-500 text-xs uppercase tracking-widest font-mono">{t.docsTechDetails}</span>
                   <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
                 </div>
 
