@@ -18,7 +18,7 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
     }
 
     return (
-        <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 editorial-theme">
+        <div className="space-y-4 max-h-[45vh] md:max-h-[55vh] lg:max-h-[65vh] overflow-y-auto pr-2 editorial-theme">
             <div className="sticky top-0 bg-white/95 backdrop-blur-sm pb-4 border-b border-[#E5E5E5] z-10">
                 <div className="flex items-center gap-2.5">
                     <div className="p-1.5 bg-gray-100 rounded-lg">
@@ -58,14 +58,14 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
                                 href={item.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-[#666666] hover:text-[#DC2626] uppercase tracking-wider font-sans flex items-center gap-1 transition-colors"
+                                className="text-xs text-[#666666] hover:text-[#DC2626] active:text-[#DC2626] uppercase tracking-wider font-sans flex items-center gap-1 transition-colors touch-manipulation"
                             >
                                 Read Source <ExternalLink className="w-3 h-3" strokeWidth={1.5} />
                             </a>
                             <button
                                 onClick={() => onAnalyze(item)}
                                 disabled={analyzingId === item.id}
-                                className={`editorial-button text-xs py-2 px-4 ${analyzingId === item.id ? 'opacity-50 cursor-not-allowed' : 'editorial-button-accent'}`}
+                                className={`editorial-button text-xs py-2.5 md:py-2 px-5 md:px-4 touch-manipulation ${analyzingId === item.id ? 'opacity-50 cursor-not-allowed' : 'editorial-button-accent'}`}
                             >
                                 {analyzingId === item.id ? 'Analyzing...' : 'Analyze Bias'}
                             </button>

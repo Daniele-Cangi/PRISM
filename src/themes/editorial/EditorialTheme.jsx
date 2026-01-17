@@ -116,7 +116,7 @@ const EditorialTheme = () => {
       <main className="editorial-wide-container max-w-[95vw]">
 
         {/* URL Search Bar */}
-        <div className="mt-8 mb-10 max-w-2xl mx-auto">
+        <div className="mt-6 md:mt-8 mb-8 md:mb-10 max-w-2xl mx-auto px-4 md:px-0">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -129,12 +129,12 @@ const EditorialTheme = () => {
               value={targetUrl}
               onChange={(e) => setTargetUrl(e.target.value)}
               placeholder="Paste article URL to analyze..."
-              className="w-full px-5 py-4 pr-14 text-lg border border-slate-200 rounded-full shadow-sm focus:outline-none focus:border-slate-400 focus:shadow-md transition-all bg-white"
+              className="w-full px-4 md:px-5 py-3 md:py-4 pr-14 text-base md:text-lg border border-slate-200 rounded-full shadow-sm focus:outline-none focus:border-slate-400 focus:shadow-md transition-all bg-white"
             />
             <button
               type="submit"
               disabled={!targetUrl.trim() || scrapingStatus === 'scanning'}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-[#1A1A1A] hover:bg-[#DC2626] disabled:bg-slate-300 text-white rounded-full transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-3 md:p-3 bg-[#1A1A1A] hover:bg-[#DC2626] active:bg-[#DC2626] disabled:bg-slate-300 text-white rounded-full transition-all touch-manipulation"
             >
               {scrapingStatus === 'scanning' ? (
                 <Loader className="w-5 h-5 animate-spin" />
@@ -143,7 +143,7 @@ const EditorialTheme = () => {
               )}
             </button>
           </form>
-          <p className="text-center text-slate-400 text-sm mt-3">
+          <p className="text-center text-slate-400 text-xs md:text-sm mt-3">
             Paste any news URL or select an article from the map below
           </p>
         </div>
@@ -151,8 +151,8 @@ const EditorialTheme = () => {
         {/* GLOBAL MONITOR */}
         <div className="mb-10">
           <h2 className="headline-secondary text-center mb-8">Global News Monitor</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[70vh] relative">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
+            <div className="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] relative">
               {/* Scanning Overlay */}
               {scrapingStatus === 'scanning' && (
                 <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center">
@@ -189,7 +189,7 @@ const EditorialTheme = () => {
                 isLoading={isLoadingFeed}
               />
             </div>
-            <div className="bg-white border border-slate-200 rounded-xl p-4 h-[70vh] overflow-hidden flex flex-col">
+            <div className="bg-white border border-slate-200 rounded-xl p-4 h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden flex flex-col">
               <IntelFeed
                 data={geoIntel}
                 sectorName={sectorName}

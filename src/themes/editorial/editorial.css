@@ -270,11 +270,15 @@
 /* Responsive */
 @media (max-width: 768px) {
   .editorial-theme .headline-primary {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .editorial-theme .headline-secondary {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+  }
+
+  .editorial-theme .headline-tertiary {
+    font-size: 1.25rem;
   }
 
   .editorial-theme .body-text {
@@ -282,15 +286,64 @@
   }
 
   .editorial-container {
-    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 0.75);
+    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 0.5);
+  }
+
+  .editorial-wide-container {
+    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 0.5);
   }
 
   .editorial-score-badge {
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
   }
 
   .editorial-score-badge .score-number {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
+
+  .editorial-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.75rem;
+    min-height: 44px; /* Minimum touch target */
+  }
+
+  .editorial-pullquote {
+    font-size: 1.25rem;
+    padding: var(--spacing-unit) 0;
+    padding-left: var(--spacing-unit);
+  }
+
+  .editorial-list {
+    font-size: 1rem;
+  }
+
+  .editorial-list li {
+    padding-left: 1.5rem;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .editorial-theme .headline-primary {
+    font-size: 1.75rem;
+  }
+
+  .editorial-theme .headline-secondary {
+    font-size: 1.25rem;
+  }
+
+  .editorial-container {
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 0.5);
+  }
+
+  .editorial-wide-container {
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 0.5);
+  }
+}
+
+/* Touch-friendly utilities */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }

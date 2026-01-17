@@ -40,7 +40,13 @@ const ISO_MAP = {
 const MapHUD = ({ onSelectCountry, isLoading }) => {
     const [hovered, setHovered] = useState(null);
 
-    const handleClick = (geo) => {
+    const handleClick = (geo, event) => {
+        // Prevent default touch behavior
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
         // Debug: Log what we clicked
         console.log("Geo Clicked:", geo.id, geo.properties);
 
@@ -59,7 +65,7 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="relative w-full h-full rounded-2xl overflow-hidden border border-[#E5E5E5] bg-[#F5F5F5] shadow-sm"
+            className="relative w-full h-full rounded-2xl overflow-hidden border border-[#E5E5E5] bg-[#F5F5F5] shadow-sm touch-manipulation"
         >
             {/* Dot Pattern Overlay */}
             <div className="absolute inset-0 opacity-[0.4] pointer-events-none"
@@ -99,26 +105,30 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
                                         geography={geo}
                                         onMouseEnter={() => setHovered(geo.rsmKey)}
                                         onMouseLeave={() => setHovered(null)}
-                                        onClick={() => handleClick(geo)}
+                                        onClick={(event) => handleClick(geo, event)}
+                                        tabIndex={isSupported ? 0 : -1}
                                         style={{
                                             default: {
-                                                fill: isSupported ? "#D4D4D8" : "#FFFFFF", // Visible differentiation
+                                                fill: isSupported ? "#D4D4D8" : "#FFFFFF",
                                                 stroke: isSupported ? "#737373" : "#E5E5E5",
                                                 strokeWidth: isSupported ? 0.75 : 0.5,
                                                 outline: "none",
-                                                cursor: isSupported ? "pointer" : "default"
+                                                cursor: isSupported ? "pointer" : "default",
+                                                touchAction: "manipulation"
                                             },
                                             hover: {
-                                                fill: isSupported ? "#FEE2E2" : "#FFFFFF", // Red tint only for supported
+                                                fill: isSupported ? "#FEE2E2" : "#FFFFFF",
                                                 stroke: isSupported ? "#DC2626" : "#E5E5E5",
                                                 strokeWidth: isSupported ? 1.5 : 0.5,
                                                 outline: "none",
-                                                cursor: isSupported ? "pointer" : "default"
+                                                cursor: isSupported ? "pointer" : "default",
+                                                touchAction: "manipulation"
                                             },
                                             pressed: {
                                                 fill: "#FCA5A5",
                                                 stroke: "#DC2626",
                                                 outline: "none",
+                                                touchAction: "manipulation"
                                             },
                                         }}
                                     />

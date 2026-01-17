@@ -674,7 +674,7 @@ const LandingPage = ({ onLogin }) => {
           {/* Docs Button */}
           <button
             onClick={() => setIsDocsModalOpen(true)}
-            className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-3 py-2 rounded-lg transition-all duration-200 border border-white/10"
+            className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-md text-white px-3 py-2.5 rounded-lg transition-all duration-200 border border-white/10 touch-manipulation min-h-[44px]"
           >
             <FileText className="w-4 h-4 opacity-70" />
             <span className="text-sm font-medium tracking-wide">Docs</span>
@@ -685,7 +685,7 @@ const LandingPage = ({ onLogin }) => {
             {/* Toggle Button - Solo codice lingua */}
             <button
               onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-              className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-3 py-2 rounded-lg transition-all duration-200 border border-white/10"
+              className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-md text-white px-3 py-2.5 rounded-lg transition-all duration-200 border border-white/10 touch-manipulation min-h-[44px]"
             >
               <span className="text-sm font-medium uppercase tracking-wide">{translations[language].code}</span>
               <ChevronDown className={`w-3 h-3 opacity-70 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
