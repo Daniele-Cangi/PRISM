@@ -328,19 +328,19 @@ const LandingPage = ({ onLogin }) => {
         {/* Overlay scuro per leggibilità */}
         <div className="absolute inset-0 bg-black/60" />
 
-        {/* MENU LINGUE - Fisso in alto a destra, minimalista */}
+        {/* MENU LINGUE - Fisso in alto a destra, minimalista bianco */}
         <div className="fixed top-4 right-4 z-50">
           <div className="relative">
-            {/* Toggle Button - Solo bandiera */}
+            {/* Toggle Button - Solo codice lingua */}
             <button
               onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-              className="flex items-center gap-1 bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg transition-all duration-200"
+              className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-3 py-2 rounded-lg transition-all duration-200 border border-white/10"
             >
-              <span className="text-lg">{translations[language].flag}</span>
-              <ChevronDown className={`w-3 h-3 opacity-60 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
+              <span className="text-sm font-medium uppercase tracking-wide">{translations[language].code}</span>
+              <ChevronDown className={`w-3 h-3 opacity-70 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
-            {/* Dropdown Menu - Minimalista */}
+            {/* Dropdown Menu - Minimalista bianco */}
             <AnimatePresence>
               {isLangMenuOpen && (
                 <motion.div
@@ -348,7 +348,7 @@ const LandingPage = ({ onLogin }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full right-0 mt-1 bg-black/80 backdrop-blur-md border border-white/10 rounded-lg overflow-hidden shadow-lg"
+                  className="absolute top-full right-0 mt-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-lg overflow-hidden shadow-lg min-w-[80px]"
                 >
                   {languages.map((lang) => (
                     <button
@@ -357,14 +357,13 @@ const LandingPage = ({ onLogin }) => {
                         setLanguage(lang.code);
                         setIsLangMenuOpen(false);
                       }}
-                      className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-all duration-150 ${
+                      className={`w-full px-4 py-2 text-center transition-all duration-150 ${
                         language === lang.code
-                          ? 'bg-white/10 text-white'
-                          : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                          ? 'bg-white/20 text-white'
+                          : 'text-white/70 hover:bg-white/10 hover:text-white'
                       }`}
                     >
-                      <span className="text-base">{lang.flag}</span>
-                      <span className="text-sm">{lang.code}</span>
+                      <span className="text-sm font-medium uppercase tracking-wide">{lang.code.toUpperCase()}</span>
                     </button>
                   ))}
                 </motion.div>
