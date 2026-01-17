@@ -78,7 +78,7 @@ const AnalysisPanel = ({ data, onClose }) => {
 
       {mode === 'editorial' ? (
         /* ---------------- EDITORIAL MODE ---------------- */
-        <div className="editorial-container py-16">
+        <div className="editorial-container pt-24 pb-16">
           {/* Header */}
           <header className="mb-12">
             <div className="editorial-meta mb-4">
@@ -153,7 +153,7 @@ const AnalysisPanel = ({ data, onClose }) => {
       ) : (
 
         /* ---------------- SCIENTIFIC MODE ---------------- */
-        <div className="sci-container py-16">
+        <div className="sci-container pt-24 pb-16">
           <header className="mb-8 border-b border-slate-200 pb-6">
             <div className="flex items-center justify-between">
               <div>
