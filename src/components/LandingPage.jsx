@@ -1107,11 +1107,74 @@ const LandingPage = ({ onLogin }) => {
               </div>
 
               {/* Content */}
-              <div className="space-y-8 text-gray-300 font-mono text-sm leading-relaxed">
+              <div className="space-y-8 text-gray-300 text-sm leading-relaxed">
+
+                {/* FOR EVERYONE - Non-technical explanation */}
+                <section className="bg-gradient-to-br from-[#DC2626]/10 to-transparent border border-[#DC2626]/20 rounded-xl p-6">
+                  <h3 className="text-white text-xl font-bold mb-4 flex items-center gap-2">
+                    <span className="text-2xl">🔍</span> What is PRISM?
+                  </h3>
+                  <div className="space-y-4 text-gray-300 font-sans">
+                    <p className="text-base leading-relaxed">
+                      <span className="text-white font-semibold">PRISM is your digital truth detector.</span> In a world flooded with news, opinions, and propaganda, it's increasingly difficult to distinguish facts from manipulation.
+                    </p>
+
+                    <div className="grid md:grid-cols-3 gap-4 my-6">
+                      <div className="bg-black/30 rounded-lg p-4 text-center">
+                        <div className="text-3xl mb-2">📰</div>
+                        <h4 className="text-white font-semibold mb-1">Paste an Article</h4>
+                        <p className="text-gray-400 text-xs">Copy any news URL from any source worldwide</p>
+                      </div>
+                      <div className="bg-black/30 rounded-lg p-4 text-center">
+                        <div className="text-3xl mb-2">🧠</div>
+                        <h4 className="text-white font-semibold mb-1">AI Analysis</h4>
+                        <p className="text-gray-400 text-xs">Our engine reads and deconstructs the narrative</p>
+                      </div>
+                      <div className="bg-black/30 rounded-lg p-4 text-center">
+                        <div className="text-3xl mb-2">📊</div>
+                        <h4 className="text-white font-semibold mb-1">Get the Truth</h4>
+                        <p className="text-gray-400 text-xs">Receive a bias score, hidden agendas, and verified facts</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-black/40 rounded-lg p-4 border-l-4 border-[#DC2626]">
+                      <h4 className="text-white font-semibold mb-2">🎯 What PRISM Reveals:</h4>
+                      <ul className="space-y-2 text-gray-300">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#DC2626]">•</span>
+                          <span><strong className="text-white">Bias Score (0-100):</strong> How manipulative is the article? 0 = neutral journalism, 100 = pure propaganda</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#DC2626]">•</span>
+                          <span><strong className="text-white">Hidden Intentions:</strong> Why was this published? Who benefits from you believing this?</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#DC2626]">•</span>
+                          <span><strong className="text-white">Verified Facts:</strong> What's actually true vs what's opinion or spin</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#DC2626]">•</span>
+                          <span><strong className="text-white">Manipulation Tactics:</strong> Emotional triggers, logical fallacies, and rhetorical tricks used</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <p className="text-gray-400 text-sm italic mt-4">
+                      Think of PRISM as X-ray vision for news. We don't tell you what to think — we show you how others are trying to make you think.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Divider */}
+                <div className="flex items-center gap-4 py-2">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                  <span className="text-gray-500 text-xs uppercase tracking-widest font-mono">Technical Details</span>
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                </div>
 
                 {/* System Overview */}
                 <section>
-                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2">
+                  <h3 className="text-[#DC2626] text-lg font-bold mb-3 flex items-center gap-2 font-mono">
                     <span className="text-white/30">//</span> SYSTEM OVERVIEW
                   </h3>
                   <div className="bg-black/50 border border-white/5 rounded-lg p-4">
