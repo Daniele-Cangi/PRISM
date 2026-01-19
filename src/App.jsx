@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import EditorialTheme from './themes/editorial/EditorialTheme';
-import LandingPage from './components/LandingPage';
+import LandingPageCustom from './components/LandingPageCustom';
+// LandingPage originale mantenuta per uso futuro
+// import LandingPage from './components/LandingPage';
 
 /**
  * Main App Component
@@ -17,7 +19,7 @@ function App() {
   };
 
   if (!isAuthenticated) {
-    return <LandingPage onLogin={handleLogin} />;
+    return <LandingPageCustom onLogin={handleLogin} />;
   }
 
   return (
