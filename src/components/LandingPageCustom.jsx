@@ -819,15 +819,33 @@ const LandingPage = ({ onLogin }) => {
               </p>
             </motion.div>
 
-            {/* Colonna destra - Join Team Button centrato */}
+            {/* Colonna destra - Pulsanti Join Team e Star */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center gap-6 flex-wrap"
             >
-              {/* Join Team Card - Quadrato cliccabile centrato */}
+              {/* Star Project Card */}
+              <motion.a
+                href="https://github.com/UnityLoop-official"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-48 h-48 rounded-2xl bg-gradient-to-br from-[#fbbf24] to-[#d97706] border-2 border-[#fbbf24] shadow-2xl flex flex-col items-center justify-center cursor-pointer overflow-hidden group"
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                <svg className="w-12 h-12 text-white mb-3 relative z-10" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+                </svg>
+                <span className="text-white font-bold text-lg text-center px-2 relative z-10">Star Project</span>
+                <span className="text-white/80 text-sm text-center px-2 mt-1 relative z-10">Support on GitHub</span>
+              </motion.a>
+
+              {/* Join Team Card */}
               <motion.button
                 onClick={() => setIsJoinModalOpen(true)}
                 className="w-48 h-48 rounded-2xl bg-gradient-to-br from-[#DC2626] to-[#991b1b] border-2 border-[#DC2626] shadow-2xl flex flex-col items-center justify-center cursor-pointer overflow-hidden group"
