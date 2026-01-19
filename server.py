@@ -1,8 +1,9 @@
 import os
 import uvicorn
 import requests
+import time
 from bs4 import BeautifulSoup
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from openai import OpenAI
@@ -13,6 +14,60 @@ load_dotenv() # Carica OPENAI_API_KEY dal file .env
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI(title="Shadow Analyzer API", version="1.0.0")
+
+# --- RATE LIMITING PER IP ---
+MAX_ANALYSES_PER_IP = 3
+RATE_LIMIT_RESET_HOURS = 24
+ip_tracker = {}  # {ip: {"count": int, "first_request": timestamp}}
+
+def get_client_ip(request: Request) -> str:
+    """Ottiene l'IP reale del client, gestendo proxy e load balancer."""
+    # Vercel/Render usano questi header per l'IP reale
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    real_ip = request.headers.get("x-real-ip")
+    if real_ip:
+        return real_ip
+    return request.client.host if request.client else "unknown"
+
+def check_rate_limit(ip: str) -> dict:
+    """Controlla e aggiorna il rate limit per un IP. Ritorna stato del limite."""
+    current_time = time.time()
+    reset_seconds = RATE_LIMIT_RESET_HOURS * 3600
+
+    if ip in ip_tracker:
+        data = ip_tracker[ip]
+        time_elapsed = current_time - data["first_request"]
+
+        # Reset se sono passate 24 ore
+        if time_elapsed >= reset_seconds:
+            ip_tracker[ip] = {"count": 0, "first_request": current_time}
+            data = ip_tracker[ip]
+
+        remaining = MAX_ANALYSES_PER_IP - data["count"]
+        reset_in = int(reset_seconds - time_elapsed)
+
+        return {
+            "allowed": remaining > 0,
+            "remaining": max(0, remaining),
+            "total": MAX_ANALYSES_PER_IP,
+            "reset_in_seconds": max(0, reset_in)
+        }
+    else:
+        # Nuovo IP
+        ip_tracker[ip] = {"count": 0, "first_request": current_time}
+        return {
+            "allowed": True,
+            "remaining": MAX_ANALYSES_PER_IP,
+            "total": MAX_ANALYSES_PER_IP,
+            "reset_in_seconds": reset_seconds
+        }
+
+def increment_usage(ip: str):
+    """Incrementa il conteggio per un IP dopo un'analisi completata."""
+    if ip in ip_tracker:
+        ip_tracker[ip]["count"] += 1
 
 # Abilitiamo CORS per permettere al Frontend (React) di parlare con noi
 app.add_middleware(
@@ -109,10 +164,37 @@ def analyze_logic(text: str):
 
 # --- ENDPOINTS ---
 
+@app.get("/rate-limit")
+async def get_rate_limit_status(request: Request):
+    """Endpoint per controllare lo stato del rate limit per l'IP corrente."""
+    client_ip = get_client_ip(request)
+    status = check_rate_limit(client_ip)
+    return {
+        "ip": client_ip,
+        "analyses_remaining": status["remaining"],
+        "analyses_total": status["total"],
+        "reset_in_seconds": status["reset_in_seconds"],
+        "reset_in_hours": round(status["reset_in_seconds"] / 3600, 1)
+    }
+
 @app.post("/analyze")
-async def run_analysis(request: AnalysisRequest):
+async def run_analysis(analysis_request: AnalysisRequest, request: Request):
+    # --- RATE LIMIT CHECK ---
+    client_ip = get_client_ip(request)
+    rate_status = check_rate_limit(client_ip)
+
+    if not rate_status["allowed"]:
+        hours_left = round(rate_status["reset_in_seconds"] / 3600, 1)
+        print(f"!!! RATE LIMIT EXCEEDED for IP: {client_ip}")
+        raise HTTPException(
+            status_code=429,
+            detail=f"RATE LIMIT EXCEEDED: You have used all {MAX_ANALYSES_PER_IP} free analyses. Reset in {hours_left} hours."
+        )
+
+    print(f">>> IP: {client_ip} | Analyses remaining: {rate_status['remaining']}")
+
     # Risolvi redirect Google News
-    target_url = resolve_google_news_url(request.url)
+    target_url = resolve_google_news_url(analysis_request.url)
     print(f"--- PHANTOM PROTOCOL INITIATED: {target_url} ---")
 
     try:
@@ -148,12 +230,19 @@ async def run_analysis(request: AnalysisRequest):
     try:
         analysis_json = analyze_logic(raw_text)
         print("--- INFERENCE COMPLETE ---")
-        
+
         # DEBUG: Stampiamo la risposta grezza per debuggare il JSON
         # print(f"DEBUG LLM RESPONSE: {analysis_json[:100]}...")
 
         import json
-        return json.loads(analysis_json)
+        result = json.loads(analysis_json)
+
+        # Incrementa il conteggio solo dopo successo
+        increment_usage(client_ip)
+        remaining = MAX_ANALYSES_PER_IP - ip_tracker[client_ip]["count"]
+        print(f">>> ANALYSIS COUNTED for IP: {client_ip} | Remaining: {remaining}")
+
+        return result
     except json.JSONDecodeError as je:
         error_msg = f"JSON PARSING FAILED: {str(je)}\nRAW CONTENT: {analysis_json}"
         print(error_msg)
