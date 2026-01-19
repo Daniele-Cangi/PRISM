@@ -918,7 +918,7 @@ const LandingPage = ({ onLogin }) => {
 
             {/* Email */}
             <motion.a
-              href="mailto:contact@unityloop.ai"
+              href="mailto:info@unityloop.ai"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
