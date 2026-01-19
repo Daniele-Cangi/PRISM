@@ -870,7 +870,7 @@ const LandingPage = ({ onLogin }) => {
           <div className="grid md:grid-cols-3 gap-6 mb-20">
             {/* GitHub */}
             <motion.a
-              href="https://github.com/unityloop"
+              href="https://github.com/UnityLoop-official"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
