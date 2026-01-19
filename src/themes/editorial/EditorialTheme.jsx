@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Globe, Loader, MapPin } from 'lucide-react';
+import { Search, Globe, Loader, MapPin, Home, AlertCircle } from 'lucide-react';
 import useAnalysisStore from '../../store/analysisStore';
 import ArticleCard from './components/ArticleCard';
 import AnalysisPanel from './components/AnalysisPanel';
@@ -11,7 +11,7 @@ import TrendingTicker from './components/TrendingTicker';
 import API_ENDPOINTS from '../../utils/api';
 import './editorial.css';
 
-const EditorialTheme = () => {
+const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAnalysisUsed }) => {
   const {
     scrapingStatus,
     targetUrl,
@@ -37,6 +37,9 @@ const EditorialTheme = () => {
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const remainingAnalyses = maxAnalyses - analysisCount;
+  const hasReachedLimit = remainingAnalyses <= 0;
+
   // Detect mobile screen
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -48,6 +51,12 @@ const EditorialTheme = () => {
   // Handle URL analysis
   const handleAnalyze = async () => {
     if (!targetUrl.trim()) return;
+
+    // Check limit
+    if (hasReachedLimit) {
+      alert('You have reached the maximum number of analyses. Return to home to reset.');
+      return;
+    }
 
     updateStatus('scanning');
 
@@ -67,6 +76,11 @@ const EditorialTheme = () => {
       setAnalysisData(result);
       setShowFullAnalysis(true);
       updateStatus('idle');
+
+      // Increment analysis count
+      if (onAnalysisUsed) {
+        onAnalysisUsed();
+      }
     } catch (error) {
       console.error('Analysis error:', error);
       updateStatus('idle');
@@ -83,12 +97,29 @@ const EditorialTheme = () => {
       <header className="border-b border-[#E5E5E5] bg-white">
         <div className="editorial-wide-container py-4 lg:py-8">
           {/* Mobile Header */}
-          <div className="lg:hidden text-center mb-3">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Loader className="w-8 h-8 text-[#DC2626] animate-spin" />
-              <h1 className="font-serif text-4xl font-black tracking-tight leading-none">
-                PRISM
-              </h1>
+          <div className="lg:hidden mb-3">
+            <div className="flex items-center justify-between mb-2">
+              {/* Home Button */}
+              <button
+                onClick={onBackToHome}
+                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-600 hover:text-[#DC2626] hover:bg-gray-100 rounded-lg transition-all"
+              >
+                <Home className="w-4 h-4" />
+                <span>Home</span>
+              </button>
+
+              {/* Logo */}
+              <div className="flex items-center gap-2">
+                <Loader className="w-8 h-8 text-[#DC2626] animate-spin" />
+                <h1 className="font-serif text-4xl font-black tracking-tight leading-none">
+                  PRISM
+                </h1>
+              </div>
+
+              {/* Analysis Counter */}
+              <div className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium ${hasReachedLimit ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
+                <span>{remainingAnalyses}/{maxAnalyses}</span>
+              </div>
             </div>
             <div className="flex items-center justify-center gap-2 text-xs font-medium text-[#DC2626] tracking-wider uppercase">
               <span className="w-1.5 h-1.5 bg-[#DC2626] rounded-full" />
@@ -99,13 +130,19 @@ const EditorialTheme = () => {
 
           {/* Desktop Header */}
           <div className="hidden lg:flex flex-row justify-between items-center border-b-2 border-black pb-4 mb-4">
-            {/* Left: Logo + Meta Data */}
+            {/* Left: Home Button + Logo */}
             <div className="flex items-center gap-4">
+              <button
+                onClick={onBackToHome}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#DC2626] hover:bg-gray-100 rounded-lg transition-all border border-gray-200"
+              >
+                <Home className="w-5 h-5" />
+                <span>Home</span>
+              </button>
               <Loader className="w-14 h-14 text-[#DC2626] animate-spin" />
               <div className="text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
                 <div>Vol. 24 • No. 118</div>
                 <div>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}</div>
-                <div>Lat: 41.90N • Lon: 12.49E</div>
               </div>
             </div>
 
@@ -121,14 +158,22 @@ const EditorialTheme = () => {
               </div>
             </div>
 
-            {/* Right: System Status */}
-            <div className="text-right text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
-              <div className="flex items-center justify-end gap-2">
-                <span>Global Bias Index</span>
-                <span className="text-[#DC2626] font-bold">CRITICAL</span>
+            {/* Right: Analysis Counter + Status */}
+            <div className="flex items-center gap-4">
+              {/* Analysis Counter */}
+              <div className={`flex flex-col items-center px-4 py-2 rounded-lg ${hasReachedLimit ? 'bg-red-100' : 'bg-green-50'}`}>
+                <span className={`text-2xl font-bold ${hasReachedLimit ? 'text-red-600' : 'text-green-600'}`}>
+                  {remainingAnalyses}
+                </span>
+                <span className="text-xs text-gray-500 uppercase">Analyses Left</span>
               </div>
-              <div>System Status: <span className="text-green-600">ONLINE</span></div>
-              <div>Ops Cycle: 24/7</div>
+              <div className="text-right text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
+                <div className="flex items-center justify-end gap-2">
+                  <span>Global Bias Index</span>
+                  <span className="text-[#DC2626] font-bold">CRITICAL</span>
+                </div>
+                <div>System Status: <span className="text-green-600">ONLINE</span></div>
+              </div>
             </div>
           </div>
 
@@ -144,10 +189,21 @@ const EditorialTheme = () => {
 
         {/* URL Search Bar */}
         <div className="mt-6 md:mt-8 mb-8 md:mb-10 max-w-2xl mx-auto px-4 md:px-0">
+          {/* Limit Warning */}
+          {hasReachedLimit && (
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <div>
+                <p className="font-medium">Analysis limit reached</p>
+                <p className="text-sm text-red-600">You've used all {maxAnalyses} free analyses. Click "Home" to start a new session.</p>
+              </div>
+            </div>
+          )}
+
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              if (targetUrl.trim()) handleAnalyze();
+              if (targetUrl.trim() && !hasReachedLimit) handleAnalyze();
             }}
             className="relative"
           >
@@ -155,12 +211,13 @@ const EditorialTheme = () => {
               type="url"
               value={targetUrl}
               onChange={(e) => setTargetUrl(e.target.value)}
-              placeholder="Paste article URL to analyze..."
-              className="w-full px-4 md:px-5 py-3 md:py-4 pr-14 text-base md:text-lg border border-slate-200 rounded-full shadow-sm focus:outline-none focus:border-slate-400 focus:shadow-md transition-all bg-white"
+              placeholder={hasReachedLimit ? "Limit reached - return to Home" : "Paste article URL to analyze..."}
+              disabled={hasReachedLimit}
+              className={`w-full px-4 md:px-5 py-3 md:py-4 pr-14 text-base md:text-lg border rounded-full shadow-sm focus:outline-none transition-all ${hasReachedLimit ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed' : 'border-slate-200 focus:border-slate-400 focus:shadow-md bg-white'}`}
             />
             <button
               type="submit"
-              disabled={!targetUrl.trim() || scrapingStatus === 'scanning'}
+              disabled={!targetUrl.trim() || scrapingStatus === 'scanning' || hasReachedLimit}
               className="absolute right-2 top-1/2 -translate-y-1/2 p-3 md:p-3 bg-[#1A1A1A] hover:bg-[#DC2626] active:bg-[#DC2626] disabled:bg-slate-300 text-white rounded-full transition-all touch-manipulation"
             >
               {scrapingStatus === 'scanning' ? (
@@ -171,7 +228,7 @@ const EditorialTheme = () => {
             </button>
           </form>
           <p className="text-center text-slate-400 text-xs md:text-sm mt-3">
-            Paste any news URL or select an article from the map below
+            {hasReachedLimit ? `${maxAnalyses} analyses used - Session complete` : 'Paste any news URL or select an article from the map below'}
           </p>
         </div>
 
