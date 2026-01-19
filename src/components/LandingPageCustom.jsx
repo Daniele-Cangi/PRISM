@@ -853,94 +853,34 @@ const LandingPage = ({ onLogin }) => {
               <p className="text-xl text-gray-400 mb-6" style={{ fontFamily: 'Lora, serif' }}>
                 {t.missionText1}
               </p>
-              <p className="text-lg text-gray-500 mb-8" style={{ fontFamily: 'Lora, serif' }}>
+              <p className="text-lg text-gray-500" style={{ fontFamily: 'Lora, serif' }}>
                 {t.missionText2}
               </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-1 bg-[#DC2626]"></div>
-                <span className="text-[#DC2626] uppercase tracking-widest text-sm font-semibold">{t.theFounders}</span>
-              </div>
             </motion.div>
 
-            {/* Colonna destra - Composizione astratta foto */}
+            {/* Colonna destra - Join Team Button centrato */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-[500px]"
+              className="flex items-center justify-center"
             >
-              {/* Foto 1 - Grande in alto a sinistra - Evangelista */}
-              <motion.div
-                className="absolute top-0 left-0 w-64 h-64 rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl z-10"
-                whileHover={{ scale: 1.05, zIndex: 30 }}
-                transition={{ duration: 0.3 }}
-              >
-                <img
-                  src="/1516274888460.jpeg"
-                  alt="Project Evangelist"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
-                  <span className="text-[#DC2626] text-xs uppercase tracking-widest font-semibold">{t.roleEvangelist}</span>
-                </div>
-              </motion.div>
-
-              {/* Foto 2 - Media in basso a destra - AI Developer */}
-              <motion.div
-                className="absolute bottom-0 right-0 w-56 h-56 rounded-2xl overflow-hidden border-4 border-[#DC2626]/30 shadow-2xl z-20"
-                whileHover={{ scale: 1.05, zIndex: 30 }}
-                transition={{ duration: 0.3 }}
-              >
-                <img
-                  src="/1684496683015.jpeg"
-                  alt="AI Developer"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
-                  <span className="text-[#DC2626] text-xs uppercase tracking-widest font-semibold">{t.roleDev}</span>
-                </div>
-              </motion.div>
-
-              {/* Foto 3 - Piccola al centro - Full Stack Developer */}
-              <motion.div
-                className="absolute top-1/2 right-1/4 transform -translate-y-1/2 w-48 h-48 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl z-30"
-                whileHover={{ scale: 1.1, zIndex: 40 }}
-                transition={{ duration: 0.3 }}
-              >
-                <img
-                  src="/1758023934673.jpeg"
-                  alt="Full Stack Developer"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-4 left-0 right-0 text-center">
-                  <span className="text-[#DC2626] text-[10px] uppercase tracking-widest font-semibold">{t.roleAIDev}</span>
-                </div>
-              </motion.div>
-
-              {/* Join Team Card - Quadrato cliccabile */}
+              {/* Join Team Card - Quadrato cliccabile centrato */}
               <motion.button
                 onClick={() => setIsJoinModalOpen(true)}
-                className="absolute bottom-10 left-10 w-40 h-40 rounded-2xl bg-gradient-to-br from-[#DC2626] to-[#991b1b] border-2 border-[#DC2626] shadow-2xl z-20 flex flex-col items-center justify-center cursor-pointer overflow-hidden group"
-                whileHover={{ scale: 1.08, zIndex: 40 }}
+                className="w-48 h-48 rounded-2xl bg-gradient-to-br from-[#DC2626] to-[#991b1b] border-2 border-[#DC2626] shadow-2xl flex flex-col items-center justify-center cursor-pointer overflow-hidden group"
+                whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-                <svg className="w-10 h-10 text-white mb-2 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 text-white mb-3 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
-                <span className="text-white font-bold text-sm text-center px-2 relative z-10">{t.joinTeam}</span>
-                <span className="text-white/70 text-xs text-center px-2 mt-1 relative z-10">{t.joinSlogan}</span>
+                <span className="text-white font-bold text-lg text-center px-2 relative z-10">{t.joinTeam}</span>
+                <span className="text-white/70 text-sm text-center px-2 mt-1 relative z-10">{t.joinSlogan}</span>
               </motion.button>
-
-              {/* Elementi decorativi */}
-              <div className="absolute top-10 right-10 w-32 h-32 border-2 border-[#DC2626]/20 rounded-full"></div>
-              <div className="absolute bottom-20 left-20 w-24 h-24 border border-white/10 rounded-lg rotate-12"></div>
-              <div className="absolute top-1/3 left-1/2 w-16 h-16 bg-[#DC2626]/10 rounded-full blur-xl"></div>
             </motion.div>
           </div>
 
