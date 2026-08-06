@@ -1,0 +1,920 @@
+# PRISM v2 — Narrative X-Ray Trajectory
+
+> **Status:** Proposed direction / technical spike
+> **Goal:** Turn PRISM from a single-article AI bias analyzer into a provenance-aware engine that reconstructs how the same event changes across sources, countries and time.
+
+---
+
+## 1. Why PRISM must change
+
+The current product is visually strong, but the analytical core is still too close to:
+
+```text
+article -> extract text -> LLM -> score + narrative analysis
+```
+
+That is useful as a prototype, but it is not defensible as a unique product.
+
+The next version should not try to answer:
+
+> "Is this article true?"
+
+or:
+
+> "How biased is this article from 0 to 100?"
+
+Instead, PRISM should answer:
+
+> **What remains invariant across independent sources, what changes, what disappears, who introduces each claim, and how does the narrative mutate over time and geography?**
+
+That becomes the core product.
+
+---
+
+# 2. Core thesis
+
+## PRISM is not a truth detector
+
+PRISM becomes a **Narrative Provenance & Differential Engine**.
+
+Its job is to reconstruct an event from many sources and expose:
+
+- shared factual claims;
+- contested claims;
+- source-specific additions;
+- missing context;
+- causal attribution differences;
+- changes in certainty;
+- source lineage and syndication;
+- geographic narrative differences;
+- temporal narrative drift.
+
+The product should make the transformation of information observable.
+
+---
+
+# 3. The hard problem: acquisition
+
+The hardest part of PRISM v2 is not the LLM.
+
+It is reliably obtaining enough independent coverage of the same event.
+
+The current approach is URL-centric:
+
+```text
+URL
+ -> Playwright
+ -> anti-bot attempts
+ -> DOM
+ -> BeautifulSoup
+ -> article text
+```
+
+This is fragile because every publisher has different infrastructure, paywalls, JavaScript, WAFs, consent layers and article templates.
+
+PRISM v2 must stop thinking:
+
+> "I need to fetch this exact page."
+
+and start thinking:
+
+> **"I need sufficient evidence about this event."**
+
+This is a fundamental architectural change.
+
+## Principle
+
+### We do not need every page. We need every story.
+
+If Article A cannot be fetched, PRISM should not spend unlimited effort fighting that publisher.
+
+It should look for:
+
+- the same syndicated copy;
+- the original wire source;
+- RSS content;
+- AMP or alternate representations where legitimately exposed;
+- JSON-LD metadata;
+- another publisher carrying the same event;
+- quoted passages in downstream coverage;
+- cached internal copies previously acquired;
+- other independent sources reporting the same claim.
+
+The acquisition system should optimize for **event coverage completeness**, not individual URL conquest.
+
+No system can guarantee literal access to every article. The engineering target is therefore:
+
+> **Always produce the richest evidence graph possible, with explicit visibility into what could and could not be acquired.**
+
+---
+
+# 4. Resilient News Acquisition Layer
+
+The new acquisition layer should be a pipeline rather than a single scraper.
+
+```text
+                 DISCOVERY
+                    |
+      +-------------+-------------+
+      |             |             |
+ Google News      RSS        external indexes
+      |             |             |
+      +-------------+-------------+
+                    |
+             EVENT CANDIDATES
+                    |
+            CANONICAL RESOLUTION
+                    |
+             ACQUISITION LADDER
+                    |
+     +--------------+---------------+
+     |              |               |
+ structured      HTTP text       browser
+ metadata        extraction      fallback
+     |              |               |
+     +--------------+---------------+
+                    |
+           NORMALIZED ARTICLE
+                    |
+          DEDUP / SOURCE LINEAGE
+```
+
+## 4.1 Discovery sources
+
+PRISM should support several discovery adapters instead of depending on one feed.
+
+Initial candidates:
+
+- Google News RSS;
+- publisher RSS feeds;
+- publisher sitemaps / news sitemaps;
+- GDELT;
+- Media Cloud;
+- optional commercial/event APIs later;
+- direct user URL.
+
+All discovery adapters should return the same internal object:
+
+```text
+DiscoveredArticle {
+    url
+    title
+    publisher
+    published_at
+    language
+    discovery_source
+    event_hint
+}
+```
+
+Discovery should be cheap and parallel.
+
+---
+
+## 4.2 Canonical resolution
+
+Before fetching an article body:
+
+- normalize tracking parameters;
+- follow safe redirects;
+- identify canonical URL where available;
+- normalize publisher domain;
+- detect Google News redirect wrappers;
+- detect obvious syndicated mirrors;
+- compute a stable article identity.
+
+The same story discovered from three different feeds must not become three separate documents.
+
+---
+
+## 4.3 Acquisition ladder
+
+Fetching should follow the cheapest and most stable route first.
+
+### Stage A — structured metadata
+
+Try to collect:
+
+- `NewsArticle` JSON-LD;
+- OpenGraph metadata;
+- canonical URL;
+- author;
+- publication time;
+- modification time;
+- headline;
+- description;
+- publisher;
+- article section.
+
+Even if the body is unavailable, this information remains useful.
+
+### Stage B — normal HTTP extraction
+
+Use a normal HTTP request with strict limits.
+
+Extract article content using a dedicated article extraction strategy rather than generic `soup.get_text()`.
+
+Possible extraction stages:
+
+```text
+HTML
+ -> remove boilerplate
+ -> identify article container
+ -> paragraph segmentation
+ -> quote extraction
+ -> metadata validation
+```
+
+### Stage C — browser rendering
+
+Playwright becomes a fallback only when:
+
+- content is JavaScript-rendered;
+- the normal response contains a shell;
+- structured data indicates an article exists but content is missing.
+
+The browser should not pretend to be a universal anti-bot weapon.
+
+It is simply another renderer.
+
+### Stage D — alternate evidence route
+
+If direct body acquisition fails:
+
+- search known syndication siblings;
+- identify likely AP / Reuters / AFP lineage;
+- search other discovered articles for quoted or duplicated paragraphs;
+- retain metadata-only representation;
+- mark the source as partial.
+
+The pipeline must continue.
+
+---
+
+# 5. Acquisition state must be explicit
+
+Every article should expose an acquisition state.
+
+```text
+FULL
+PARTIAL
+METADATA_ONLY
+BLOCKED
+PAYWALLED
+REMOVED
+FAILED
+```
+
+And an extraction method:
+
+```text
+JSON_LD
+HTTP
+READABILITY
+PLAYWRIGHT
+RSS_BODY
+SYNDICATION_RECOVERY
+```
+
+This information becomes part of the final evidence model.
+
+PRISM must never silently pretend that a partial page is a complete article.
+
+---
+
+# 6. Security requirements for fetching
+
+The current public URL fetch path must be hardened before PRISM is exposed again.
+
+Minimum requirements:
+
+- accept only `http` and `https`;
+- reject embedded credentials;
+- resolve DNS before connection;
+- block loopback addresses;
+- block RFC1918/private networks;
+- block link-local addresses;
+- block cloud metadata addresses;
+- block private and special IPv6 ranges;
+- repeat validation after every redirect;
+- strict connect/read timeout;
+- strict maximum response size;
+- redirect limit;
+- per-host concurrency limit;
+- global worker concurrency limit;
+- persistent rate limiting;
+- trusted-proxy configuration for client IP headers;
+- restricted CORS;
+- isolated browser workers;
+- controlled browser egress where practical.
+
+The acquisition layer is an untrusted network boundary.
+
+Treat every supplied URL as hostile input.
+
+---
+
+# 7. Normalized article model
+
+The output of acquisition must stop being a single 25k-character string.
+
+Target representation:
+
+```text
+Article {
+    id
+    canonical_url
+    original_url
+
+    publisher
+    author
+    title
+    language
+
+    published_at
+    updated_at
+
+    paragraphs[]
+    quotations[]
+    outbound_links[]
+    named_entities[]
+
+    acquisition_state
+    extraction_method
+    completeness_score
+
+    content_hash
+    similarity_hash
+
+    discovery_source
+    probable_origin
+    lineage_group
+}
+```
+
+Paragraphs must keep stable IDs so every later claim can point back to exact evidence.
+
+Example:
+
+```text
+article_14:p17
+```
+
+---
+
+# 8. Source lineage before consensus
+
+A central rule of PRISM v2:
+
+> **Ten publishers repeating Reuters do not equal ten independent confirmations.**
+
+Before calculating consensus, PRISM must detect source families.
+
+Signals:
+
+- identical / near-identical paragraphs;
+- explicit wire attribution;
+- byline patterns;
+- publication timestamps;
+- headline similarity;
+- semantic similarity;
+- quotation overlap;
+- canonical links;
+- source references.
+
+Example:
+
+```text
+Reuters origin
+  |
+  +-- Outlet A
+  +-- Outlet B
+  +-- Outlet C
+
+AP origin
+  |
+  +-- Outlet D
+  +-- Outlet E
+
+Independent local reporting
+  |
+  +-- Outlet F
+```
+
+PRISM should display:
+
+```text
+17 articles
+6 independent narrative origins
+```
+
+This is substantially more useful than a raw source count.
+
+---
+
+# 9. Claim extraction with provenance
+
+The LLM should no longer output free-floating "facts".
+
+Every extracted claim must be evidence-bound.
+
+Example:
+
+```text
+ClaimInstance {
+    id
+    article_id
+    paragraph_id
+    source_text
+
+    normalized_claim
+
+    subject
+    predicate
+    object
+
+    claim_type
+    certainty
+    attribution
+    timestamp_reference
+}
+```
+
+Example:
+
+```text
+source_text:
+"Officials said the blast occurred shortly after 2 p.m."
+
+normalized_claim:
+"The blast occurred shortly after 14:00."
+
+certainty:
+ATTRIBUTED_ASSERTION
+
+paragraph_id:
+article_14:p17
+```
+
+No claim without provenance.
+
+---
+
+# 10. Claim clustering
+
+Different wording can describe the same underlying claim.
+
+```text
+"The blast happened at about 2 p.m."
+"The explosion occurred shortly after 14:00."
+"At approximately two in the afternoon, an explosion was reported."
+```
+
+These should become one canonical claim cluster.
+
+```text
+CanonicalClaim C17
+  |- instance Reuters:p4
+  |- instance BBC:p8
+  |- instance DR:p3
+```
+
+Clustering can initially combine:
+
+- embeddings;
+- entity overlap;
+- temporal normalization;
+- LLM adjudication only for ambiguous pairs.
+
+The model should resolve ambiguity, not invent the data structure.
+
+---
+
+# 11. The core product: Claim × Source Matrix
+
+The primary analytical object becomes a matrix.
+
+```text
+                         Reuters   BBC   RT   CNN   DR
+C1 explosion occurred      +       +     +     +     +
+C2 X caused explosion      ?       0     -     +     0
+C3 twelve fatalities       +       +     +     +     +
+C4 prior warning existed   0       +     0     +     +
+```
+
+Suggested states:
+
+```text
++  supports / asserts
+-  contradicts
+?  explicitly uncertain
+0  not mentioned
+```
+
+Every populated cell must be clickable back to the source paragraph.
+
+A `0` is not automatically manipulation.
+
+An omission only becomes analytically relevant when the missing claim is central to the event or disproportionately present among independent sources.
+
+---
+
+# 12. Event DNA
+
+From the claim matrix PRISM can construct an **Event DNA**.
+
+## 12.1 Invariant Core
+
+Claims independently present across a high proportion of source families.
+
+This is not labelled "truth".
+
+It is labelled:
+
+> **Cross-source invariant**
+
+## 12.2 Contested Claims
+
+Claims where independent sources assert incompatible versions.
+
+## 12.3 Narrative Delta
+
+For each source:
+
+- unique claims;
+- unusual omissions;
+- changed causal attribution;
+- changed agency;
+- changed certainty;
+- emotionally loaded additions;
+- contextual additions absent elsewhere.
+
+## 12.4 Source Independence
+
+How many apparently separate reports actually derive from distinct origins.
+
+## 12.5 Evidence Coverage
+
+How much of the event's extracted claim space is supported by directly acquired evidence.
+
+---
+
+# 13. Replace the magic bias score
+
+Remove the single 0-100 "propaganda" score as the central product metric.
+
+Replace it with evidence-derived indicators.
+
+Possible metrics:
+
+```text
+SOURCE INDEPENDENCE
+CLAIM CONSENSUS
+NARRATIVE DIVERGENCE
+CAUSALITY DIVERGENCE
+EVIDENCE COVERAGE
+SOURCE LINEAGE CONCENTRATION
+```
+
+These metrics should be derived from observable data.
+
+Example:
+
+```text
+Claim Consensus =
+independent source families supporting claim
+/
+independent source families covering event
+```
+
+The LLM should not invent the number.
+
+---
+
+# 14. Narrative drift over time
+
+PRISM should keep article publication and update timestamps.
+
+This allows reconstruction of narrative evolution.
+
+```text
+09:14  first report appears
+09:31  claim X introduced
+10:03  claim X appears in 8 outlets
+10:47  source wording changes
+11:12  official statement contradicts X
+12:05  four outlets update
+14:20  three outlets retain original claim
+```
+
+This can become one of the product's most distinctive views.
+
+The important question becomes:
+
+> **Where did a claim originate and how did it propagate?**
+
+---
+
+# 15. Geographic refraction
+
+The existing world map should become analytical rather than decorative.
+
+Current concept:
+
+```text
+country -> top local headlines
+```
+
+PRISM v2:
+
+```text
+same event
+   |
+   +-- Denmark -> framing A
+   +-- Germany -> framing A'
+   +-- Italy   -> framing B
+   +-- US      -> framing C
+```
+
+The user selects an event, not merely a country.
+
+The map then displays:
+
+- source count per country;
+- independent source families;
+- dominant claim differences;
+- causal attribution differences;
+- unique local claims;
+- narrative divergence.
+
+This gives the existing map a real reason to exist.
+
+---
+
+# 16. Existing fact-check enrichment
+
+Where available, canonical claims can be connected to external published fact checks.
+
+Important distinction:
+
+PRISM should not ask an LLM:
+
+> "Is this claim true?"
+
+Instead it can show:
+
+```text
+Claim C17
+
+Independent sources: 5
+Contradicting source families: 2
+
+Existing third-party fact checks:
+- Source A -> False
+- Source B -> Misleading
+```
+
+External fact checks are evidence attached to the claim graph, not absolute authority embedded into the model.
+
+---
+
+# 17. Product view: Narrative X-Ray
+
+The first PRISM v2 interface should be one page.
+
+Do not rebuild the whole frontend.
+
+## Event header
+
+```text
+EVENT
+Location / timestamp / source coverage
+```
+
+## Invariant Core
+
+Claims shared by independent source families.
+
+## Contested
+
+Claims with incompatible versions.
+
+## Narrative Deltas
+
+What each major source adds, removes or changes.
+
+## Source Lineage
+
+Show syndication / likely origin graph.
+
+## Claim Matrix
+
+The evidence table.
+
+## Timeline
+
+Show claim origin and propagation when enough temporal data exists.
+
+Every analytical statement should be traceable back to article evidence.
+
+---
+
+# 18. Technical architecture
+
+```text
+                         PRISM v2
+
+                      DISCOVERY LAYER
+      Google News / RSS / GDELT / Media indexes / URL
+                             |
+                             v
+                       EVENT BUILDER
+                             |
+                             v
+                    ACQUISITION MANAGER
+          metadata -> HTTP -> renderer -> recovery
+                             |
+                             v
+                       ARTICLE STORE
+                             |
+               +-------------+-------------+
+               |                           |
+               v                           v
+        SOURCE LINEAGE               CLAIM EXTRACTION
+               |                           |
+               +-------------+-------------+
+                             |
+                             v
+                       CLAIM CLUSTERING
+                             |
+                             v
+                    CLAIM x SOURCE MATRIX
+                             |
+               +-------------+-------------+
+               |             |             |
+               v             v             v
+           EVENT DNA      TIMELINE       GEO DELTA
+               |             |             |
+               +-------------+-------------+
+                             |
+                             v
+                       NARRATIVE X-RAY
+```
+
+---
+
+# 19. Spike plan — only a few hours first
+
+Do not build the full platform yet.
+
+The first spike should answer one question:
+
+> **Does the Narrative X-Ray reveal something materially harder to obtain than asking a normal LLM to summarize several articles?**
+
+## Phase 0 — freeze current product
+
+Do not invest in the existing bias score architecture.
+
+Keep the frontend components worth reusing.
+
+## Phase 1 — acquisition spike
+
+Choose one real event with broad international coverage.
+
+Target:
+
+```text
+10-15 article candidates
+>= 6 publishers
+>= 3 countries if possible
+```
+
+Build a small acquisition runner that:
+
+1. discovers or receives candidate URLs;
+2. canonicalizes them;
+3. tries the acquisition ladder;
+4. stores paragraph-level normalized articles;
+5. records acquisition state;
+6. deduplicates obvious syndication.
+
+### First success criterion
+
+At least **8 useful article representations** for the event without manually copying article text.
+
+A representation can be FULL or sufficiently useful PARTIAL content.
+
+If this repeatedly fails across normal news events, acquisition remains the blocking problem and we do not continue into UI work.
+
+## Phase 2 — claim extraction spike
+
+From the acquired corpus:
+
+- extract provenance-bound claims;
+- cluster equivalent claims;
+- classify support / contradiction / uncertainty / absence.
+
+Generate the first Claim × Source matrix.
+
+## Phase 3 — minimal Narrative X-Ray
+
+Reuse the existing frontend.
+
+Render only:
+
+- Invariant Core;
+- Contested Claims;
+- Claim Matrix;
+- Source Lineage summary.
+
+No redesign.
+
+No authentication.
+
+No monetization.
+
+No additional themes.
+
+No unnecessary infrastructure.
+
+---
+
+# 20. Kill criteria
+
+PRISM v2 should be abandoned or frozen if the spike shows that:
+
+1. reliable multi-source acquisition requires constant publisher-specific maintenance;
+2. the Claim Matrix cannot maintain evidence provenance;
+3. source lineage is too noisy to distinguish syndication from independent reporting;
+4. the final view provides little beyond what a generic LLM can produce from the same corpus;
+5. acquisition cost or latency makes normal event analysis impractical.
+
+The goal is not to save the project at all costs.
+
+The goal is to discover whether there is a genuinely differentiated product inside it.
+
+---
+
+# 21. Success criteria
+
+PRISM deserves continued development if one event analysis can demonstrate all of the following:
+
+- multiple independent sources acquired automatically;
+- exact paragraph provenance for every major claim;
+- duplicated/syndicated reporting separated from independent origins;
+- meaningful cross-source invariant claims;
+- at least one contested or materially divergent claim exposed clearly;
+- a Claim × Source matrix understandable in seconds;
+- an insight that is difficult to obtain from reading a single article or running a single generic prompt.
+
+If those conditions are met, PRISM is no longer a bias analyzer.
+
+It becomes an **observability system for information narratives**.
+
+---
+
+# 22. Immediate engineering priority
+
+The first implementation task is **not the LLM layer**.
+
+It is:
+
+## `acquisition_v2`
+
+A small isolated module responsible for:
+
+```text
+URL / discovery candidate
+        |
+        v
+safe canonical resolution
+        |
+        v
+structured metadata
+        |
+        v
+HTTP article extraction
+        |
+        v
+Playwright fallback
+        |
+        v
+alternate / syndication recovery
+        |
+        v
+Normalized Article + acquisition diagnostics
+```
+
+The module should be testable independently from the current UI and analysis engine.
+
+Once acquisition is robust enough, the rest of PRISM v2 becomes tractable.
+
+Until then, acquisition is the project.
+
+---
+
+## Final principle
+
+> **Do not fight to fetch every URL. Build a system that refuses to lose the event when one URL fails.**
+
+That is the acquisition philosophy PRISM v2 should be built around.
