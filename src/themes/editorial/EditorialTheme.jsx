@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Search, Globe, Loader, MapPin, Home, AlertCircle } from 'lucide-react';
 import useAnalysisStore from '../../store/analysisStore';
 import ArticleCard from './components/ArticleCard';
@@ -19,10 +19,8 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
     setTargetUrl,
     updateStatus,
     setAnalysisData,
-    resetAnalysis,
     // Geo State
     geoIntel,
-    selectedSector,
     sectorName,
     isLoadingFeed,
     analyzingId,
@@ -37,7 +35,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  const remainingAnalyses = maxAnalyses - analysisCount;
+  const remainingAnalyses = Math.max(0, maxAnalyses - analysisCount);
   const hasReachedLimit = remainingAnalyses <= 0;
 
   // Detect mobile screen
@@ -49,12 +47,13 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
   }, []);
 
   // Handle URL analysis
-  const handleAnalyze = async () => {
-    if (!targetUrl.trim()) return;
+  const handleAnalyze = async (requestedUrl = targetUrl) => {
+    const normalizedUrl = requestedUrl.trim();
+    if (!normalizedUrl) return;
 
     // Check limit
     if (hasReachedLimit) {
-      alert('You have reached the maximum number of analyses. Return to home to reset.');
+      alert('You have reached the analysis limit. Try again after the reset time.');
       return;
     }
 
@@ -64,7 +63,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
       const response = await fetch(API_ENDPOINTS.analyze, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: targetUrl }),
+        body: JSON.stringify({ url: normalizedUrl }),
       });
 
       if (!response.ok) {
@@ -79,7 +78,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
 
       // Increment analysis count
       if (onAnalysisUsed) {
-        onAnalysisUsed();
+        await onAnalysisUsed();
       }
     } catch (error) {
       console.error('Analysis error:', error);
@@ -195,7 +194,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               <div>
                 <p className="font-medium">Analysis limit reached</p>
-                <p className="text-sm text-red-600">You've used all {maxAnalyses} free analyses. Click "Home" to start a new session.</p>
+                <p className="text-sm text-red-600">You've used all {maxAnalyses} free analyses for this rate-limit window.</p>
               </div>
             </div>
           )}
@@ -211,7 +210,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
               type="url"
               value={targetUrl}
               onChange={(e) => setTargetUrl(e.target.value)}
-              placeholder={hasReachedLimit ? "Limit reached - return to Home" : "Paste article URL to analyze..."}
+              placeholder={hasReachedLimit ? "Analysis limit reached" : "Paste article URL to analyze..."}
               disabled={hasReachedLimit}
               className={`w-full px-4 md:px-5 py-3 md:py-4 pr-14 text-base md:text-lg border rounded-full shadow-sm focus:outline-none transition-all ${hasReachedLimit ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed' : 'border-slate-200 focus:border-slate-400 focus:shadow-md bg-white'}`}
             />
@@ -229,6 +228,13 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
           </form>
           <p className="text-center text-slate-400 text-xs md:text-sm mt-3">
             {hasReachedLimit ? `${maxAnalyses} analyses used - Session complete` : 'Paste any news URL or select an article from the map below'}
+          </p>
+          <p className="text-center text-slate-400 text-xs mt-2">
+            Article text is sent to OpenAI for analysis. Results are AI-generated
+            assessments, not verified facts. See our{" "}
+            <a className="underline" href="/privacy.html">Privacy Notice</a>
+            {" "}and{" "}
+            <a className="underline" href="/terms.html">Terms</a>.
           </p>
         </div>
 
@@ -295,7 +301,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
                 analyzingId={analyzingId}
                 onAnalyze={(item) => {
                   setTargetUrl(item.url);
-                  handleAnalyze();
+                  handleAnalyze(item.url);
                 }}
               />
             </div>
@@ -314,7 +320,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
         onAnalyze={(item) => {
           setTargetUrl(item.url);
           setIsMobileSheetOpen(false);
-          handleAnalyze();
+          handleAnalyze(item.url);
         }}
       />
 
@@ -330,8 +336,13 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
 
       {/* Footer */}
       <footer className="editorial-wide-container border-t border-[#E5E5E5] mt-20 py-8 text-center">
+        <p className="caption mb-2">
+          AI-assisted narrative analysis • Verify important claims independently
+        </p>
         <p className="caption">
-          Powered by advanced AI analysis • Built with integrity and transparency
+          <a className="underline" href="/privacy.html">Privacy</a>
+          {" · "}
+          <a className="underline" href="/terms.html">Terms</a>
         </p>
       </footer>
     </div>

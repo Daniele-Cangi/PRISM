@@ -1,16 +1,23 @@
-// API configuration for development and production
 const isDev = import.meta.env.DEV;
+const configuredBase = (
+  import.meta.env.VITE_API_URL || ""
+).replace(/\/$/, "");
 
-// In development, use local backend server
-// In production, use Render backend API
-// IMPORTANT: Replace with your actual Render URL after deploy
-const RENDER_API_URL = import.meta.env.VITE_API_URL || 'https://shadow-analyzer-api.onrender.com';
-const API_BASE = isDev ? 'http://localhost:8001' : RENDER_API_URL;
+const API_BASE = configuredBase
+  || (isDev ? "http://localhost:8001" : "");
+const API_PREFIX =
+  configuredBase || isDev ? "" : "/api";
 
 export const API_ENDPOINTS = {
-  analyze: `${API_BASE}/analyze`,
-  geoRecon: (countryCode) => `${API_BASE}/recon/geo?country_code=${countryCode}`,
-  rateLimit: `${API_BASE}/rate-limit`,
+  analyze: API_BASE + API_PREFIX + "/analyze",
+  geoRecon: (countryCode) => (
+    API_BASE
+    + API_PREFIX
+    + "/recon/geo?country_code="
+    + encodeURIComponent(countryCode)
+  ),
+  rateLimit:
+    API_BASE + API_PREFIX + "/rate-limit",
 };
 
 export default API_ENDPOINTS;

@@ -1,137 +1,134 @@
-# SHADOW // ANALYZER
-### Adversarial Intelligence & Narrative Deconstruction Engine
+# PRISM / Shadow Analyzer
 
-![Status](https://img.shields.io/badge/STATUS-OPERATIONAL-00ff00?style=for-the-badge)
-![Security](https://img.shields.io/badge/SECURITY-PHANTOM_PROTOCOL-blue?style=for-the-badge)
-![Core](https://img.shields.io/badge/CORE-GPT--4o-purple?style=for-the-badge)
+PRISM is an experimental cognitive-security application that extracts text
+from public news URLs and uses an AI model to examine framing, rhetorical
+devices, omitted context, and plausible narrative intent.
 
-**SHADOW ANALYZER** is a specialized cognitive security, open-source intelligence (OSINT) tool designed to deconstruct adversarial narratives in real-time. It moves beyond simple "fake news detection" to analyze the *rhetorical architecture*, *strategic intent*, and *psychological triggers* embedded within digital content.
+Its output is an AI-generated assessment, not a fact check, verified truth, or
+professional advice. Important claims should always be checked against primary
+sources.
 
----
+## Architecture
 
-## 🏗️ Architecture
+- **Frontend:** React 19, Vite, Tailwind CSS, Framer Motion.
+- **Primary production API:** Vercel Python functions under `/api`.
+- **Optional standalone API:** FastAPI on port 8001, deployable with Docker or
+  Render.
+- **Extraction:** bounded HTTP(S) fetching without executing article
+  JavaScript.
+- **Analysis:** OpenAI Chat Completions with an output schema validated by
+  Pydantic.
+- **Abuse protection:** Redis-backed fixed-window limiting in production.
 
-The system operates on a "Zero-Trust" architecture divided into three security layers:
+The frontend uses same-origin Vercel functions by default. Set `VITE_API_URL`
+only when using the standalone FastAPI service.
 
-### 1. The Interface (Lab Mode)
-- **Tech Stack**: React (Vite), Tailwind CSS v3, Framer Motion.
-- **Aesthetic**: "Newsroom War Room" (Monochrome, Red Accents, High Density).
-- **Features**:
-    - **Live Intelligence Ticker**: Scrolling breaking news feed.
-    - **Global Defcon Status**: Real-time system monitoring indicators.
-    - **Tactical Map (MapHUD)**: Interactive vector-based world map for sector monitoring.
+## Security model
 
-### 2. The Phantom Scraper (Stealth Extraction)
-- **Tech Stack**: Python, Playwright, BeautifulSoup, NumPy.
-- **Protocol**: `phantom_scraper.py`
-- **Core Capabilities**:
+Public URL processing is treated as hostile input:
 
-    #### 🕵️‍♂️ Phase 1: Shapeshifter Protocol (The Mask)
-    Rotates through 3 distinct digital fingerprints to evade WAFs:
-    - **Profile Alpha**: Desktop Chrome (Windows).
-    - **Profile Beta**: iPhone 14 Pro (Mobile Evasion to bypass rigid desktop walls).
-    - **Profile Gamma**: Desktop Firefox (Alternative fingerprint).
-    - **Smart Retry**: Intelligent cool-down delays (3-7s) between profile shifts.
+- only HTTP on port 80 and HTTPS on port 443 are accepted;
+- credentials, local hostnames, private IPs, metadata ranges, mixed public and
+  private DNS answers, and non-global addresses are rejected;
+- each redirect is resolved and validated again;
+- connections are pinned to a validated public IP while preserving Host, TLS
+  SNI, and certificate verification, preventing DNS rebinding;
+- response bodies are capped at 2 MB and extracted text at 25,000 characters;
+- production refuses to start without exact CORS origins, Redis, an HMAC salt,
+  and an OpenAI key;
+- submitted URLs and raw IP addresses are excluded from application logs;
+- request attempts are counted before external fetching or model inference.
 
-    #### 🧬 Phase 2: Bio-Mimicry (The Movement)
-    Replicates human motor control to defeat heuristic analysis:
-    - **Bezier Mouse curves**: Mouse movements follow non-linear, randomized paths.
-    - **Mobile Touch Emulation**: Simulates swipe gestures when engaging Profile Beta.
-    - **Smart Scroll**: Variable-speed scrolling with random pauses to trigger "Lazy Loading".
+An outbound firewall that denies private, link-local, and metadata networks is
+still recommended as defense in depth.
 
-    #### 🎯 Phase 3: Target Resolution (The Breach)
-    Advanced logic to handle hostile redirect chains (e.g., Google News RSS):
-    - **Consent Bypass**: Autonomously identifies and clicks "Accept/Agree" on cookie walls.
-    - **Redirect Escrow**: Verifies breakout from aggregator domains (Google) before capturing content.
-    - **Payload Extraction**: Surgical DOM cleaning to strip ads, scripts, and noise.
+## Requirements
 
-### 3. Global Overwatch (GEOINT) [NEW]
-- **Tech Stack**: React Simple Maps, d3-geo, Google News RSS.
-- **Protocol**: `/recon/geo`
-- **Capabilities**:
-    - **Tactical Map (MapHUD)**: Interactive vector-based world map supporting 16 strategic sectors (US, CN, RU, IT, etc.).
-    - **Sector Monitoring**: Real-time acquisition of top 10 narrative targets per country.
-    - **Intel Feed**: Bento-style sidebar for rapid target selection and Deep Analysis injection.
+- Node.js 20.19 or newer (Node 22 LTS recommended)
+- Python 3.13
+- Redis for production
+- an OpenAI API key
 
-### 4. Identify & Analyze (Cognitive Core)
-- **Tech Stack**: Python (FastAPI), OpenAI GPT-4o.
-- **Protocol**: `System Prompt v2.0` (Recalibrated).
-- **Logic**:
-    - **Dynamic Scoring**: 0-100 scale broken into discrete threat bands (Neutral, Leaning, Propaganda, Weaponized).
-    - **Narrative Deconstruction**: A 500+ word forensic deep-dive into the article's framing and hidden axioms.
-    - **Semantic Stripping**: Removes emotional adjectives to isolate raw facts.
-    - **Paywall Logic**: Automatically detects and aborts analysis on encrypted/stub content (<500 chars).
+## Local setup
 
----
+Clone the actual repository:
 
-## 🚀 Installation & Setup
+~~~bash
+git clone https://github.com/Daniele-Cangi/SHADOW-ANALYZER.git
+cd SHADOW-ANALYZER
+~~~
 
-### Prerequisites
-- Node.js (v18+)
-- Python (3.12+)
-- OpenAI API Key
+Create local configuration. Never commit the resulting `.env` file:
 
-### 1. Clone & Configure
-```bash
-git clone https://github.com/your-repo/shadow-analyzer.git
-cd shadow-analyzer
-```
+~~~powershell
+Copy-Item .env.example .env
+~~~
 
-### 2. Backend Deployment (The Engine)
-Create a `.env` file in the root directory:
-```env
-OPENAI_API_KEY=sk-your-api-key-here
-```
+Install and run the frontend:
 
-Install dependencies and install the Phantom browser:
-```bash
-pip install fastapi uvicorn requests beautifulsoup4 openai python-dotenv playwright playwright-stealth numpy
-playwright install chromium
-```
-
-Launch the server:
-```bash
-python server.py
-# Server will listen on http://0.0.0.0:8000
-```
-
-### 3. Frontend Deployment (The Interface)
-In a new terminal:
-```bash
-npm install
+~~~bash
+npm ci
 npm run dev
-# Interface accessible at http://localhost:5175
-```
+~~~
 
----
+In another terminal, install and run the FastAPI service:
 
-## ⚡ Usage
+~~~powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.venv\Scripts\python.exe server.py
+~~~
 
-1. **Initialize**: Open the interface. The "System Ready" status should be visible.
-2. **Target**: Paste any URL (News, Blog, Social Media Post) into the input field.
-3. **Execute**: Click `ANALYZE`.
-4. **Observe**:
-    - **Phase 1**: Phantom Scraper infiltrates the target (Status: `BYPASSING_PROTOCOLS`).
-    - **Phase 2**: Cognitive Engine processes the text (Status: `CALCULATING_VECTORS`).
-    - **Phase 3**: Dashboard renders the `Forensic Report`.
+The frontend is available at `http://localhost:5173`; FastAPI runs at
+`http://localhost:8001`. Interactive API documentation is enabled only outside
+production.
 
----
+## Production configuration
 
-## 📊 Output Schema
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `APP_ENV=production` | standalone API | enables fail-closed checks |
+| `OPENAI_API_KEY` | yes | server-side secret; rotate before deployment |
+| `OPENAI_MODEL` | no | defaults to `gpt-4o` |
+| `ALLOWED_ORIGINS` | yes | comma-separated exact frontend origins |
+| `RATE_LIMIT_REDIS_URL` | yes | durable cross-instance rate limit |
+| `RATE_LIMIT_SALT` | yes | random HMAC secret for client identifiers |
+| `TRUSTED_PROXY_HOPS` | yes behind a proxy | client position counted from the right side of X-Forwarded-For |
+| `MAX_ANALYSES_PER_IP` | no | defaults to 3 |
+| `RATE_LIMIT_WINDOW_SECONDS` | no | defaults to 86400 |
+| `MAX_CONCURRENT_ANALYSES` | no | standalone API concurrency cap |
 
-The engine returns a strict JSON object containing:
+For Vercel, configure the same secrets in the project settings. For Render,
+the blueprint marks operator-supplied values with `sync: false`; existing
+services must be updated manually because Render does not apply new
+`sync: false` values during later blueprint syncs.
 
-- **`meta.score`**: 0-100 Deception Score.
-- **`meta.verdict_short`**: 5-word ruthless summary.
-- **`intent`**: Strategic reason for publication (Cui Bono).
-- **`facts`**: List of verifiable facts stripped of emotion.
-- **`axioms`**: Hidden premises and omitted context.
-- **`narrative_analysis`**: Long-form rhetorical deconstruction.
+## Validation
 
----
+~~~bash
+npm run check
+npm audit --audit-level=high
+python -m ruff format --check .
+python -m ruff check .
+python -m pytest -q --cov --cov-fail-under=60
+python -m pip_audit -r requirements.txt
+python -m pip_audit -r api/requirements.txt
+~~~
 
-## 🛡️ Disclaimer
+Python direct and transitive dependencies are resolved exactly in
+`requirements.txt`, `requirements-dev.txt`, and `api/requirements.txt`.
+Regenerate them from the corresponding `.in` files with `pip-compile`.
 
-This tool is for **educational and research purposes only**. It is designed to analyze public information. The user assumes all responsibility for compliant usage with target terms of service.
+## Responsible operation
 
-> *"In an era of cognitive warfare, the only defense is the ability to deconstruct."*
+Submit only public article URLs that you are permitted to access and process.
+The extracted text is sent to the configured OpenAI API. Do not submit private,
+confidential, personal, paywalled, infringing, or unlawfully obtained material.
+
+Read [Privacy](PRIVACY.md), [Terms](TERMS.md), [Security](SECURITY.md), and
+[Contributing](CONTRIBUTING.md) before deploying or contributing.
+
+## License
+
+PRISM is licensed under the [Apache License 2.0](LICENSE). Third-party
+dependencies and content remain subject to their respective licenses.

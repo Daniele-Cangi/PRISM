@@ -59,13 +59,14 @@ The hardest part of PRISM v2 is not the LLM.
 
 It is reliably obtaining enough independent coverage of the same event.
 
-The current approach is URL-centric:
+The hardened v1 approach remains URL-centric:
 
 ```text
 URL
- -> Playwright
- -> anti-bot attempts
- -> DOM
+ -> scheme, port and hostname validation
+ -> public DNS resolution
+ -> IP-pinned, TLS-verified HTTPS
+ -> bounded HTML response
  -> BeautifulSoup
  -> article text
 ```
@@ -225,17 +226,18 @@ HTML
  -> metadata validation
 ```
 
-### Stage C — browser rendering
+### Stage C — bounded failure
 
-Playwright becomes a fallback only when:
+A public service must not render arbitrary user-supplied URLs in a privileged
+browser. If the regular response is only a JavaScript shell:
 
-- content is JavaScript-rendered;
-- the normal response contains a shell;
-- structured data indicates an article exists but content is missing.
+- mark direct acquisition as partial or unavailable;
+- continue through controlled feeds, discovery and syndication routes;
+- retain metadata when it is still useful;
+- never weaken the network boundary to fight a publisher's anti-bot layer.
 
-The browser should not pretend to be a universal anti-bot weapon.
-
-It is simply another renderer.
+Any future browser-based acquisition belongs in a separately isolated service
+with strict egress controls, not in the public request path.
 
 ### Stage D — alternate evidence route
 
@@ -896,7 +898,7 @@ structured metadata
 HTTP article extraction
         |
         v
-Playwright fallback
+bounded failure / partial record
         |
         v
 alternate / syndication recovery

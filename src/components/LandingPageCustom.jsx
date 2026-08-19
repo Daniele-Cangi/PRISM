@@ -35,7 +35,6 @@ const LandingPage = ({ onLogin }) => {
       roleDev: 'Full Stack Developer',
       // Sponsorship
       supportTitle: 'Support the Project',
-      supportText: 'Prism is an open source project. Soon you will be able to support our development and help us build this tool for information democracy. (Coming Soon)',
       sponsorGithub: 'Sponsor directly on GitHub',
       sponsor: 'Sponsor',
       becomePatron: 'Become a monthly patron',
@@ -44,11 +43,9 @@ const LandingPage = ({ onLogin }) => {
       coffee: 'Buy a Coffee',
       kofiSupport: 'One-time or monthly support',
       kofiBtn: 'Support on Ko-fi',
-      supportThanks: 'Every contribution, big or small, helps us keep Prism free and open source.',
       thanksHeart: '❤️ Thank you for your support!',
       // Legal Transparency
       legalTitle: 'Infrastructure & Partners',
-      legalText: 'Prism is an open source project powered by research labs and organizations that believe in information democracy. We welcome partnerships with entities that share our vision.',
       legalMonitored: 'Infrastructure supported by',
       legalVerified: 'Open Source Project',
       legalBtn: 'Visit Lab',
@@ -125,23 +122,11 @@ const LandingPage = ({ onLogin }) => {
       docsPropagandaText: 'Heavy emotional framing, logical fallacies, clear agenda',
       docsWeaponized: 'WEAPONIZED',
       docsWeaponizedText: 'Disinformation, psychological warfare, fabrication',
-      docsPhantom: 'PHANTOM SCRAPER MODULE',
-      docsPhantomText: 'Advanced web extraction engine using',
-      docsPhantomText2: 'headless browser with anti-detection capabilities:',
-      docsShapeshifter: 'Shapeshifter Profiles:',
-      docsShapeshifterText: 'Rotates between Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
-      docsStealth: 'Stealth Injection:',
-      docsStealthText: 'Overwrites navigator.webdriver, WebGL fingerprint spoofing',
-      docsBioMimicry: 'Bio-Mimicry:',
-      docsBioMimicryText: 'Human-like mouse movements, scroll patterns, touch gestures',
-      docsGoogleBypass: 'Google Consent Bypass:',
-      docsGoogleBypassText: 'Automatic handling of cookie walls and interstitials',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Real-time intelligence gathering from',
       docsGeointText2: '35+ geographic sectors',
       docsGeointText3: 'via Google News RSS with localized perspectives:',
       docsOutput: 'OUTPUT SCHEMA',
-      docsFooter: 'PRISM Cognitive Security Engine | Open Source Project',
       docsQuote: 'Democracy Dies in Darkness. Logic Survives in Light.'
     },
     da: {
@@ -164,7 +149,6 @@ const LandingPage = ({ onLogin }) => {
       roleAIDev: 'AI-udvikler',
       roleDev: 'Full Stack Udvikler',
       supportTitle: 'Støt Projektet',
-      supportText: 'Prism er et open source-projekt. Snart vil du kunne støtte vores udvikling og hjælpe os med at bygge dette værktøj for informationsdemokrati. (Kommer snart)',
       sponsorGithub: 'Sponsor direkte på GitHub',
       sponsor: 'Sponsor',
       becomePatron: 'Bliv månedlig patron',
@@ -173,10 +157,8 @@ const LandingPage = ({ onLogin }) => {
       coffee: 'Køb en Kaffe',
       kofiSupport: 'Engangsstøtte eller månedlig',
       kofiBtn: 'Støt på Ko-fi',
-      supportThanks: 'Hvert bidrag, stort som lille, hjælper os med at holde Prism gratis og open source.',
       thanksHeart: '❤️ Tak for din støtte!',
       legalTitle: 'Infrastruktur & Partnere',
-      legalText: 'Prism er et open source-projekt drevet af forskningslaboratorier og organisationer, der tror på informationsdemokrati. Vi byder partnerskaber velkommen med enheder, der deler vores vision.',
       legalMonitored: 'Infrastruktur understøttet af',
       legalVerified: 'Open Source Projekt',
       legalBtn: 'Besøg Lab',
@@ -251,23 +233,11 @@ const LandingPage = ({ onLogin }) => {
       docsPropagandaText: 'Tung emotionel ramme, logiske fejlslutninger, klar dagsorden',
       docsWeaponized: 'VÅBENGJORT',
       docsWeaponizedText: 'Desinformation, psykologisk krigsførelse, fabrikation',
-      docsPhantom: 'PHANTOM SCRAPER MODUL',
-      docsPhantomText: 'Avanceret web-ekstraktionsmotor bruger',
-      docsPhantomText2: 'headless browser med anti-detektionsevner:',
-      docsShapeshifter: 'Shapeshifter Profiler:',
-      docsShapeshifterText: 'Roterer mellem Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
-      docsStealth: 'Stealth Injektion:',
-      docsStealthText: 'Overskriver navigator.webdriver, WebGL fingeraftryk spoofing',
-      docsBioMimicry: 'Bio-Mimicry:',
-      docsBioMimicryText: 'Menneskelignende musebevægelser, scrollmønstre, touch-gestikker',
-      docsGoogleBypass: 'Google Consent Bypass:',
-      docsGoogleBypassText: 'Automatisk håndtering af cookie-vægge og interstitials',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Real-time efterretningsindsamling fra',
       docsGeointText2: '35+ geografiske sektorer',
       docsGeointText3: 'via Google News RSS med lokaliserede perspektiver:',
       docsOutput: 'OUTPUT SKEMA',
-      docsFooter: 'PRISM Kognitiv Sikkerhedsmotor | Open Source Projekt',
       docsQuote: 'Demokrati Dør i Mørke. Logik Overlever i Lyset.'
     },
     sv: {
@@ -290,7 +260,6 @@ const LandingPage = ({ onLogin }) => {
       roleAIDev: 'AI-utvecklare',
       roleDev: 'Full Stack Utvecklare',
       supportTitle: 'Stöd Projektet',
-      supportText: 'Prism är ett open source-projekt. Snart kommer du att kunna stödja vår utveckling och hjälpa oss bygga detta verktyg för informationsdemokrati. (Kommer snart)',
       sponsorGithub: 'Sponsra direkt på GitHub',
       sponsor: 'Sponsra',
       becomePatron: 'Bli månadspatron',
@@ -299,10 +268,8 @@ const LandingPage = ({ onLogin }) => {
       coffee: 'Köp en Kaffe',
       kofiSupport: 'Engångsstöd eller månatligt',
       kofiBtn: 'Stöd på Ko-fi',
-      supportThanks: 'Varje bidrag, stort som litet, hjälper oss att hålla Prism gratis och open source.',
       thanksHeart: '❤️ Tack för ditt stöd!',
       legalTitle: 'Infrastruktur & Partners',
-      legalText: 'Prism är ett open source-projekt drivet av forskningslaboratorier och organisationer som tror på informationsdemokrati. Vi välkomnar partnerskap med enheter som delar vår vision.',
       legalMonitored: 'Infrastruktur stödd av',
       legalVerified: 'Open Source Projekt',
       legalBtn: 'Besök Lab',
@@ -377,23 +344,11 @@ const LandingPage = ({ onLogin }) => {
       docsPropagandaText: 'Tung emotionell inramning, logiska felslut, tydlig agenda',
       docsWeaponized: 'VAPENISERAD',
       docsWeaponizedText: 'Desinformation, psykologisk krigföring, fabricering',
-      docsPhantom: 'PHANTOM SCRAPER MODUL',
-      docsPhantomText: 'Avancerad webbextraktionsmotor använder',
-      docsPhantomText2: 'headless webbläsare med anti-detektionsförmågor:',
-      docsShapeshifter: 'Shapeshifter Profiler:',
-      docsShapeshifterText: 'Roterar mellan Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
-      docsStealth: 'Stealth Injektion:',
-      docsStealthText: 'Skriver över navigator.webdriver, WebGL fingeravtrycksspoofing',
-      docsBioMimicry: 'Bio-Mimicry:',
-      docsBioMimicryText: 'Människoliknande musrörelser, scrollmönster, touch-gester',
-      docsGoogleBypass: 'Google Consent Bypass:',
-      docsGoogleBypassText: 'Automatisk hantering av cookieväggar och interstitials',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Realtidsinsamling av underrättelser från',
       docsGeointText2: '35+ geografiska sektorer',
       docsGeointText3: 'via Google News RSS med lokaliserade perspektiv:',
       docsOutput: 'OUTPUT-SCHEMA',
-      docsFooter: 'PRISM Kognitiv Säkerhetsmotor | Open Source Projekt',
       docsQuote: 'Demokrati Dör i Mörker. Logik Överlever i Ljuset.'
     },
     no: {
@@ -416,7 +371,6 @@ const LandingPage = ({ onLogin }) => {
       roleAIDev: 'AI-utvikler',
       roleDev: 'Full Stack Utvikler',
       supportTitle: 'Støtt Prosjektet',
-      supportText: 'Prism er et open source-prosjekt. Snart vil du kunne støtte vår utvikling og hjelpe oss med å bygge dette verktøyet for informasjonsdemokrati. (Kommer snart)',
       sponsorGithub: 'Sponsor direkte på GitHub',
       sponsor: 'Sponsor',
       becomePatron: 'Bli månedlig patron',
@@ -425,10 +379,8 @@ const LandingPage = ({ onLogin }) => {
       coffee: 'Kjøp en Kaffe',
       kofiSupport: 'Engangsstøtte eller månedlig',
       kofiBtn: 'Støtt på Ko-fi',
-      supportThanks: 'Hvert bidrag, stort som lite, hjelper oss å holde Prism gratis og open source.',
       thanksHeart: '❤️ Takk for din støtte!',
       legalTitle: 'Infrastruktur & Partnere',
-      legalText: 'Prism er et open source-prosjekt drevet av forskningslaboratorier og organisasjoner som tror på informasjonsdemokrati. Vi ønsker partnerskap med enheter som deler vår visjon velkommen.',
       legalMonitored: 'Infrastruktur støttet av',
       legalVerified: 'Open Source Prosjekt',
       legalBtn: 'Besøk Lab',
@@ -503,23 +455,11 @@ const LandingPage = ({ onLogin }) => {
       docsPropagandaText: 'Tung emosjonell innramming, logiske feilslutninger, tydelig agenda',
       docsWeaponized: 'VÅPENISERT',
       docsWeaponizedText: 'Desinformasjon, psykologisk krigføring, fabrikasjon',
-      docsPhantom: 'PHANTOM SCRAPER MODUL',
-      docsPhantomText: 'Avansert webuttrekkingsmotor bruker',
-      docsPhantomText2: 'headless nettleser med anti-deteksjonsevner:',
-      docsShapeshifter: 'Shapeshifter Profiler:',
-      docsShapeshifterText: 'Roterer mellom Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
-      docsStealth: 'Stealth Injeksjon:',
-      docsStealthText: 'Overskriver navigator.webdriver, WebGL fingeravtrykkspoofing',
-      docsBioMimicry: 'Bio-Mimicry:',
-      docsBioMimicryText: 'Menneskelignende musebevegelser, scrollmønstre, touch-gester',
-      docsGoogleBypass: 'Google Consent Bypass:',
-      docsGoogleBypassText: 'Automatisk håndtering av cookievegger og interstitials',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Sanntidsinnsamling av etterretning fra',
       docsGeointText2: '35+ geografiske sektorer',
       docsGeointText3: 'via Google News RSS med lokaliserte perspektiver:',
       docsOutput: 'OUTPUT-SKJEMA',
-      docsFooter: 'PRISM Kognitiv Sikkerhetsmotor | Open Source Prosjekt',
       docsQuote: 'Demokrati Dør i Mørke. Logikk Overlever i Lyset.'
     },
     it: {
@@ -542,7 +482,6 @@ const LandingPage = ({ onLogin }) => {
       roleAIDev: 'Sviluppatore AI',
       roleDev: 'Full Stack Developer',
       supportTitle: 'Supporta il Progetto',
-      supportText: 'Prism è un progetto open source. Presto potrai supportare il nostro sviluppo e aiutarci a costruire questo strumento per la democrazia informativa. (Prossimamente)',
       sponsorGithub: 'Sponsorizza direttamente su GitHub',
       sponsor: 'Sponsorizza',
       becomePatron: 'Diventa un patron mensile',
@@ -551,10 +490,8 @@ const LandingPage = ({ onLogin }) => {
       coffee: 'Offri un Caffè',
       kofiSupport: 'Supporto una tantum o mensile',
       kofiBtn: 'Supporta su Ko-fi',
-      supportThanks: 'Ogni contributo, grande o piccolo, ci aiuta a mantenere Prism gratuito e open source.',
       thanksHeart: '❤️ Grazie per il tuo supporto!',
       legalTitle: 'Infrastruttura & Partner',
-      legalText: 'Prism è un progetto open source sostenuto da laboratori di ricerca e organizzazioni che credono nella democrazia informativa. Accogliamo partnership con enti che condividono la nostra visione.',
       legalMonitored: 'Infrastruttura supportata da',
       legalVerified: 'Progetto Open Source',
       legalBtn: 'Visita il Lab',
@@ -629,23 +566,11 @@ const LandingPage = ({ onLogin }) => {
       docsPropagandaText: 'Forte framing emotivo, fallacie logiche, agenda chiara',
       docsWeaponized: 'WEAPONIZED',
       docsWeaponizedText: 'Disinformazione, guerra psicologica, fabbricazione',
-      docsPhantom: 'MODULO PHANTOM SCRAPER',
-      docsPhantomText: 'Motore avanzato di estrazione web usando',
-      docsPhantomText2: 'browser headless con capacità anti-rilevamento:',
-      docsShapeshifter: 'Profili Shapeshifter:',
-      docsShapeshifterText: 'Ruota tra Desktop Chrome, iPhone 14 Pro, Desktop Firefox',
-      docsStealth: 'Stealth Injection:',
-      docsStealthText: 'Sovrascrive navigator.webdriver, spoofing fingerprint WebGL',
-      docsBioMimicry: 'Bio-Mimicry:',
-      docsBioMimicryText: 'Movimenti mouse simil-umani, pattern di scroll, gesture touch',
-      docsGoogleBypass: 'Google Consent Bypass:',
-      docsGoogleBypassText: 'Gestione automatica di cookie wall e interstitial',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Raccolta intelligence in tempo reale da',
       docsGeointText2: '35+ settori geografici',
       docsGeointText3: 'via Google News RSS con prospettive localizzate:',
       docsOutput: 'SCHEMA OUTPUT',
-      docsFooter: 'PRISM Cognitive Security Engine | Progetto Open Source',
       docsQuote: 'La Democrazia Muore nel Buio. La Logica Sopravvive nella Luce.'
     }
   };
@@ -663,8 +588,8 @@ const LandingPage = ({ onLogin }) => {
     <div className="bg-black">
       {/* HERO SECTION - Full screen con immagine di sfondo */}
       <div
-        className="min-h-screen w-full bg-cover bg-center bg-no-repeat relative bg-fixed"
-        style={{ backgroundImage: `url('/strillone-LOra-e1546063219226.jpg')` }}
+        className="min-h-screen w-full relative bg-fixed"
+        style={{ background: 'radial-gradient(circle at 20% 20%, rgba(220,38,38,.28), transparent 35%), radial-gradient(circle at 80% 70%, rgba(251,191,36,.18), transparent 32%), linear-gradient(135deg, #09090b 0%, #18181b 48%, #050505 100%)' }}
       >
         {/* Overlay scuro per leggibilità */}
         <div className="absolute inset-0 bg-black/60" />
@@ -673,7 +598,7 @@ const LandingPage = ({ onLogin }) => {
         <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
           {/* GitHub Star Button */}
           <a
-            href="https://github.com/UnityLoop-official"
+            href="https://github.com/Daniele-Cangi/SHADOW-ANALYZER"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 bg-[#fbbf24]/20 hover:bg-[#fbbf24]/30 active:bg-[#fbbf24]/40 backdrop-blur-md text-white px-3 py-2.5 rounded-lg transition-all duration-200 border border-[#fbbf24]/30 touch-manipulation min-h-[44px]"
@@ -781,7 +706,14 @@ const LandingPage = ({ onLogin }) => {
             </button>
 
             <p className="text-xs text-gray-500 text-center mt-6">
-              {t.termsText}
+              {t.termsText}.{" "}
+              <a className="underline hover:text-white" href="/terms.html">
+                Terms
+              </a>
+              {" · "}
+              <a className="underline hover:text-white" href="/privacy.html">
+                Privacy
+              </a>
             </p>
           </motion.div>
 
@@ -883,7 +815,7 @@ const LandingPage = ({ onLogin }) => {
           <div className="grid md:grid-cols-3 gap-6 mb-20">
             {/* GitHub */}
             <motion.a
-              href="https://github.com/UnityLoop-official"
+              href="https://github.com/Daniele-Cangi/SHADOW-ANALYZER"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
@@ -1023,7 +955,7 @@ const LandingPage = ({ onLogin }) => {
               <div className="space-y-3 mb-6">
                 {/* GitHub Button */}
                 <a
-                  href="https://github.com/UnityLoop-official/SHADOW-ANALYZER/issues/new?template=join-team.md&title=Join+Team+Application"
+                  href="https://github.com/Daniele-Cangi/SHADOW-ANALYZER/issues/new"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-3 bg-[#24292e] hover:bg-[#2f363d] text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02]"
@@ -1159,7 +1091,7 @@ const LandingPage = ({ onLogin }) => {
                   <a href="#architecture" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Architecture</a>
                   <a href="#protocol" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Protocol</a>
                   <a href="#scoring" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Scoring</a>
-                  <a href="#scraper" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Scraper</a>
+                  <a href="#scraper" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Extractor</a>
                   <a href="#geoint" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">GEOINT</a>
                   <a href="#output" className="block text-gray-500 hover:text-white text-xs py-1.5 transition-colors">Output</a>
                 </nav>
@@ -1287,7 +1219,7 @@ const LandingPage = ({ onLogin }) => {
                         <h4 className="text-gray-400 text-xs uppercase tracking-wider mb-3">Backend</h4>
                         <ul className="text-gray-500 text-sm space-y-1">
                           <li>FastAPI</li>
-                          <li>Playwright</li>
+                          <li>urllib3 (IP-pinned HTTPS)</li>
                           <li>BeautifulSoup4</li>
                           <li>OpenAI GPT-4o</li>
                         </ul>
@@ -1339,12 +1271,12 @@ const LandingPage = ({ onLogin }) => {
 
                   {/* Scraper */}
                   <section id="scraper" className="mb-12">
-                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Phantom Scraper</h3>
-                    <p className="text-gray-500 text-sm mb-4">Web extraction engine with anti-detection:</p>
+                    <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Hardened Article Extractor</h3>
+                    <p className="text-gray-500 text-sm mb-4">Bounded extraction without executing article JavaScript:</p>
                     <ul className="text-gray-500 text-sm space-y-2">
-                      <li><span className="text-gray-400">Shapeshifter</span> — rotates browser profiles</li>
-                      <li><span className="text-gray-400">Stealth</span> — fingerprint spoofing</li>
-                      <li><span className="text-gray-400">Bio-Mimicry</span> — human-like behavior</li>
+                      <li><span className="text-gray-400">Public web only</span> — HTTP(S) on standard ports</li>
+                      <li><span className="text-gray-400">Redirect guard</span> — every destination and DNS answer is validated</li>
+                      <li><span className="text-gray-400">Resource limits</span> — strict timeouts and a 2 MB response cap</li>
                     </ul>
                   </section>
 
