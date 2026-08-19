@@ -45,7 +45,7 @@ still recommended as defense in depth.
 ## Requirements
 
 - Node.js 20.19 or newer (Node 22 LTS recommended)
-- Python 3.13
+- Python 3.14
 - Redis for production
 - an OpenAI API key
 
