@@ -98,8 +98,8 @@ const AnalysisPanel = ({ data, onClose }) => {
           text: `Bias Score: ${meta?.score}% - ${meta?.verdict_short}`,
           url: window.location.href
         });
-      } catch (err) {
-        console.log('Share cancelled');
+      } catch {
+        // Sharing is optional; cancellation needs no user-facing error.
       }
     }
   };

@@ -69,7 +69,7 @@ export default function ForensicScan({ onComplete }) {
 
             {/* Terminal Output */}
             <div className="h-48 overflow-hidden border border-cyber-green/30 bg-black/50 p-4 relative">
-                <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
+                <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,rgba(255,255,255,0.15)_0.7px,transparent_0.7px)] bg-[length:4px_4px] opacity-10"></div>
                 <div className="space-y-1">
                     {logs.map((log, index) => (
                         <motion.div

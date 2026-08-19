@@ -3,7 +3,6 @@
  * Biomorphic, flowing aesthetic (Apple, Stripe)
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap');
 
 .organic-theme {
   --organic-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

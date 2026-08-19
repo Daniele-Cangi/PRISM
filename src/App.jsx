@@ -1,48 +1,75 @@
-import React, { useState } from 'react';
-import EditorialTheme from './themes/editorial/EditorialTheme';
-import LandingPageCustom from './components/LandingPageCustom';
-// LandingPage originale mantenuta per uso futuro
-// import LandingPage from './components/LandingPage';
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useState,
+} from "react";
 
-const MAX_ANALYSES = 3;
+import API_ENDPOINTS from "./utils/api";
 
-/**
- * Main App Component
- * Shows Landing Page first, then Editorial Theme after login
- */
+
+const EditorialTheme = lazy(
+  () => import("./themes/editorial/EditorialTheme"),
+);
+const LandingPage = lazy(
+  () => import("./components/LandingPageCustom"),
+);
+const FALLBACK_LIMIT = 3;
+
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <p className="font-mono text-sm tracking-widest">
+        LOADING PRISM…
+      </p>
+    </div>
+  );
+}
+
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
-  const [analysisCount, setAnalysisCount] = useState(0);
+  const [hasEntered, setHasEntered] = useState(false);
+  const [rateLimit, setRateLimit] = useState(null);
 
-  const handleLogin = (provider) => {
-    // Per ora simuliamo il login
-    setUser({ provider, name: provider === 'guest' ? 'Ospite' : `User (${provider})` });
-    setIsAuthenticated(true);
-    setAnalysisCount(0); // Reset contatore al login
+  const refreshRateLimit = useCallback(async () => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.rateLimit,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        },
+      );
+      if (!response.ok) return;
+      setRateLimit(await response.json());
+    } catch {
+      // The API remains authoritative if status lookup is unavailable.
+    }
+  }, []);
+
+  const handleEnter = () => {
+    setHasEntered(true);
+    refreshRateLimit();
   };
 
-  const handleBackToHome = () => {
-    setIsAuthenticated(false);
-    setUser(null);
-    setAnalysisCount(0);
-  };
-
-  const handleAnalysisUsed = () => {
-    setAnalysisCount(prev => prev + 1);
-  };
-
-  if (!isAuthenticated) {
-    return <LandingPageCustom onLogin={handleLogin} />;
-  }
+  const total =
+    rateLimit?.analyses_total ?? FALLBACK_LIMIT;
+  const remaining =
+    rateLimit?.analyses_remaining ?? total;
 
   return (
-    <EditorialTheme
-      onBackToHome={handleBackToHome}
-      analysisCount={analysisCount}
-      maxAnalyses={MAX_ANALYSES}
-      onAnalysisUsed={handleAnalysisUsed}
-    />
+    <Suspense fallback={<LoadingScreen />}>
+      {hasEntered ? (
+        <EditorialTheme
+          onBackToHome={() => setHasEntered(false)}
+          analysisCount={total - remaining}
+          maxAnalyses={total}
+          onAnalysisUsed={refreshRateLimit}
+        />
+      ) : (
+        <LandingPage onLogin={handleEnter} />
+      )}
+    </Suspense>
   );
 }
 

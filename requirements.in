@@ -1,0 +1,11 @@
+beautifulsoup4
+fastapi
+feedparser
+lxml
+openai
+pydantic
+python-dotenv
+redis
+certifi
+urllib3
+uvicorn[standard]
