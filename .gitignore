@@ -42,3 +42,6 @@ dist-ssr
 .secrets.baseline
 bandit-report.*
 pip-audit-report.*
+
+# Local acquisition spike output
+.acquisition_v2/

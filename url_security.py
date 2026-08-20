@@ -58,9 +58,12 @@ class PinnedResponse:
         self,
         response: urllib3.response.BaseHTTPResponse,
         pool: HTTPConnectionPool | HTTPSConnectionPool,
+        *,
+        url: str | None = None,
     ):
         self._response = response
         self._pool = pool
+        self.url = url.split("#", 1)[0] if url else None
 
     @property
     def status_code(self) -> int:
@@ -277,6 +280,7 @@ def _request_pinned(
             return PinnedResponse(
                 response,
                 pool,
+                url=target.url,
             )
         except Exception as exc:
             last_error = exc

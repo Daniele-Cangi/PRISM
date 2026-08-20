@@ -132,3 +132,24 @@ Read [Privacy](PRIVACY.md), [Terms](TERMS.md), [Security](SECURITY.md), and
 
 PRISM is licensed under the [Apache License 2.0](LICENSE). Third-party
 dependencies and content remain subject to their respective licenses.
+
+## PRISM v2 acquisition spike
+
+The isolated `acquisition_v2` package benchmarks multi-source event
+acquisition without changing the public v1 API or invoking the analysis model.
+
+Example:
+
+~~~powershell
+.venv\Scripts\python.exe -m acquisition_v2.runner `
+  --query "event keywords" `
+  --source gdelt `
+  --source google `
+  --country IT
+~~~
+
+The local report is written to `.acquisition_v2/latest-report.json`, which is
+ignored by Git. A passing report requires at least 10 candidates, 8 useful
+articles, 6 publishers and 4 probable independent lineage groups. Run the
+benchmark across at least three representative events before proceeding to
+claim extraction or UI work.
