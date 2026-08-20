@@ -17,7 +17,18 @@ from urllib3.util import Timeout
 
 MAX_URL_LENGTH = 2048
 MAX_REDIRECTS = 5
+MAX_REQUEST_BODY_BYTES = 64 * 1024
 REDIRECT_STATUSES = {301, 302, 303, 307, 308}
+SENSITIVE_REQUEST_HEADERS = frozenset(
+    {
+        "authorization",
+        "cookie",
+        "proxy-authorization",
+        "x-api-key",
+        "x-api-token",
+        "x-subscription-token",
+    }
+)
 BLOCKED_HOST_SUFFIXES = (
     ".home.arpa",
     ".internal",
@@ -212,8 +223,17 @@ def validate_public_url(value: str) -> ValidatedURL:
             "",
         )
     )
+    diagnostic_url = urlunsplit(
+        (
+            parsed.scheme,
+            parsed.netloc,
+            parsed.path,
+            parsed.query,
+            "",
+        )
+    )
     return ValidatedURL(
-        url=url,
+        url=diagnostic_url,
         scheme=scheme,
         hostname=hostname,
         port=port,
@@ -235,6 +255,7 @@ def _request_pinned(
     target: ValidatedURL,
     method: str,
     headers: dict[str, str] | None,
+    body: bytes | None,
     timeout: tuple[float, float],
 ) -> PinnedResponse:
     request_headers = dict(headers or {})
@@ -273,6 +294,7 @@ def _request_pinned(
                 method,
                 target.request_target,
                 headers=request_headers,
+                body=body,
                 redirect=False,
                 preload_content=False,
                 retries=False,
@@ -296,6 +318,7 @@ def request_with_safe_redirects(
     url: str,
     *,
     headers: dict[str, str] | None = None,
+    body: bytes | None = None,
     timeout: tuple[float, float] = (
         5.0,
         20.0,
@@ -303,15 +326,25 @@ def request_with_safe_redirects(
     max_redirects: int = MAX_REDIRECTS,
 ) -> PinnedResponse:
     """Fetch while pinning and revalidating every hop."""
+    if body is not None:
+        if not isinstance(body, bytes):
+            raise UnsafeURLError("The request body must be bytes.")
+        if len(body) > MAX_REQUEST_BODY_BYTES:
+            raise UnsafeURLError(
+                f"The request body must contain at most {MAX_REQUEST_BODY_BYTES} bytes."
+            )
+
     current_url = url
     current_method = method.upper()
 
+    current_body = body
     for redirect_count in range(max_redirects + 1):
         target = validate_public_url(current_url)
         response = _request_pinned(
             target,
             current_method,
             headers,
+            current_body,
             timeout,
         )
         if response.status_code not in REDIRECT_STATUSES:
@@ -329,8 +362,22 @@ def request_with_safe_redirects(
             current_url,
             location,
         )
-        validate_public_url(current_url)
-        if status_code == 303 and current_method != "HEAD":
+        redirect_target = validate_public_url(current_url)
+        origin_changed = (
+            redirect_target.scheme,
+            redirect_target.hostname,
+            redirect_target.port,
+        ) != (target.scheme, target.hostname, target.port)
+        if origin_changed and any(
+            name.casefold() in SENSITIVE_REQUEST_HEADERS for name in (headers or {})
+        ):
+            raise UnsafeURLError("Sensitive headers cannot cross an origin redirect.")
+        if current_body is not None and status_code in {301, 302, 303}:
+            current_method = "GET"
+            current_body = None
+        elif current_body is not None and origin_changed:
+            raise UnsafeURLError("A request body cannot cross an origin redirect.")
+        elif status_code == 303 and current_method != "HEAD":
             current_method = "GET"
 
     raise UnsafeURLError("The URL exceeded the redirect limit.")

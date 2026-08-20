@@ -20,9 +20,7 @@ ALLOWED_CONTENT_TYPES = (
     "text/plain",
 )
 HEADERS = {
-    "User-Agent": (
-        "PRISM-Analyzer/1.0 (+https://github.com/Daniele-Cangi/SHADOW-ANALYZER)"
-    ),
+    "User-Agent": ("PRISM/1.0 (+https://github.com/Daniele-Cangi/PRISM)"),
     "Accept": (
         "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8"
     ),

@@ -4,18 +4,18 @@ import { Radio } from 'lucide-react';
 
 const TrendingTicker = () => {
     const headlines = [
-        "GLOBAL MONITOR ACTIVE: Scanning 142 sources across 12 sectors...",
-        "DETECTED: High variance in North Atlantic narrative patterns...",
-        "SYSTEM ALERT: Propaganda levels in Eastern Europe exceeded threshold 75%...",
-        "ANALYSIS COMPLETE: Washington Post editorial flagged for specific framing...",
-        "LIVE FEED: Ingesting real-time signals from Reuters, AP, and AFP..."
+        "LOCAL-FIRST: Article text is processed by your local PRISM backend.",
+        "PERSONAL KEY: OpenAI credentials remain in the backend environment.",
+        "PUBLIC WEB ONLY: Private and local network targets are rejected.",
+        "BOUNDED EXTRACTION: Redirects, response size, and text length are limited.",
+        "GEO VIEW: Select a country to request current public RSS headlines."
     ];
 
     return (
         <div className="bg-[#1A1A1A] text-white py-2 overflow-hidden flex items-center border-b border-[#DC2626]">
             <div className="px-4 flex items-center gap-2 z-10 bg-[#1A1A1A] shrink-0">
                 <div className="w-2 h-2 rounded-full bg-[#DC2626] animate-pulse" />
-                <span className="text-xs font-bold tracking-widest uppercase text-[#DC2626]">Live Intelligence</span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#DC2626]">Local Workspace</span>
             </div>
 
             <div className="flex overflow-hidden relative w-full mask-linear-fade">

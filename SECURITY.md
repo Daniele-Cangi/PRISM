@@ -8,7 +8,7 @@ commits, forks, and third-party deployments are not supported by this project.
 ## Reporting a vulnerability
 
 Please do not open a public issue for a suspected vulnerability. Use
-[GitHub private vulnerability reporting](https://github.com/Daniele-Cangi/SHADOW-ANALYZER/security/advisories/new)
+[GitHub private vulnerability reporting](https://github.com/Daniele-Cangi/PRISM/security/advisories/new)
 and include:
 
 - affected commit and deployment;

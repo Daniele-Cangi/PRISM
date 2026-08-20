@@ -65,6 +65,15 @@ def test_accepts_public_https(monkeypatch):
     assert str(result.addresses[0]) == PUBLIC_V4
 
 
+def test_validated_url_omits_fragment(monkeypatch):
+    monkeypatch.setattr(socket, "getaddrinfo", public_dns)
+
+    result = validate_public_url("https://example.com/article?q=1#section")
+
+    assert result.url == "https://example.com/article?q=1"
+    assert result.request_target == "/article?q=1"
+
+
 def test_rejects_mixed_public_and_private_dns(
     monkeypatch,
 ):
@@ -157,6 +166,31 @@ def test_revalidates_redirect_targets(
     assert len(calls) == 1
 
 
+def test_sensitive_headers_cannot_cross_origin_redirect(monkeypatch):
+    monkeypatch.setattr(socket, "getaddrinfo", public_dns)
+    calls = []
+    first = PinnedResponse(
+        FakeRawResponse(
+            302,
+            {"Location": "http://example.com/collect"},
+        ),
+        FakePool(),
+    )
+
+    def fake_request(target, *_args):
+        calls.append(target)
+        return first
+
+    monkeypatch.setattr(url_security, "_request_pinned", fake_request)
+    with pytest.raises(UnsafeURLError, match="Sensitive headers"):
+        request_with_safe_redirects(
+            "GET",
+            "https://example.com/start",
+            headers={"X-Subscription-Token": "secret"},
+        )
+    assert len(calls) == 1
+
+
 def test_https_connection_is_pinned_to_ip(
     monkeypatch,
 ):
@@ -189,6 +223,38 @@ def test_https_connection_is_pinned_to_ip(
     assert captured["host"] == PUBLIC_V4
     assert captured["server_hostname"] == "example.com"
     assert captured["assert_hostname"] == "example.com"
+
+
+def test_sends_bounded_request_body(monkeypatch):
+    monkeypatch.setattr(socket, "getaddrinfo", public_dns)
+    captured = {}
+
+    class CapturingPool(FakePool):
+        def __init__(self, **_kwargs):
+            super().__init__()
+
+        def urlopen(self, *_args, **kwargs):
+            captured.update(kwargs)
+            return FakeRawResponse()
+
+    monkeypatch.setattr(url_security, "HTTPSConnectionPool", CapturingPool)
+    response = request_with_safe_redirects(
+        "POST",
+        "https://example.com/form",
+        body=b"value=bounded",
+    )
+    response.close()
+
+    assert captured["body"] == b"value=bounded"
+
+
+def test_rejects_oversized_request_body():
+    with pytest.raises(UnsafeURLError, match="request body"):
+        request_with_safe_redirects(
+            "POST",
+            "https://example.com/form",
+            body=b"x" * (url_security.MAX_REQUEST_BODY_BYTES + 1),
+        )
 
 
 def test_limits_decoded_response_size():

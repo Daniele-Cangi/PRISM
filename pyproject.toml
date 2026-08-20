@@ -7,7 +7,6 @@ branch = true
 source = [
   "acquisition_v2",
   "analysis_engine",
-  "api_common",
   "article_extractor",
   "geo_service",
   "rate_limit",

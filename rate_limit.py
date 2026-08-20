@@ -138,10 +138,7 @@ class RedisRateLimiter:
 
 
 def is_production() -> bool:
-    return (
-        os.getenv("APP_ENV", "").lower() == "production"
-        or os.getenv("VERCEL_ENV", "").lower() == "production"
-    )
+    return os.getenv("APP_ENV", "").lower() == "production"
 
 
 def build_rate_limiter():

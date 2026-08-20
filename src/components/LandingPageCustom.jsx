@@ -123,8 +123,8 @@ const LandingPage = ({ onLogin }) => {
       docsWeaponized: 'WEAPONIZED',
       docsWeaponizedText: 'Disinformation, psychological warfare, fabrication',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
-      docsGeointText: 'Real-time intelligence gathering from',
-      docsGeointText2: '35+ geographic sectors',
+      docsGeointText: 'On-demand headline discovery from',
+      docsGeointText2: 'On-demand public RSS headlines',
       docsGeointText3: 'via Google News RSS with localized perspectives:',
       docsOutput: 'OUTPUT SCHEMA',
       docsQuote: 'Democracy Dies in Darkness. Logic Survives in Light.'
@@ -234,8 +234,8 @@ const LandingPage = ({ onLogin }) => {
       docsWeaponized: 'VÅBENGJORT',
       docsWeaponizedText: 'Desinformation, psykologisk krigsførelse, fabrikation',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
-      docsGeointText: 'Real-time efterretningsindsamling fra',
-      docsGeointText2: '35+ geografiske sektorer',
+      docsGeointText: 'Nyhedsindsamling efter behov fra',
+      docsGeointText2: 'Offentlige RSS-overskrifter efter behov',
       docsGeointText3: 'via Google News RSS med lokaliserede perspektiver:',
       docsOutput: 'OUTPUT SKEMA',
       docsQuote: 'Demokrati Dør i Mørke. Logik Overlever i Lyset.'
@@ -346,7 +346,7 @@ const LandingPage = ({ onLogin }) => {
       docsWeaponizedText: 'Desinformation, psykologisk krigföring, fabricering',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Realtidsinsamling av underrättelser från',
-      docsGeointText2: '35+ geografiska sektorer',
+      docsGeointText2: 'Offentliga RSS-rubriker på begäran',
       docsGeointText3: 'via Google News RSS med lokaliserade perspektiv:',
       docsOutput: 'OUTPUT-SCHEMA',
       docsQuote: 'Demokrati Dör i Mörker. Logik Överlever i Ljuset.'
@@ -457,7 +457,7 @@ const LandingPage = ({ onLogin }) => {
       docsWeaponizedText: 'Desinformasjon, psykologisk krigføring, fabrikasjon',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Sanntidsinnsamling av etterretning fra',
-      docsGeointText2: '35+ geografiske sektorer',
+      docsGeointText2: 'Offentlige RSS-overskrifter ved behov',
       docsGeointText3: 'via Google News RSS med lokaliserte perspektiver:',
       docsOutput: 'OUTPUT-SKJEMA',
       docsQuote: 'Demokrati Dør i Mørke. Logikk Overlever i Lyset.'
@@ -568,7 +568,7 @@ const LandingPage = ({ onLogin }) => {
       docsWeaponizedText: 'Disinformazione, guerra psicologica, fabbricazione',
       docsGeoint: 'GLOBAL OVERWATCH (GEOINT)',
       docsGeointText: 'Raccolta intelligence in tempo reale da',
-      docsGeointText2: '35+ settori geografici',
+      docsGeointText2: 'Titoli RSS pubblici su richiesta',
       docsGeointText3: 'via Google News RSS con prospettive localizzate:',
       docsOutput: 'SCHEMA OUTPUT',
       docsQuote: 'La Democrazia Muore nel Buio. La Logica Sopravvive nella Luce.'
@@ -598,7 +598,7 @@ const LandingPage = ({ onLogin }) => {
         <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
           {/* GitHub Star Button */}
           <a
-            href="https://github.com/Daniele-Cangi/SHADOW-ANALYZER"
+            href="https://github.com/Daniele-Cangi/PRISM"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 bg-[#fbbf24]/20 hover:bg-[#fbbf24]/30 active:bg-[#fbbf24]/40 backdrop-blur-md text-white px-3 py-2.5 rounded-lg transition-all duration-200 border border-[#fbbf24]/30 touch-manipulation min-h-[44px]"
@@ -815,7 +815,7 @@ const LandingPage = ({ onLogin }) => {
           <div className="grid md:grid-cols-3 gap-6 mb-20">
             {/* GitHub */}
             <motion.a
-              href="https://github.com/Daniele-Cangi/SHADOW-ANALYZER"
+              href="https://github.com/Daniele-Cangi/PRISM"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
@@ -955,7 +955,7 @@ const LandingPage = ({ onLogin }) => {
               <div className="space-y-3 mb-6">
                 {/* GitHub Button */}
                 <a
-                  href="https://github.com/Daniele-Cangi/SHADOW-ANALYZER/issues/new"
+                  href="https://github.com/Daniele-Cangi/PRISM/issues/new"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-3 bg-[#24292e] hover:bg-[#2f363d] text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02]"
@@ -1283,7 +1283,7 @@ const LandingPage = ({ onLogin }) => {
                   {/* GEOINT */}
                   <section id="geoint" className="mb-12">
                     <h3 className="text-white text-xl mb-6" style={{ fontFamily: 'Georgia, serif' }}>Global Overwatch</h3>
-                    <p className="text-gray-500 text-sm mb-4">Real-time intelligence from 35+ geographic sectors via Google News RSS.</p>
+                    <p className="text-gray-500 text-sm mb-4">On-demand public headlines by country via Google News RSS.</p>
                     <div className="flex flex-wrap gap-2">
                       {['North America', 'Europe', 'Asia Pacific', 'Middle East', 'Latin America', 'Africa', 'Scandinavia', 'Baltic'].map(region => (
                         <span key={region} className="text-gray-600 text-xs border border-white/5 px-2 py-1">{region}</span>
