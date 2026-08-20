@@ -554,10 +554,11 @@ def acquire_article(candidate: DiscoveredArticle) -> NormalizedArticle:
     )
     article_id = stable_article_id(canonical_url)
 
-    quotation_soup = BeautifulSoup(document, "lxml")
-    link_soup = BeautifulSoup(document, "lxml")
+    quotation_soup = soup
+    link_soup = soup
+    paragraph_soup = BeautifulSoup(document, "lxml")
     paragraphs, method = extract_paragraphs(
-        BeautifulSoup(document, "lxml"),
+        paragraph_soup,
         article_body=metadata.article_body,
     )
     warnings: list[str] = []
