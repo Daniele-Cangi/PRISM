@@ -168,10 +168,10 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
               </div>
               <div className="text-right text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
                 <div className="flex items-center justify-end gap-2">
-                  <span>Global Bias Index</span>
-                  <span className="text-[#DC2626] font-bold">CRITICAL</span>
+                  <span>Runtime Mode</span>
+                  <span className="text-[#DC2626] font-bold">LOCAL</span>
                 </div>
-                <div>System Status: <span className="text-green-600">ONLINE</span></div>
+                <div>API Key: <span className="text-green-600">SERVER-SIDE</span></div>
               </div>
             </div>
           </div>

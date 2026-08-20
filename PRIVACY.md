@@ -1,56 +1,49 @@
 # Privacy Notice
 
-Effective date: 19 August 2026
+Effective date: 20 August 2026
 
-PRISM analyzes public article URLs submitted by visitors. This notice describes
-the data flow implemented by this repository. Deployers are responsible for
-adapting it to their identity, jurisdiction, hosting choices, and legal duties.
+PRISM is local-first software. The project does not operate a hosted PRISM
+instance and does not receive data from copies run by other people. Whoever
+runs a copy is responsible for its configuration, data handling, and legal
+obligations.
 
-## Data processed
+## Data flow
 
-When you request an analysis, the service processes:
+When a local user requests an analysis, that copy of PRISM processes:
 
-- the article URL you submit;
-- text extracted from the public article;
-- an IP-derived pseudonymous identifier used only for abuse prevention;
+- the public article URL submitted by the user;
+- text extracted from the article;
+- the generated analysis;
+- a pseudonymous client identifier used for local rate limiting;
 - minimal operational error metadata.
 
-The current guest interface does not create user accounts and does not use
-advertising or analytics cookies.
+The extracted article text is sent directly from the locally operated backend
+to the OpenAI API account configured in that backend's `.env` file. API keys
+remain server-side and are never included in the frontend bundle.
 
-## Why and how data is used
-
-Extracted article text is sent to the configured OpenAI API to produce the
-requested narrative analysis. Do not submit private, paywalled, confidential,
-personal, or unlawfully obtained material.
-
-The service hashes client addresses with a deployment-specific secret before
-rate-limit storage. By default, rate-limit entries expire after 24 hours.
-Submitted URLs and raw client IP addresses are intentionally excluded from
-application logs. The geographic news cache contains only public feed data and
-expires after five minutes.
-
-## Service providers
-
-Deployments may use hosting, Redis, DNS, and OpenAI API providers. Those
-providers process data under their own terms and the deployer's agreements.
-Review the current OpenAI API data controls before operating a public instance.
-
-## Retention and security
+## Storage and logs
 
 PRISM does not intentionally persist extracted article text or generated
-analysis. Provider logs, backups, and security records may have separate
-retention periods configured by the deployer. The application restricts target
-URLs to public HTTP(S) resources, limits request and response sizes, and applies
-rate limiting, but no internet service can guarantee absolute security.
+analysis. The default rate limiter is process-local memory and the geographic
+news cache expires after five minutes. Submitted URLs and raw client IP
+addresses are intentionally excluded from application logs.
+
+The optional PRISM v2 metadata index stores source URLs and discovery metadata,
+not article bodies. Its database is local and ignored by Git.
+
+## Third parties
+
+Article publishers, DNS resolvers, OpenAI, and any infrastructure chosen by a
+local operator process data under their own terms. Review their policies before
+using PRISM, and do not submit private, paywalled, confidential, personal, or
+unlawfully obtained material.
 
 ## Your choices
 
-Do not submit a URL if you do not want its article text processed by the
-configured AI provider. For privacy questions or deletion requests relating to
-the reference deployment, contact info@unityloop.ai. For another deployment,
-contact its operator.
+Do not submit a URL if you do not want its text processed by your configured AI
+provider. To remove locally held data, stop the processes and delete the local
+runtime files under `.acquisition_v2/`; those files are not part of the
+repository.
 
-## Changes
-
-Material changes should update this file and its effective date before release.
+Forks or independently exposed instances must publish privacy information
+appropriate to their own operator, jurisdiction, configuration, and users.

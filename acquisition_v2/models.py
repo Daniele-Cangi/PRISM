@@ -11,8 +11,15 @@ from pydantic import BaseModel, ConfigDict, Field
 class DiscoverySource(StrEnum):
     DIRECT_URL = "DIRECT_URL"
     GDELT = "GDELT"
+    BRAVE_NEWS = "BRAVE_NEWS"
+    LOCAL_METADATA_INDEX = "LOCAL_METADATA_INDEX"
     GOOGLE_NEWS_RSS = "GOOGLE_NEWS_RSS"
     PUBLISHER_RSS = "PUBLISHER_RSS"
+    NEWS_SITEMAP = "NEWS_SITEMAP"
+
+
+class URLResolutionMethod(StrEnum):
+    GOOGLE_NEWS_INTERNAL = "GOOGLE_NEWS_INTERNAL"
 
 
 class AcquisitionState(StrEnum):
@@ -44,6 +51,10 @@ class DiscoveredArticle(BaseModel):
     country: str | None = Field(default=None, max_length=64)
     discovery_source: DiscoverySource
     event_hint: str | None = Field(default=None, max_length=500)
+    discovery_url: str | None = Field(default=None, max_length=2048)
+    resolution_method: URLResolutionMethod | None = None
+    resolution_error: str | None = Field(default=None, max_length=500)
+
     rss_content: str | None = Field(
         default=None,
         max_length=25_000,
@@ -78,6 +89,9 @@ class NormalizedArticle(BaseModel):
     id: str = Field(pattern=r"^article_[0-9a-f]{16}$")
     canonical_url: str
     original_url: str
+    discovery_url: str | None = None
+    resolution_method: URLResolutionMethod | None = None
+    resolution_error: str | None = None
     publisher: str | None = None
     authors: list[str] = Field(default_factory=list, max_length=20)
     title: str | None = None

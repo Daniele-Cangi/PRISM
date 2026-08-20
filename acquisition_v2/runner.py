@@ -4,20 +4,30 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
+from acquisition_v2.canonical import is_google_news_wrapper
 from acquisition_v2.discovery import (
     direct_candidate,
+    discover_brave_news,
     discover_gdelt,
     discover_google_news,
     discover_rss,
 )
 from acquisition_v2.lineage import independent_origin_count
 from acquisition_v2.manager import AcquisitionManager
-from acquisition_v2.models import DiscoveredArticle, NormalizedArticle
+from acquisition_v2.metadata_index import (
+    DEFAULT_MAX_AGE_DAYS,
+    MetadataIndex,
+    RefreshStatus,
+)
+from acquisition_v2.models import DiscoveredArticle, DiscoverySource, NormalizedArticle
 
+DEFAULT_INDEX = Path(".acquisition_v2/discovery-index.sqlite3")
+DEFAULT_REGISTRY = Path(__file__).with_name("source_registry.json")
 DEFAULT_OUTPUT = Path(".acquisition_v2/latest-report.json")
 
 
@@ -67,13 +77,32 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--source",
         action="append",
-        choices=("gdelt", "google"),
-        help="Discovery adapter; repeat to combine. Query-only defaults to gdelt.",
+        choices=("index", "google", "gdelt", "brave"),
+        help="Repeat to combine. Query-only defaults to the free index + Google.",
     )
     parser.add_argument(
         "--country",
         default="US",
-        help="Google News two-letter edition code.",
+        help="Two-letter discovery country code.",
+    )
+    parser.add_argument(
+        "--search-language",
+        default="en",
+        help="Brave News result language.",
+    )
+    parser.add_argument(
+        "--brave-freshness",
+        default="pw",
+        help="Brave freshness: pd, pw, pm, py, or YYYY-MM-DDtoYYYY-MM-DD.",
+    )
+    parser.add_argument(
+        "--resolve-google-wrappers",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help=(
+            "Experimentally resolve Google News wrappers through an undocumented "
+            "internal RPC; use --no-resolve-google-wrappers as a kill switch."
+        ),
     )
     parser.add_argument(
         "--url",
@@ -102,6 +131,36 @@ def _parse_args() -> argparse.Namespace:
         metavar="1-8",
     )
     parser.add_argument(
+        "--index-db",
+        type=Path,
+        default=DEFAULT_INDEX,
+        help="Local metadata-only SQLite index.",
+    )
+    parser.add_argument(
+        "--source-registry",
+        type=Path,
+        default=DEFAULT_REGISTRY,
+        help="Versioned RSS/news-sitemap source registry.",
+    )
+    parser.add_argument(
+        "--refresh-index",
+        action="store_true",
+        help="Poll due registry sources before discovery.",
+    )
+    parser.add_argument(
+        "--force-index-refresh",
+        action="store_true",
+        help="Ignore source polling intervals; implies --refresh-index.",
+    )
+    parser.add_argument(
+        "--index-max-age-days",
+        type=int,
+        default=DEFAULT_MAX_AGE_DAYS,
+        choices=range(1, 366),
+        metavar="1-365",
+        help="Maximum metadata age retained and searched.",
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=DEFAULT_OUTPUT,
@@ -109,16 +168,73 @@ def _parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _candidate_sort_key(candidate: DiscoveredArticle) -> tuple[bool, float]:
+    published_at = candidate.published_at
+    if published_at is None:
+        freshness = 0.0
+    else:
+        if published_at.tzinfo is None:
+            published_at = published_at.replace(tzinfo=UTC)
+        freshness = -published_at.timestamp()
+    return is_google_news_wrapper(candidate.url), freshness
+
+
 def _discover(args: argparse.Namespace) -> tuple[list[DiscoveredArticle], list[str]]:
-    sources = args.source or (
-        ["gdelt"] if args.query and not args.url and not args.rss else []
-    )
     candidates = [direct_candidate(url, event_hint=args.query) for url in args.url]
     errors: list[str] = []
+    index: MetadataIndex | None = None
 
+    try:
+        index = MetadataIndex(args.index_db)
+    except Exception as exc:
+        errors.append(f"index: {type(exc).__name__}: {exc}")
+
+    if index is not None:
+        try:
+            index.prune(max_age_days=args.index_max_age_days)
+        except Exception as exc:
+            errors.append(f"index-prune: {type(exc).__name__}: {exc}")
+        if args.refresh_index or args.force_index_refresh:
+            try:
+                refresh_results = index.refresh_registry(
+                    args.source_registry,
+                    force=args.force_index_refresh,
+                )
+                errors.extend(
+                    f"index:{result.source_id}: {result.error}"
+                    for result in refresh_results
+                    if result.status is RefreshStatus.FAILED
+                )
+            except Exception as exc:
+                errors.append(f"index-refresh: {type(exc).__name__}: {exc}")
+
+    sources = args.source or (
+        ["index", "google"] if args.query and not args.url and not args.rss else []
+    )
     for source in sources:
         try:
-            if source == "gdelt":
+            if source == "index":
+                if index is None:
+                    raise RuntimeError("The local metadata index is unavailable.")
+                if not args.query:
+                    raise ValueError("--query is required for index search.")
+                candidates.extend(
+                    index.search(
+                        args.query,
+                        max_records=args.max_candidates,
+                        max_age_days=args.index_max_age_days,
+                    )
+                )
+            elif source == "google":
+                candidates.extend(
+                    discover_google_news(
+                        country_code=args.country,
+                        resolve_wrappers=args.resolve_google_wrappers,
+                        query=args.query,
+                        max_records=args.max_candidates,
+                    )
+                )
+            elif source == "gdelt":
                 if not args.query:
                     raise ValueError("--query is required for GDELT.")
                 candidates.extend(
@@ -127,11 +243,19 @@ def _discover(args: argparse.Namespace) -> tuple[list[DiscoveredArticle], list[s
                         max_records=args.max_candidates,
                     )
                 )
-            elif source == "google":
+            elif source == "brave":
+                if not args.query:
+                    raise ValueError("--query is required for Brave News.")
+                api_key = os.environ.get("BRAVE_SEARCH_API_KEY")
+                if not api_key:
+                    raise ValueError("BRAVE_SEARCH_API_KEY is required for Brave News.")
                 candidates.extend(
-                    discover_google_news(
+                    discover_brave_news(
+                        args.query,
+                        api_key=api_key,
                         country_code=args.country,
-                        query=args.query,
+                        search_language=args.search_language,
+                        freshness=args.brave_freshness,
                         max_records=args.max_candidates,
                     )
                 )
@@ -151,6 +275,19 @@ def _discover(args: argparse.Namespace) -> tuple[list[DiscoveredArticle], list[s
             errors.append(f"rss: {type(exc).__name__}: {exc}")
 
     candidates = AcquisitionManager.deduplicate_candidates(candidates)
+    if index is not None:
+        indexable = [
+            candidate
+            for candidate in candidates
+            if candidate.discovery_source is not DiscoverySource.LOCAL_METADATA_INDEX
+            and not is_google_news_wrapper(candidate.url)
+        ]
+        try:
+            index.upsert_candidates(indexable)
+        except Exception as exc:
+            errors.append(f"index-store: {type(exc).__name__}: {exc}")
+
+    candidates.sort(key=_candidate_sort_key)
     return candidates[: args.max_candidates], errors
 
 

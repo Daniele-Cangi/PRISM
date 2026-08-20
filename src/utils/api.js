@@ -1,23 +1,18 @@
-const isDev = import.meta.env.DEV;
 const configuredBase = (
   import.meta.env.VITE_API_URL || ""
 ).replace(/\/$/, "");
 
-const API_BASE = configuredBase
-  || (isDev ? "http://localhost:8001" : "");
-const API_PREFIX =
-  configuredBase || isDev ? "" : "/api";
+const API_BASE = configuredBase || "http://localhost:8001";
 
 export const API_ENDPOINTS = {
-  analyze: API_BASE + API_PREFIX + "/analyze",
+  analyze: API_BASE + "/analyze",
   geoRecon: (countryCode) => (
     API_BASE
-    + API_PREFIX
     + "/recon/geo?country_code="
     + encodeURIComponent(countryCode)
   ),
   rateLimit:
-    API_BASE + API_PREFIX + "/rate-limit",
+    API_BASE + "/rate-limit",
 };
 
 export default API_ENDPOINTS;

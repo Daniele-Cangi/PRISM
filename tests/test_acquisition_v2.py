@@ -8,6 +8,7 @@ import pytest
 
 import acquisition_v2.discovery as discovery
 import acquisition_v2.extractor as extractor
+import acquisition_v2.google_resolver as google_resolver
 import acquisition_v2.manager as manager_module
 from acquisition_v2.canonical import (
     choose_canonical_url,
@@ -17,6 +18,7 @@ from acquisition_v2.canonical import (
 )
 from acquisition_v2.discovery import (
     direct_candidate,
+    discover_brave_news,
     discover_gdelt,
     discover_google_news,
     discover_rss,
@@ -36,6 +38,7 @@ from acquisition_v2.models import (
     DiscoverySource,
     ExtractionMethod,
     NormalizedArticle,
+    URLResolutionMethod,
 )
 from acquisition_v2.runner import build_benchmark_report
 
@@ -324,6 +327,66 @@ def test_detects_paywall_marker(monkeypatch):
     assert article.acquisition_state is AcquisitionState.PAYWALLED
 
 
+def test_resolves_google_wrapper_through_bounded_rpc(monkeypatch):
+    token = "A" * 32
+    wrapper = f"https://news.google.com/rss/articles/{token}?oc=5"
+    direct = "https://publisher.example/story?utm_source=google"
+    wrapper_html = (
+        b'<html><c-wiz><div jscontroller="x" '
+        b'data-n-a-sg="signature_123" data-n-a-ts="12345678"></div>'
+        b"</c-wiz></html>"
+    )
+    batch_payload = (
+        ")]}'\n\n"
+        + json.dumps([["wrb.fr", "Fbv4je", json.dumps(["garturlres", direct])]])
+    ).encode()
+    responses = [
+        FakeResponse(wrapper_html, url=wrapper),
+        FakeResponse(batch_payload, content_type="application/json"),
+    ]
+    calls = []
+
+    def fake_request(method, url, **kwargs):
+        calls.append((method, url, kwargs))
+        return responses.pop(0)
+
+    monkeypatch.setattr(google_resolver, "request_with_safe_redirects", fake_request)
+    monkeypatch.setattr(
+        google_resolver,
+        "read_limited_body",
+        lambda response, _limit: response.body,
+    )
+
+    resolved = google_resolver.resolve_google_news_url(wrapper)
+
+    assert resolved == "https://publisher.example/story"
+    assert calls[0][0] == "GET"
+    assert calls[1][0] == "POST"
+    assert calls[1][2]["max_redirects"] == 0
+    assert len(calls[1][2]["body"]) < 4_096
+
+
+def test_google_wrapper_resolver_rejects_missing_parameters(monkeypatch):
+    wrapper = f"https://news.google.com/rss/articles/{'A' * 32}?oc=5"
+    response = FakeResponse(b"<html><body>No parameters</body></html>", url=wrapper)
+    monkeypatch.setattr(
+        google_resolver,
+        "request_with_safe_redirects",
+        lambda *_args, **_kwargs: response,
+    )
+    monkeypatch.setattr(
+        google_resolver,
+        "read_limited_body",
+        lambda current, _limit: current.body,
+    )
+
+    with pytest.raises(
+        google_resolver.GoogleNewsResolutionError,
+        match="did not expose",
+    ):
+        google_resolver.resolve_google_news_url(wrapper)
+
+
 def test_discovers_gdelt_direct_urls(monkeypatch):
     payload = {
         "articles": [
@@ -349,6 +412,41 @@ def test_discovers_gdelt_direct_urls(monkeypatch):
     assert candidates[0].publisher == "publisher.example"
     assert candidates[0].country == "Italy"
     assert candidates[0].discovery_source is DiscoverySource.GDELT
+
+
+def test_discovers_brave_direct_urls_without_exposing_key(monkeypatch):
+    payload = {
+        "results": [
+            {
+                "url": "https://publisher.example/brave-story",
+                "title": "Direct Brave result",
+                "page_age": "2026-08-19T12:00:00Z",
+                "meta_url": {"hostname": "publisher.example"},
+            }
+        ]
+    }
+    captured = {}
+
+    def fake_fetch(url, *, headers=None):
+        captured["url"] = url
+        captured["headers"] = headers
+        return json.dumps(payload).encode()
+
+    monkeypatch.setattr(discovery, "_fetch", fake_fetch)
+
+    candidates = discover_brave_news(
+        "international event",
+        api_key="test-secret",
+        country_code="IT",
+        search_language="it",
+    )
+
+    assert len(candidates) == 1
+    assert candidates[0].url == "https://publisher.example/brave-story"
+    assert candidates[0].discovery_source is DiscoverySource.BRAVE_NEWS
+    assert "q=international+event" in captured["url"]
+    assert captured["headers"]["X-Subscription-Token"] == "test-secret"
+    assert "test-secret" not in captured["url"]
 
 
 def test_rejects_invalid_gdelt_query():
@@ -390,6 +488,35 @@ def test_discovers_google_news_and_preserves_metadata(monkeypatch):
     assert candidates[0].publisher == "Publisher"
     assert candidates[0].country == "IT"
     assert candidates[0].event_hint == "same event"
+
+
+def test_google_discovery_resolves_wrappers_with_provenance(monkeypatch):
+    token = "A" * 32
+    wrapper = f"https://news.google.com/rss/articles/{token}?oc=5"
+    rss = f"""
+    <rss version="2.0"><channel><title>Google News</title>
+      <item>
+        <title>Resolved event - Publisher</title>
+        <link>{wrapper}</link>
+        <source>Publisher</source>
+      </item>
+    </channel></rss>
+    """.encode()
+    direct = "https://publisher.example/resolved-story"
+    monkeypatch.setattr(discovery, "_fetch", lambda _url: rss)
+    monkeypatch.setattr(discovery, "resolve_google_news_url", lambda _url: direct)
+
+    candidates = discover_google_news(
+        country_code="US",
+        query="resolved event",
+        resolve_wrappers=True,
+    )
+
+    assert len(candidates) == 1
+    assert candidates[0].url == direct
+    assert candidates[0].discovery_url == wrapper
+    assert candidates[0].resolution_method is URLResolutionMethod.GOOGLE_NEWS_INTERNAL
+    assert candidates[0].resolution_error is None
 
 
 def test_discovers_publisher_rss_content(monkeypatch):

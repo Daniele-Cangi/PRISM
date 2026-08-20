@@ -5,16 +5,25 @@ from __future__ import annotations
 import json
 from datetime import UTC, datetime
 from time import struct_time
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 
 import feedparser
 from bs4 import BeautifulSoup
 
-from acquisition_v2.models import DiscoveredArticle, DiscoverySource
+from acquisition_v2.google_resolver import (
+    GoogleNewsResolutionError,
+    resolve_google_news_url,
+)
+from acquisition_v2.models import (
+    DiscoveredArticle,
+    DiscoverySource,
+    URLResolutionMethod,
+)
 from geo_service import GEO_CONFIG
 from url_security import read_limited_body, request_with_safe_redirects
 
 MAX_DISCOVERY_BYTES = 2 * 1024 * 1024
+BRAVE_NEWS_URL = "https://api.search.brave.com/res/v1/news/search"
 DISCOVERY_HEADERS = {
     "User-Agent": (
         "PRISM-Acquisition-Spike/2.0 "
@@ -28,11 +37,11 @@ class DiscoveryError(RuntimeError):
     pass
 
 
-def _fetch(url: str) -> bytes:
+def _fetch(url: str, *, headers: dict[str, str] | None = None) -> bytes:
     response = request_with_safe_redirects(
         "GET",
         url,
-        headers=DISCOVERY_HEADERS,
+        headers=headers or DISCOVERY_HEADERS,
         timeout=(30.0, 45.0),
     )
     try:
@@ -90,6 +99,118 @@ def direct_candidate(
         discovery_source=DiscoverySource.DIRECT_URL,
         event_hint=event_hint,
     )
+
+
+def _brave_datetime(value: object) -> datetime | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed.replace(tzinfo=UTC) if parsed.tzinfo is None else parsed
+
+
+def _validate_brave_freshness(value: str) -> str:
+    freshness = value.strip().lower()
+    if freshness in {"pd", "pw", "pm", "py"}:
+        return freshness
+    dates = freshness.split("to")
+    if len(dates) == 2:
+        try:
+            for current in dates:
+                datetime.strptime(current, "%Y-%m-%d")
+        except ValueError:
+            pass
+        else:
+            return freshness
+    raise ValueError("Invalid Brave News freshness filter.")
+
+
+def discover_brave_news(
+    query: str,
+    *,
+    api_key: str,
+    country_code: str = "US",
+    search_language: str = "en",
+    freshness: str = "pw",
+    max_records: int = 15,
+) -> list[DiscoveredArticle]:
+    """Discover direct publisher URLs through Brave News Search."""
+    query = query.strip()
+    if not 2 <= len(query) <= 400 or len(query.split()) > 50:
+        raise ValueError(
+            "Brave query must contain 2-400 characters and at most 50 words."
+        )
+    api_key = api_key.strip()
+    if not api_key or len(api_key) > 1_024:
+        raise ValueError("A valid Brave Search API key is required.")
+
+    country = country_code.strip().upper()
+    if country != "ALL" and (len(country) != 2 or not country.isalpha()):
+        raise ValueError("Brave country must be a two-letter code or ALL.")
+    language = search_language.strip().lower()
+    if not 2 <= len(language) <= 5 or not language.replace("-", "").isalpha():
+        raise ValueError("Invalid Brave search language.")
+    max_records = min(max(1, max_records), 50)
+
+    url = (
+        BRAVE_NEWS_URL
+        + "?"
+        + urlencode(
+            {
+                "q": query,
+                "count": max_records,
+                "country": country,
+                "search_lang": language,
+                "freshness": _validate_brave_freshness(freshness),
+                "safesearch": "strict",
+                "spellcheck": "true",
+            }
+        )
+    )
+    headers = {
+        **DISCOVERY_HEADERS,
+        "Accept": "application/json",
+        "X-Subscription-Token": api_key,
+    }
+    try:
+        payload = json.loads(_fetch(url, headers=headers).decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise DiscoveryError("Brave returned an invalid discovery response.") from exc
+
+    if not isinstance(payload, dict):
+        raise DiscoveryError("Brave returned an invalid discovery object.")
+    results = payload.get("results", [])
+    if not isinstance(results, list):
+        raise DiscoveryError("Brave did not return a news result list.")
+
+    candidates: list[DiscoveredArticle] = []
+    for article in results:
+        if not isinstance(article, dict):
+            continue
+        article_url = article.get("url")
+        if not isinstance(article_url, str) or not article_url.startswith(
+            ("http://", "https://")
+        ):
+            continue
+        meta_url = article.get("meta_url")
+        publisher = meta_url.get("hostname") if isinstance(meta_url, dict) else None
+        publisher = publisher or urlsplit(article_url).hostname
+        title = article.get("title")
+        candidates.append(
+            DiscoveredArticle(
+                url=article_url,
+                title=title if isinstance(title, str) else None,
+                publisher=publisher if isinstance(publisher, str) else None,
+                published_at=_brave_datetime(article.get("page_age")),
+                language=language,
+                country=None if country == "ALL" else country,
+                discovery_source=DiscoverySource.BRAVE_NEWS,
+                event_hint=query,
+            )
+        )
+    return candidates[:max_records]
 
 
 def discover_gdelt(
@@ -152,6 +273,7 @@ def discover_google_news(
     country_code: str,
     query: str | None = None,
     max_records: int = 15,
+    resolve_wrappers: bool = False,
 ) -> list[DiscoveredArticle]:
     """Discover candidates from the public Google News RSS surface."""
     code = country_code.strip().upper()
@@ -175,9 +297,25 @@ def discover_google_news(
     candidates: list[DiscoveredArticle] = []
     for entry in feed.entries[:max_records]:
         source = entry.get("source") or {}
+        wrapper_url = entry.get("link", "")
+        if not isinstance(wrapper_url, str) or not wrapper_url:
+            continue
+
+        article_url = wrapper_url
+        discovery_url = None
+        resolution_method = None
+        resolution_error = None
+        if resolve_wrappers:
+            discovery_url = wrapper_url
+            resolution_method = URLResolutionMethod.GOOGLE_NEWS_INTERNAL
+            try:
+                article_url = resolve_google_news_url(wrapper_url)
+            except GoogleNewsResolutionError as exc:
+                resolution_error = f"{type(exc).__name__}: {exc}"[:500]
+
         candidates.append(
             DiscoveredArticle(
-                url=entry.get("link", ""),
+                url=article_url,
                 title=entry.get("title"),
                 publisher=source.get("title"),
                 published_at=_feed_datetime(entry.get("published_parsed")),
@@ -185,6 +323,9 @@ def discover_google_news(
                 country=country,
                 discovery_source=DiscoverySource.GOOGLE_NEWS_RSS,
                 event_hint=query.strip() if query else None,
+                discovery_url=discovery_url,
+                resolution_method=resolution_method,
+                resolution_error=resolution_error,
                 rss_content=_rss_content(entry),
             )
         )

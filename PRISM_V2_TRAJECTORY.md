@@ -1035,3 +1035,121 @@ the requirement for automatic multi-source discovery.
 
 The next investment is a reliable direct-URL discovery source and selection policy,
 rather than more extraction heuristics or browser automation.
+
+---
+
+# 25. Discovery fabric decision - 20 August 2026
+
+Automatic acquisition must not depend on one feed or on progressively more
+aggressive scraping. The selected engineering direction is a provider fabric
+that degrades by losing coverage, not by losing the whole event.
+
+```text
+event query
+   |
+   +-- owned feed/sitemap metadata index (primary)
+   +-- Google News resolver (free bootstrap)
+   +-- optional GDELT / commercial adapters (coverage)
+   |
+   v
+normalize -> preserve provenance -> deduplicate -> diversify domains/countries
+   |
+   v
+bounded article acquisition
+```
+
+## Provider lanes
+
+1. **The owned metadata-only index is the primary lane.** The implemented
+   SQLite/FTS catalog stores only URL/title/publisher/time/language/provenance,
+   automatically retains resolved direct URLs and can poll an operator-reviewed
+   registry of RSS feeds and explicit news sitemap `urlset` files.
+2. **Google News is the free bootstrap sensor.** The isolated resolver is enabled
+   for the spike so a new query can seed the index. It has a CLI kill switch,
+   preserves the original wrapper and degrades to an explicit per-candidate
+   error when the undocumented protocol changes.
+3. **GDELT is an optional public sensor.** Quota failures do not discard local
+   index or Google candidates.
+4. **Brave is an optional commercial comparison adapter.** It is never selected
+   by default, is not required by the architecture and cannot satisfy the free
+   production lane.
+
+The Google resolver is deliberately non-standard, but it is not a hidden
+production dependency: input/output sizes are capped, POST redirects are
+disabled, every result preserves the wrapper URL and resolution method, and a
+protocol change produces an explicit per-candidate error.
+
+## Fusion and failure policy
+
+- fan out only within a fixed per-event request and time budget;
+- apply provider-specific circuit breakers after repeated quota or protocol
+  failures;
+- cache discovery metadata by normalized query, locale and freshness window;
+- prefer direct publisher URLs over unresolved wrappers;
+- deduplicate canonical URLs before acquisition;
+- select for publisher, country and probable-origin diversity instead of raw
+  rank alone;
+- never log provider secrets or copy them across origin redirects;
+- keep a candidate when one optional enrichment step fails.
+
+## Owned-index boundary
+
+The local SQLite/FTS metadata catalog is implemented with a default 14-day
+retention window. It never stores RSS bodies or acquired article text. Its
+versioned source registry is empty by default so each feed can receive an
+operator terms review before activation. Polling uses `ETag`/`Last-Modified`,
+bounded two-megabyte responses, a minimum per-source interval and exponential
+failure backoff. Sitemap indexes are not recursively expanded; each child news
+sitemap must be explicitly reviewed and registered. A production service should
+move the same contract to durable storage only after retention and rights review.
+
+## Go/no-go gate
+
+The free acquisition spike continues only if at least two of the three event
+runs satisfy the existing useful-article, publisher and lineage thresholds.
+After an event is seeded, an index-only replay must recover its direct URLs
+without Google or a paid API. Before production, the reviewed RSS/sitemap
+registry must provide enough ongoing coverage that a Google protocol failure
+reduces recall rather than disabling discovery. Brave is not required.
+
+## Three-event live validation
+
+The experimental Google resolver was rerun end-to-end on all three established
+corpora, with 12 automatically discovered candidates per event.
+
+| Event corpus | Resolved | Useful | Publishers | Origins | Result |
+| --- | ---: | ---: | ---: | ---: | --- |
+| International / Hormuz | 12/12 | 8 | 8 | 8 | PASS |
+| Controversial / Ukraine | 12/12 | 6 | 5 | 5 | FAIL |
+| European local-to-global | 12/12 | 11 | 8 | 11 | PASS |
+
+All 36 wrappers resolved to direct publisher URLs, no wrappers remained and no
+resolver error was recorded. Two of the three end-to-end runs passed the
+existing acquisition thresholds. The political corpus failed on useful article
+and publisher counts after publisher acquisition, not on wrapper resolution.
+
+This converts the earlier Google metadata-only failure into a viable free
+bootstrap route and satisfies the experimental two-of-three event threshold.
+The production gate now depends on index-only replay and reviewed feed coverage,
+not on a Brave subscription or any other paid discovery API.
+
+
+## Free index replay validation
+
+The international corpus was rerun through the new free default fabric and then
+replayed with Google and every external discovery provider disabled:
+
+| Discovery mode | Candidates | Useful | Publishers | Origins | Result |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Local index + Google bootstrap | 12 | 8 | 8 | 8 | PASS |
+| Local index only | 12 | 8 | 8 | 8 | PASS |
+
+All 12 replay candidates were emitted as `LOCAL_METADATA_INDEX`. The SQLite
+database contained 12 rows and only URL/title/publisher/time/language/country,
+resolution provenance and lifecycle metadata columns; no RSS content or article
+body column exists. This proves that one successful free bootstrap can be replayed
+without Google, GDELT, Brave or another paid discovery API.
+
+The remaining production work is breadth and freshness: populate the reviewed
+RSS/news-sitemap registry and repeat index-only validation across all three
+event classes after the retention window.

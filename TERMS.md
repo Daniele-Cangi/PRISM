@@ -1,9 +1,11 @@
-# Terms of Use
+# Responsible Use and Software Terms
 
-Effective date: 19 August 2026
+Effective date: 20 August 2026
 
-These terms apply to the reference PRISM deployment. Operators of forks or
-other deployments must publish terms appropriate to their service.
+PRISM is source code, not a hosted service. Use, modification, and distribution
+of the code are governed by the [Apache License 2.0](LICENSE). Anyone operating
+a copy is responsible for that instance and for publishing any additional terms
+required for its users.
 
 ## Purpose and limitations
 
@@ -13,38 +15,27 @@ facts, professional advice, or a substitute for reading original sources.
 Scores and inferred intent may be incomplete, biased, or wrong. Independently
 verify important claims.
 
-## Acceptable use
+## Responsible use
 
-You may submit only public HTTP(S) article URLs that you are permitted to
-access and process. You must not use PRISM to:
+Only submit public HTTP(S) article URLs that you are permitted to access and
+process. Do not use PRISM to:
 
 - probe private networks, local services, cloud metadata, or non-public systems;
 - bypass access controls, paywalls, robots protections, or applicable law;
 - submit confidential, personal, infringing, or unlawfully obtained content;
-- automate requests to evade limits or disrupt the service;
+- automate requests to evade limits or disrupt systems;
 - present generated assessments as established fact or use them to harass,
   discriminate against, or defame people.
 
 ## Third-party services and content
 
 Article publishers retain responsibility and rights in their content. Analysis
-requests may be processed by OpenAI and infrastructure providers. Their terms
-and policies may also apply. PRISM does not endorse linked sources or generated
-claims.
+requests are sent to the OpenAI API account configured by the operator. Those
+providers' terms and policies also apply. PRISM does not endorse linked sources
+or generated claims.
 
 ## Availability and warranties
 
-The service may reject URLs, limit requests, change, or become unavailable.
-It is provided on an as-is and as-available basis, to the extent permitted by
-applicable law, without guarantees of accuracy, fitness, or uninterrupted
-operation.
-
-## Source-code license
-
-Use of the source code is governed by the Apache License 2.0.
-These service terms do not grant additional rights to third-party content,
-trademarks, or hosted infrastructure.
-
-## Contact
-
-Questions about the reference deployment may be sent to info@unityloop.ai.
+The software is provided on an as-is and as-available basis, to the extent
+permitted by applicable law, without guarantees of accuracy, fitness,
+availability, or uninterrupted operation.

@@ -47,7 +47,6 @@ jobs:
       - run: python -m ruff check .
       - run: python -m pytest -q --cov --cov-report=term-missing --cov-fail-under=60
       - run: python -m pip_audit --requirement requirements.txt
-      - run: python -m pip_audit --requirement api/requirements.txt
 
   container:
     runs-on: ubuntu-latest

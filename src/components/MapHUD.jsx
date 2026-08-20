@@ -40,8 +40,10 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
       .center([0, 20])
       .translate([WIDTH / 2, HEIGHT / 2]);
     const createPath = geoPath(projection);
-    return countries.map((country) => {
-      const id = numericCountryId(country.id);
+    return countries.map((country, index) => {
+      const id = country.id == null
+        ? "unknown-" + index
+        : numericCountryId(country.id);
       return {
         id,
         iso2: ISO_MAP[id],
