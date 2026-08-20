@@ -63,7 +63,7 @@ class PinnedResponse:
     ):
         self._response = response
         self._pool = pool
-        self.url = url
+        self.url = url.split("#", 1)[0] if url else None
 
     @property
     def status_code(self) -> int:
