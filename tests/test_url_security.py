@@ -65,6 +65,15 @@ def test_accepts_public_https(monkeypatch):
     assert str(result.addresses[0]) == PUBLIC_V4
 
 
+def test_validated_url_omits_fragment(monkeypatch):
+    monkeypatch.setattr(socket, "getaddrinfo", public_dns)
+
+    result = validate_public_url("https://example.com/article?q=1#section")
+
+    assert result.url == "https://example.com/article?q=1"
+    assert result.request_target == "/article?q=1"
+
+
 def test_rejects_mixed_public_and_private_dns(
     monkeypatch,
 ):

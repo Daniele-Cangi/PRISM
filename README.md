@@ -2,7 +2,7 @@
   <img src="public/logo.svg" width="88" alt="PRISM logo">
 </p>
 
-<h1 align="center">PRISM — Shadow Analyzer</h1>
+<h1 align="center">PRISM</h1>
 
 <p align="center">
   <strong>See through the narrative.</strong><br>
@@ -10,8 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Daniele-Cangi/SHADOW-ANALYZER/actions/workflows/ci.yml"><img src="https://github.com/Daniele-Cangi/SHADOW-ANALYZER/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/Daniele-Cangi/SHADOW-ANALYZER" alt="Apache 2.0 license"></a>
+  <a href="https://github.com/Daniele-Cangi/PRISM/actions/workflows/ci.yml"><img src="https://github.com/Daniele-Cangi/PRISM/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Daniele-Cangi/PRISM" alt="Apache 2.0 license"></a>
   <img src="https://img.shields.io/badge/deployment-local--first-DC2626" alt="Local-first">
 </p>
 
@@ -79,8 +79,8 @@ instance, account system, analytics SDK, or project-operated proxy.
 Clone the repository:
 
 ~~~bash
-git clone https://github.com/Daniele-Cangi/SHADOW-ANALYZER.git
-cd SHADOW-ANALYZER
+git clone https://github.com/Daniele-Cangi/PRISM.git
+cd PRISM
 ~~~
 
 Create your private local configuration:

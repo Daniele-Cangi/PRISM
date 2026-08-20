@@ -54,8 +54,7 @@ ARTICLE_TYPES = {
 }
 HEADERS = {
     "User-Agent": (
-        "PRISM-Acquisition-Spike/2.0 "
-        "(+https://github.com/Daniele-Cangi/SHADOW-ANALYZER)"
+        "PRISM-Acquisition-Spike/2.0 (+https://github.com/Daniele-Cangi/PRISM)"
     ),
     "Accept": (
         "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8"
@@ -557,8 +556,6 @@ def acquire_article(candidate: DiscoveredArticle) -> NormalizedArticle:
     )
     article_id = stable_article_id(canonical_url)
 
-    quotation_soup = BeautifulSoup(document, "lxml")
-    link_soup = BeautifulSoup(document, "lxml")
     paragraphs, method = extract_paragraphs(
         BeautifulSoup(document, "lxml"),
         article_body=metadata.article_body,
@@ -631,8 +628,8 @@ def acquire_article(candidate: DiscoveredArticle) -> NormalizedArticle:
         fetched_at=datetime.now(UTC),
         extraction_version=EXTRACTION_VERSION,
         paragraphs=paragraph_models,
-        quotations=_extract_quotations(quotation_soup),
-        outbound_links=_extract_links(link_soup, canonical_url),
+        quotations=_extract_quotations(soup),
+        outbound_links=_extract_links(soup, canonical_url),
         acquisition_state=state,
         extraction_method=method or ExtractionMethod.STRUCTURED_METADATA,
         completeness_score=completeness,

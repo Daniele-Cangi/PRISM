@@ -29,8 +29,7 @@ SOURCE_ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_-]{1,63}$")
 QUERY_TOKEN_PATTERN = re.compile(r"[^\W_]{2,}", re.UNICODE)
 INDEX_HEADERS = {
     "User-Agent": (
-        "PRISM-Acquisition-Spike/2.0 "
-        "(+https://github.com/Daniele-Cangi/SHADOW-ANALYZER)"
+        "PRISM-Acquisition-Spike/2.0 (+https://github.com/Daniele-Cangi/PRISM)"
     ),
     "Accept": (
         "application/rss+xml,application/atom+xml,application/xml,text/xml,*/*;q=0.1"

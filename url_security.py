@@ -223,8 +223,17 @@ def validate_public_url(value: str) -> ValidatedURL:
             "",
         )
     )
+    diagnostic_url = urlunsplit(
+        (
+            parsed.scheme,
+            parsed.netloc,
+            parsed.path,
+            parsed.query,
+            "",
+        )
+    )
     return ValidatedURL(
-        url=url,
+        url=diagnostic_url,
         scheme=scheme,
         hostname=hostname,
         port=port,

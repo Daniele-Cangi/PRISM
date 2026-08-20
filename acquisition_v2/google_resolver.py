@@ -23,8 +23,7 @@ SIGNATURE_PATTERN = re.compile(r"^[A-Za-z0-9_-]{8,512}$")
 TIMESTAMP_PATTERN = re.compile(r"^[0-9]{8,20}$")
 GET_HEADERS = {
     "User-Agent": (
-        "PRISM-Acquisition-Spike/2.0 "
-        "(+https://github.com/Daniele-Cangi/SHADOW-ANALYZER)"
+        "PRISM-Acquisition-Spike/2.0 (+https://github.com/Daniele-Cangi/PRISM)"
     ),
     "Accept": "text/html,application/xhtml+xml",
 }

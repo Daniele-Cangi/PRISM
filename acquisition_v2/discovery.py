@@ -26,8 +26,7 @@ MAX_DISCOVERY_BYTES = 2 * 1024 * 1024
 BRAVE_NEWS_URL = "https://api.search.brave.com/res/v1/news/search"
 DISCOVERY_HEADERS = {
     "User-Agent": (
-        "PRISM-Acquisition-Spike/2.0 "
-        "(+https://github.com/Daniele-Cangi/SHADOW-ANALYZER)"
+        "PRISM-Acquisition-Spike/2.0 (+https://github.com/Daniele-Cangi/PRISM)"
     ),
     "Accept": "application/json,application/rss+xml,application/xml,text/xml",
 }
