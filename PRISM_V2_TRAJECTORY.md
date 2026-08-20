@@ -335,6 +335,8 @@ Article {
 
     published_at
     updated_at
+    fetched_at
+    extraction_version
 
     paragraphs[]
     quotations[]
@@ -919,4 +921,117 @@ Until then, acquisition is the project.
 
 > **Do not fight to fetch every URL. Build a system that refuses to lose the event when one URL fails.**
 
+---
+
+# 23. Spike implementation contract — 20 August 2026
+
+This section supersedes conflicting details in the earlier proposal while the
+technical spike is active.
+
+## Public acquisition boundary
+
+- The hardened v1 URL fetcher is the required security baseline for every v2
+  HTTP adapter.
+- The public request path does not use a browser or execute publisher
+  JavaScript.
+- The earlier `PLAYWRIGHT` extraction method and `renderer` architecture box
+  are not part of the spike. A future renderer would require a separately
+  isolated service with controlled egress.
+- Google News RSS is a discovery hint, not a guaranteed publisher URL resolver.
+  Wrapper failures must remain explicit and must not count as useful articles.
+
+The active extraction methods are:
+
+```text
+STRUCTURED_METADATA
+HTTP_ARTICLE
+JSON_LD_BODY
+RSS_BODY
+SYNDICATION_RECOVERY
+```
+
+## Benchmark scope
+
+The acquisition gate is evaluated across at least three events:
+
+1. a broadly covered international event;
+2. a controversial political event;
+3. a local event that receives international coverage.
+
+The spike passes only if at least two events produce, without manual article
+copying:
+
+```text
+>= 10 candidates
+>= 8 FULL or useful PARTIAL articles
+>= 6 publishers
+>= 4 probable independent lineage groups
+```
+
+Metadata-only, blocked, removed, paywalled and failed records remain visible in
+the report but do not satisfy the useful-article threshold.
+
+## Persistence and evidence versioning
+
+Every normalized article records `fetched_at`, `extraction_version`, content
+hashes and paragraph IDs. Production storage is out of scope until the spike
+passes. Before any public persistent Article Store is introduced, the Privacy
+Notice, Terms, retention policy and third-party-content handling must be
+updated.
+
+## Current implementation boundary
+
+The first implementation lives in the isolated `acquisition_v2` package and
+produces local JSON benchmark artifacts. It does not change the v1 API, score,
+prompt, frontend or production persistence.
+
 That is the acquisition philosophy PRISM v2 should be built around.
+
+---
+
+# 24. Acquisition spike result - 20 August 2026
+
+The live spike separates extraction quality from discovery quality. This is a
+benchmark result, not a claim that every publisher is fetchable or that one
+public provider is reliable enough for production.
+
+## Automated discovery
+
+`Iran Hormuz oil sanctions`, 12 candidates requested:
+
+- GDELT returned HTTP 429 from the shared public quota even after the documented pause.
+- Google News RSS returned 12 wrappers rather than documented publisher URLs.
+- The run retained all 12 records as `METADATA_ONLY` and produced 0 useful articles.
+
+**Outcome: FAIL.** Automated discovery is still the blocking part of acquisition.
+
+## Direct-URL acquisition control
+
+No article text was copied into PRISM. Public editorial URLs were supplied as
+bounded candidates so the extractor could be evaluated independently.
+
+| Event corpus | Candidates | Useful | Publishers | Origins | Result |
+| --- | ---: | ---: | ---: | ---: | --- |
+| International / Hormuz | 12 | 9 | 7 | 9 | PASS |
+| Controversial / Ukraine, initial mix | 12 | 7 | 7 | 7 | FAIL by 1 article |
+| Controversial / accessible-source mix | 12 | 9 | 8 | 9 | PASS |
+| European local-to-global / Schengen | 12 | 11 | 8 | 11 | PASS |
+
+The rebalanced controversial corpus replaces two externally blocked/challenged
+sources while keeping the event, threshold, concurrency limits and extraction
+algorithm unchanged.
+
+**Outcome: the extractor passes, but the full acquisition gate does not yet
+pass.** Manual URL selection proves extraction viability; it does not satisfy
+the requirement for automatic multi-source discovery.
+
+## Decision
+
+- Do not start claim extraction, UI changes or persistent article storage yet.
+- Keep `acquisition_v2` isolated from the v1 public request path.
+- Before continuing, add and benchmark at least one second discovery adapter that
+  returns documented direct publisher URLs with predictable quotas, then add
+  caching and explicit provider fallback.
+
+The next investment is a reliable direct-URL discovery source and selection policy,
+rather than more extraction heuristics or browser automation.

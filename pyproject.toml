@@ -5,6 +5,7 @@ testpaths = ["tests"]
 [tool.coverage.run]
 branch = true
 source = [
+  "acquisition_v2",
   "analysis_engine",
   "api_common",
   "article_extractor",
