@@ -23,7 +23,7 @@
     "react-dom": "^19.2.8",
     "simplex-noise": "^4.0.3",
     "tailwind-merge": "^3.4.0",
-    "three": "^0.182.0",
+    "three": "^0.186.0",
     "topojson-client": "^3.1.0",
     "world-atlas": "^2.0.2",
     "zustand": "^5.0.9"
