@@ -33,10 +33,6 @@ charset-normalizer==3.5.1
     # via requests
 click==8.4.2
     # via uvicorn
-colorama==0.4.6
-    # via
-    #   click
-    #   pytest
 coverage==7.15.4
     # via pytest-cov
 cyclonedx-python-lib==11.12.0
@@ -86,7 +82,7 @@ mdurl==0.1.2
     # via markdown-it-py
 msgpack==1.2.1
     # via cachecontrol
-openai==3.3.1
+openai==3.16.2
     # via -r requirements.in
 packageurl-python==0.17.6
     # via cyclonedx-python-lib
@@ -178,6 +174,8 @@ urllib3==2.8.0
     #   requests
 uvicorn==0.52.4
     # via -r requirements.in
+uvloop==0.22.1
+    # via uvicorn
 watchfiles==1.2.0
     # via uvicorn
 websockets==17.0.1
