@@ -13,6 +13,19 @@ updates:
           - tailwindcss
           - "@tailwindcss/*"
           - postcss
+      react:
+        patterns:
+          - react
+          - react-dom
+          - "@types/react"
+          - "@types/react-dom"
+      lint-tooling:
+        patterns:
+          - eslint
+          - "@eslint/js"
+          - "eslint-*"
+          - globals
+          - "@humanfs/*"
     ignore:
       - dependency-name: tailwindcss
         update-types:
