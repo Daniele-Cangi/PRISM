@@ -5,6 +5,24 @@ import { getScoreBand } from '../../utils/formatAnalysis';
 import API_ENDPOINTS from '../../utils/api';
 import './retro.css';
 
+const ScanningProgress = () => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev >= 100 ? 0 : prev + 2));
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="retro-progress">
+      <div className="retro-progress-fill" style={{ width: `${progress}%` }}></div>
+      <div className="retro-progress-text">{progress}%</div>
+    </div>
+  );
+};
+
 const RetroTheme = () => {
   const {
     scrapingStatus,
@@ -17,7 +35,6 @@ const RetroTheme = () => {
   } = useAnalysisStore();
 
   const [bootSequence, setBootSequence] = useState(true);
-  const [progress, setProgress] = useState(0);
 
   // Boot sequence on mount
   useEffect(() => {
@@ -26,18 +43,6 @@ const RetroTheme = () => {
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
-
-  // Progress bar animation during scanning
-  useEffect(() => {
-    if (scrapingStatus === 'scanning') {
-      const interval = setInterval(() => {
-        setProgress(prev => (prev >= 100 ? 0 : prev + 2));
-      }, 50);
-      return () => clearInterval(interval);
-    } else {
-      setProgress(0);
-    }
-  }, [scrapingStatus]);
 
   const handleAnalyze = async (e) => {
     e.preventDefault();
@@ -139,10 +144,7 @@ const RetroTheme = () => {
                 <br />
               </div>
 
-              <div className="retro-progress">
-                <div className="retro-progress-fill" style={{ width: `${progress}%` }}></div>
-                <div className="retro-progress-text">{progress}%</div>
-              </div>
+              <ScanningProgress />
 
               <br />
               <div className="retro-text">
