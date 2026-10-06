@@ -62,7 +62,7 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="relative w-full h-full rounded-2xl overflow-hidden border border-[#E5E5E5] bg-[#F5F5F5] shadow-sm touch-manipulation"
+      className="relative w-full h-full rounded-2xl overflow-hidden border border-[#E5E5E5] bg-[#F5F5F5] shadow-xs touch-manipulation"
     >
       <div
         className="absolute inset-0 opacity-[0.4] pointer-events-none"
@@ -73,9 +73,9 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
       />
 
       {isLoading && (
-        <div className="absolute inset-0 bg-white/90 z-20 flex items-center justify-center backdrop-blur-sm">
+        <div className="absolute inset-0 bg-white/90 z-20 flex items-center justify-center backdrop-blur-xs">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-[#E5E5E5] border-t-[#DC2626] rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-[#E5E5E5] border-t-danger rounded-full animate-spin" />
             <span className="text-sm font-bold tracking-widest uppercase text-[#1A1A1A]">
               Acquiring Target...
             </span>
@@ -148,7 +148,7 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
       </svg>
 
       {hovered && (
-        <div className="absolute bottom-4 left-4 px-4 py-2.5 bg-white/95 border border-slate-200 rounded-xl backdrop-blur-sm shadow-lg">
+        <div className="absolute bottom-4 left-4 px-4 py-2.5 bg-white/95 border border-slate-200 rounded-xl backdrop-blur-xs shadow-lg">
           <span className="text-xs font-semibold text-slate-500">
             Sector:{" "}
           </span>
@@ -158,9 +158,9 @@ const MapHUD = ({ onSelectCountry, isLoading }) => {
         </div>
       )}
 
-      <div className="absolute top-4 right-4 px-4 py-2.5 bg-white/95 border border-slate-200 rounded-xl backdrop-blur-sm shadow-lg">
+      <div className="absolute top-4 right-4 px-4 py-2.5 bg-white/95 border border-slate-200 rounded-xl backdrop-blur-xs shadow-lg">
         <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-600">
-          <div className="w-2 h-2 bg-primary rounded-full animate-pulse shadow-sm shadow-primary/50" />
+          <div className="w-2 h-2 bg-primary rounded-full animate-pulse shadow-xs shadow-primary/50" />
           Intel Available
         </div>
       </div>

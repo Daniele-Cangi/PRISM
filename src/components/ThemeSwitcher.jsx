@@ -42,7 +42,7 @@ const ThemeSwitcher = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60]"
+              className="fixed inset-0 bg-black/30 backdrop-blur-xs z-60"
             />
 
             {/* Modal */}
@@ -50,7 +50,7 @@ const ThemeSwitcher = () => {
               initial={{ opacity: 0, scale: 0.9, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -20 }}
-              className="fixed top-20 left-4 right-4 sm:left-auto sm:right-auto sm:w-[600px] bg-white rounded-2xl shadow-2xl z-[70] max-h-[80vh] overflow-hidden"
+              className="fixed top-20 left-4 right-4 sm:left-auto sm:right-auto sm:w-[600px] bg-white rounded-2xl shadow-2xl z-70 max-h-[80vh] overflow-hidden"
             >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-slate-200">
@@ -108,7 +108,7 @@ const ThemeSwitcher = () => {
                           {/* Color Indicator */}
                           <div className="flex items-center gap-2">
                             <div
-                              className="w-4 h-4 rounded-full border-2 border-white shadow-sm"
+                              className="w-4 h-4 rounded-full border-2 border-white shadow-xs"
                               style={{ backgroundColor: theme.primaryColor }}
                             />
                             <span className="text-xs font-mono text-slate-500">

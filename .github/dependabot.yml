@@ -5,6 +5,14 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    groups:
+      frontend-toolchain:
+        patterns:
+          - vite
+          - "@vitejs/plugin-react"
+          - tailwindcss
+          - "@tailwindcss/*"
+          - postcss
     ignore:
       - dependency-name: tailwindcss
         update-types:
@@ -39,3 +47,7 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    groups:
+      codeql:
+        patterns:
+          - "github/codeql-action/*"

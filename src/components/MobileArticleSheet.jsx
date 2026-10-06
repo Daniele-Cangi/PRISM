@@ -82,8 +82,8 @@ const MobileArticleSheet = ({
                         <div className="px-5 pb-4 border-b border-slate-100">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2.5 bg-[#DC2626]/10 rounded-xl">
-                                        <Target className="w-5 h-5 text-[#DC2626]" strokeWidth={2} />
+                                    <div className="p-2.5 bg-danger/10 rounded-xl">
+                                        <Target className="w-5 h-5 text-danger" strokeWidth={2} />
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-bold text-[#1A1A1A] font-serif">
@@ -121,7 +121,7 @@ const MobileArticleSheet = ({
                         >
                             {isLoading ? (
                                 <div className="flex flex-col items-center justify-center py-12">
-                                    <Loader className="w-10 h-10 text-[#DC2626] animate-spin mb-3" />
+                                    <Loader className="w-10 h-10 text-danger animate-spin mb-3" />
                                     <p className="text-sm text-slate-500">Loading articles...</p>
                                 </div>
                             ) : !data || data.length === 0 ? (
@@ -148,7 +148,7 @@ const MobileArticleSheet = ({
                                         >
                                             {/* Source & Time */}
                                             <div className="flex items-center gap-2 mb-2">
-                                                <span className="text-[11px] font-bold text-[#DC2626] uppercase tracking-wider">
+                                                <span className="text-[11px] font-bold text-danger uppercase tracking-wider">
                                                     {item.source}
                                                 </span>
                                                 <span className="text-slate-300">•</span>
@@ -171,7 +171,7 @@ const MobileArticleSheet = ({
                                                     className={`flex-1 py-3.5 px-4 rounded-xl font-semibold text-sm transition-all touch-manipulation ${
                                                         analyzingId === item.id
                                                             ? 'bg-slate-200 text-slate-400'
-                                                            : 'bg-[#DC2626] text-white active:bg-[#b91c1c]'
+                                                            : 'bg-danger text-white active:bg-[#b91c1c]'
                                                     }`}
                                                 >
                                                     {analyzingId === item.id ? (

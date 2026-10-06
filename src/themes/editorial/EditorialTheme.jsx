@@ -101,7 +101,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
               {/* Home Button */}
               <button
                 onClick={onBackToHome}
-                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-600 hover:text-[#DC2626] hover:bg-gray-100 rounded-lg transition-all"
+                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-600 hover:text-danger hover:bg-gray-100 rounded-lg transition-all"
               >
                 <Home className="w-4 h-4" />
                 <span>Home</span>
@@ -109,7 +109,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
 
               {/* Logo */}
               <div className="flex items-center gap-2">
-                <Loader className="w-8 h-8 text-[#DC2626] animate-spin" />
+                <Loader className="w-8 h-8 text-danger animate-spin" />
                 <h1 className="font-serif text-4xl font-black tracking-tight leading-none">
                   PRISM
                 </h1>
@@ -120,10 +120,10 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
                 <span>{remainingAnalyses}/{maxAnalyses}</span>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-2 text-xs font-medium text-[#DC2626] tracking-wider uppercase">
-              <span className="w-1.5 h-1.5 bg-[#DC2626] rounded-full" />
+            <div className="flex items-center justify-center gap-2 text-xs font-medium text-danger tracking-wider uppercase">
+              <span className="w-1.5 h-1.5 bg-danger rounded-full" />
               <span>Cognitive Security</span>
-              <span className="w-1.5 h-1.5 bg-[#DC2626] rounded-full" />
+              <span className="w-1.5 h-1.5 bg-danger rounded-full" />
             </div>
           </div>
 
@@ -133,12 +133,12 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
             <div className="flex items-center gap-4">
               <button
                 onClick={onBackToHome}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#DC2626] hover:bg-gray-100 rounded-lg transition-all border border-gray-200"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-danger hover:bg-gray-100 rounded-lg transition-all border border-gray-200"
               >
                 <Home className="w-5 h-5" />
                 <span>Home</span>
               </button>
-              <Loader className="w-14 h-14 text-[#DC2626] animate-spin" />
+              <Loader className="w-14 h-14 text-danger animate-spin" />
               <div className="text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
                 <div>Vol. 24 • No. 118</div>
                 <div>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}</div>
@@ -150,10 +150,10 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
               <h1 className="font-serif text-7xl font-black tracking-tight leading-none mb-2">
                 PRISM
               </h1>
-              <div className="flex items-center justify-center gap-3 text-sm font-medium text-[#DC2626] tracking-widest uppercase">
-                <span className="w-2 h-2 bg-[#DC2626] rounded-full" />
+              <div className="flex items-center justify-center gap-3 text-sm font-medium text-danger tracking-widest uppercase">
+                <span className="w-2 h-2 bg-danger rounded-full" />
                 <span>Cognitive Security Grid</span>
-                <span className="w-2 h-2 bg-[#DC2626] rounded-full" />
+                <span className="w-2 h-2 bg-danger rounded-full" />
               </div>
             </div>
 
@@ -169,7 +169,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
               <div className="text-right text-xs font-mono text-gray-500 uppercase tracking-widest space-y-1">
                 <div className="flex items-center justify-end gap-2">
                   <span>Runtime Mode</span>
-                  <span className="text-[#DC2626] font-bold">LOCAL</span>
+                  <span className="text-danger font-bold">LOCAL</span>
                 </div>
                 <div>API Key: <span className="text-green-600">SERVER-SIDE</span></div>
               </div>
@@ -191,7 +191,7 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
           {/* Limit Warning */}
           {hasReachedLimit && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <AlertCircle className="w-5 h-5 shrink-0" />
               <div>
                 <p className="font-medium">Analysis limit reached</p>
                 <p className="text-sm text-red-600">You've used all {maxAnalyses} free analyses for this rate-limit window.</p>
@@ -212,12 +212,12 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
               onChange={(e) => setTargetUrl(e.target.value)}
               placeholder={hasReachedLimit ? "Analysis limit reached" : "Paste article URL to analyze..."}
               disabled={hasReachedLimit}
-              className={`w-full px-4 md:px-5 py-3 md:py-4 pr-14 text-base md:text-lg border rounded-full shadow-sm focus:outline-none transition-all ${hasReachedLimit ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed' : 'border-slate-200 focus:border-slate-400 focus:shadow-md bg-white'}`}
+              className={`w-full px-4 md:px-5 py-3 md:py-4 pr-14 text-base md:text-lg border rounded-full shadow-xs focus:outline-hidden transition-all ${hasReachedLimit ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed' : 'border-slate-200 focus:border-slate-400 focus:shadow-md bg-white'}`}
             />
             <button
               type="submit"
               disabled={!targetUrl.trim() || scrapingStatus === 'scanning' || hasReachedLimit}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-3 md:p-3 bg-[#1A1A1A] hover:bg-[#DC2626] active:bg-[#DC2626] disabled:bg-slate-300 text-white rounded-full transition-all touch-manipulation"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-3 md:p-3 bg-[#1A1A1A] hover:bg-danger active:bg-danger disabled:bg-slate-300 text-white rounded-full transition-all touch-manipulation"
             >
               {scrapingStatus === 'scanning' ? (
                 <Loader className="w-5 h-5 animate-spin" />
@@ -253,8 +253,8 @@ const EditorialTheme = ({ onBackToHome, analysisCount = 0, maxAnalyses = 3, onAn
             <div className="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[55vh] lg:min-h-[70vh] relative">
               {/* Scanning Overlay */}
               {scrapingStatus === 'scanning' && (
-                <div className="absolute inset-0 z-40 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center">
-                  <Loader className="w-12 h-12 lg:w-16 lg:h-16 text-[#DC2626] animate-spin mb-4" />
+                <div className="absolute inset-0 z-40 bg-white/90 backdrop-blur-xs flex flex-col items-center justify-center">
+                  <Loader className="w-12 h-12 lg:w-16 lg:h-16 text-danger animate-spin mb-4" />
                   <h3 className="headline-tertiary text-base lg:text-xl">Analyzing Narrative...</h3>
                   <p className="text-[#666666] text-sm">Extracting bias patterns</p>
                 </div>

@@ -17,7 +17,7 @@ const StatsSidebar = ({ data }) => {
   const getTrendIcon = () => {
     if (score < 30) return <TrendingDown className="w-5 h-5 text-gray-500" />;
     if (score < 70) return <Minus className="w-5 h-5 text-gray-700" />;
-    return <TrendingUp className="w-5 h-5 text-[#DC2626]" />;
+    return <TrendingUp className="w-5 h-5 text-danger" />;
   };
 
   const getColor = () => {
