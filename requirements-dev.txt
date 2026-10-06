@@ -33,10 +33,6 @@ charset-normalizer==3.5.1
     # via requests
 click==8.4.2
     # via uvicorn
-colorama==0.4.6
-    # via
-    #   click
-    #   pytest
 coverage==7.15.4
     # via pytest-cov
 cyclonedx-python-lib==11.12.0
@@ -142,7 +138,7 @@ requests==2.34.2
     #   pip-audit
 rich==15.0.0
     # via pip-audit
-ruff==0.16.9
+ruff==0.16.10
     # via -r requirements-dev.in
 sniffio==1.3.1
     # via openai
@@ -178,7 +174,7 @@ urllib3==2.8.0
     #   requests
 uvicorn==0.54.0
     # via -r requirements.in
-uvloop==0.22.1 ; sys_platform != "win32" and platform_python_implementation == "CPython"
+uvloop==0.22.1
     # via uvicorn
 watchfiles==1.2.0
     # via uvicorn
