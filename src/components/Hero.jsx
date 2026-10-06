@@ -28,7 +28,7 @@ export default function Hero({ onAnalyzeComplete }) {
                     >
                         {/* Title / Hook */}
                         <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-2">
-                            DECODE THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-red to-orange-600">NARRATIVE</span>
+                            DECODE THE <span className="text-transparent bg-clip-text bg-linear-to-r from-neon-red to-orange-600">NARRATIVE</span>
                         </h2>
                         <p className="text-gray-400 font-mono mb-12 max-w-lg mx-auto">
                             Advanced sentiment forensics and deception detection engine.
@@ -37,7 +37,7 @@ export default function Hero({ onAnalyzeComplete }) {
 
                         {/* Input Container */}
                         <div className="relative group w-full max-w-2xl mx-auto mb-8">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-neon-red via-gray-500 to-cyber-green rounded-lg opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur"></div>
+                            <div className="absolute -inset-0.5 bg-linear-to-r from-neon-red via-gray-500 to-cyber-green rounded-lg opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur-sm"></div>
                             <div className="relative flex bg-black rounded-lg border border-gray-800 p-2">
                                 <div className="flex items-center justify-center pl-4 text-gray-500">
                                     <Search className="w-5 h-5" />
@@ -47,13 +47,13 @@ export default function Hero({ onAnalyzeComplete }) {
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
                                     placeholder="INSERT SOURCE URL OR RAW INTELLIGENCE..."
-                                    className="flex-1 bg-transparent text-white font-mono placeholder-gray-600 px-4 py-3 focus:outline-none uppercase"
+                                    className="flex-1 bg-transparent text-white font-mono placeholder-gray-600 px-4 py-3 focus:outline-hidden uppercase"
                                     onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
                                 />
                                 <button
                                     onClick={handleAnalyze}
                                     className={clsx(
-                                        "px-6 py-2 rounded font-bold tracking-wider transition-all duration-300 transform",
+                                        "px-6 py-2 rounded-sm font-bold tracking-wider transition-all duration-300 transform",
                                         inputValue ? "bg-neon-red text-black hover:bg-red-500 hover:scale-105" : "bg-gray-800 text-gray-500 cursor-not-allowed"
                                     )}
                                     disabled={!inputValue}
@@ -74,7 +74,7 @@ export default function Hero({ onAnalyzeComplete }) {
                                 <button
                                     key={source.label}
                                     onClick={() => setInputValue(source.label === 'REUTERS' ? "https://reuters.com/article/example" : source.label === 'TWITTER / X' ? "https://x.com/user/status/123456789" : "MAGNET:?xt=urn:sha1:7f8a...")}
-                                    className="flex items-center gap-1 px-3 py-1 rounded border border-gray-800 bg-gray-900/50 text-[10px] text-gray-400 hover:border-gray-600 hover:text-white transition-colors"
+                                    className="flex items-center gap-1 px-3 py-1 rounded-sm border border-gray-800 bg-gray-900/50 text-[10px] text-gray-400 hover:border-gray-600 hover:text-white transition-colors"
                                 >
                                     <source.icon className="w-3 h-3" />
                                     {source.label}

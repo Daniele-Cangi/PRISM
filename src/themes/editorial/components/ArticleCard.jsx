@@ -30,7 +30,7 @@ const ArticleCard = ({ data, onClick }) => {
         </div>
 
         {/* Headline */}
-        <h2 className="headline-secondary mb-3 hover:text-[#DC2626] transition-colors">
+        <h2 className="headline-secondary mb-3 hover:text-danger transition-colors">
           {title}
         </h2>
 
@@ -40,7 +40,7 @@ const ArticleCard = ({ data, onClick }) => {
         </p>
 
         {/* Read More */}
-        <div className="byline text-[#DC2626] hover:underline">
+        <div className="byline text-danger hover:underline">
           Read Full Analysis →
         </div>
       </div>

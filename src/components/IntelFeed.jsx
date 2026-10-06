@@ -19,7 +19,7 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
 
     return (
         <div className="space-y-4 max-h-[45vh] md:max-h-[55vh] lg:max-h-[65vh] overflow-y-auto pr-2 editorial-theme">
-            <div className="sticky top-0 bg-white/95 backdrop-blur-sm pb-4 border-b border-[#E5E5E5] z-10">
+            <div className="sticky top-0 bg-white/95 backdrop-blur-xs pb-4 border-b border-[#E5E5E5] z-10">
                 <div className="flex items-center gap-2.5">
                     <div className="p-1.5 bg-gray-100 rounded-lg">
                         <Target className="w-4 h-4 text-[#1A1A1A]" strokeWidth={2.5} />
@@ -35,12 +35,12 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className="group bg-white border border-[#E5E5E5] p-6 hover:border-[#DC2626] transition-all duration-300"
+                    className="group bg-white border border-[#E5E5E5] p-6 hover:border-danger transition-all duration-300"
                 >
                     <div className="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
                             <div className="flex items-center gap-3">
-                                <span className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest font-sans">
+                                <span className="text-[10px] font-bold text-danger uppercase tracking-widest font-sans">
                                     {item.source}
                                 </span>
                                 <span className="flex items-center gap-1 text-[10px] text-[#666666] font-medium uppercase tracking-wider font-sans">
@@ -48,7 +48,7 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
                                     {item.published?.split(',')[0] || 'Recent'}
                                 </span>
                             </div>
-                            <h4 className="text-lg font-serif font-medium text-[#1A1A1A] leading-snug group-hover:text-[#DC2626] transition-colors">
+                            <h4 className="text-lg font-serif font-medium text-[#1A1A1A] leading-snug group-hover:text-danger transition-colors">
                                 {item.title}
                             </h4>
                         </div>
@@ -58,7 +58,7 @@ const IntelFeed = ({ data, sectorName, onAnalyze, analyzingId }) => {
                                 href={item.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-[#666666] hover:text-[#DC2626] active:text-[#DC2626] uppercase tracking-wider font-sans flex items-center gap-1 transition-colors touch-manipulation"
+                                className="text-xs text-[#666666] hover:text-danger active:text-danger uppercase tracking-wider font-sans flex items-center gap-1 transition-colors touch-manipulation"
                             >
                                 Read Source <ExternalLink className="w-3 h-3" strokeWidth={1.5} />
                             </a>

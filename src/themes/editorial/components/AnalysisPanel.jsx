@@ -112,7 +112,7 @@ const AnalysisPanel = ({ data, onClose }) => {
       className={`fixed inset-0 bg-white z-50 overflow-y-auto ${mode === 'scientific' ? 'scientific-theme' : 'editorial-theme'}`}
     >
       {/* Mobile Header - Fixed */}
-      <div className="sticky top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-slate-200 z-50 lg:relative lg:border-0">
+      <div className="sticky top-0 left-0 right-0 bg-white/95 backdrop-blur-xs border-b border-slate-200 z-50 lg:relative lg:border-0">
         <div className="flex items-center justify-between p-4">
           <button
             onClick={onClose}
@@ -127,7 +127,7 @@ const AnalysisPanel = ({ data, onClose }) => {
             <button
               onClick={() => setMode('editorial')}
               className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all touch-manipulation min-h-[40px] ${mode === 'editorial'
-                ? 'bg-white text-[#1A1A1A] shadow-sm'
+                ? 'bg-white text-[#1A1A1A] shadow-xs'
                 : 'text-slate-500'
                 }`}
             >
@@ -137,7 +137,7 @@ const AnalysisPanel = ({ data, onClose }) => {
             <button
               onClick={() => setMode('scientific')}
               className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all touch-manipulation min-h-[40px] ${mode === 'scientific'
-                ? 'bg-[#DC2626] text-white shadow-sm'
+                ? 'bg-danger text-white shadow-xs'
                 : 'text-slate-500'
                 }`}
             >
@@ -171,7 +171,7 @@ const AnalysisPanel = ({ data, onClose }) => {
         <div className="px-4 pb-8 pt-4 lg:pt-8 max-w-4xl mx-auto">
 
           {/* Mobile Score Summary Card */}
-          <div className="lg:hidden bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 mb-6">
+          <div className="lg:hidden bg-linear-to-br from-slate-50 to-slate-100 rounded-2xl p-6 mb-6">
             <div className="flex items-start gap-4">
               <ScoreBadge score={meta?.score || 0} />
               <div className="flex-1 min-w-0">
@@ -213,7 +213,7 @@ const AnalysisPanel = ({ data, onClose }) => {
           {/* Strategic Intent - Collapsible on Mobile */}
           <div className="lg:hidden">
             <CollapsibleSection title="Strategic Intent" icon={Eye} defaultOpen={true} accentColor="#DC2626">
-              <p className="text-base text-slate-700 leading-relaxed italic border-l-4 border-[#DC2626] pl-4">
+              <p className="text-base text-slate-700 leading-relaxed italic border-l-4 border-danger pl-4">
                 {intent}
               </p>
             </CollapsibleSection>
@@ -252,7 +252,7 @@ const AnalysisPanel = ({ data, onClose }) => {
               <ul className="space-y-3">
                 {facts?.map((fact, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                    <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
                       {i + 1}
                     </span>
                     <span className="text-slate-700">{fact}</span>
@@ -268,7 +268,7 @@ const AnalysisPanel = ({ data, onClose }) => {
               <ul className="space-y-3">
                 {axioms?.map((axiom, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                    <span className="w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
                       {i + 1}
                     </span>
                     <span className="text-slate-700">{axiom}</span>
@@ -319,7 +319,7 @@ const AnalysisPanel = ({ data, onClose }) => {
                 </div>
                 <div className="text-right">
                   <div className="text-xs uppercase tracking-wider text-slate-400 mb-1">Classification</div>
-                  <div className="text-lg font-semibold text-[#DC2626]">{meta?.verdict_short || 'Unknown'}</div>
+                  <div className="text-lg font-semibold text-danger">{meta?.verdict_short || 'Unknown'}</div>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-700">
