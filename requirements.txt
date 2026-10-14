@@ -20,9 +20,7 @@ certifi==2026.7.22
     # via -r requirements.in
 click==8.4.2
     # via uvicorn
-colorama==0.4.6
-    # via click
-fastapi==0.142.2
+fastapi==0.143.0
     # via -r requirements.in
 feedparser==6.0.14
     # via -r requirements.in
@@ -92,7 +90,7 @@ urllib3==2.8.0
     # via -r requirements.in
 uvicorn==0.54.0
     # via -r requirements.in
-uvloop==0.22.1 ; sys_platform != "win32" and platform_python_implementation == "CPython"
+uvloop==0.22.1
     # via uvicorn
 watchfiles==1.2.0
     # via uvicorn
