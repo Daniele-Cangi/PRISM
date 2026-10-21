@@ -16,7 +16,7 @@
     "@react-three/fiber": "^9.8.1",
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
-    "framer-motion": "^14.0.0",
+    "framer-motion": "^14.3.0",
     "lucide-react": "^1.51.0",
     "prop-types": "^15.8.1",
     "react": "^19.3.0",
