@@ -16,12 +16,10 @@ anyio==4.14.2
     #   watchfiles
 beautifulsoup4==4.15.0
     # via -r requirements.in
-certifi==2026.7.22
+certifi==2026.10.19
     # via -r requirements.in
 click==8.4.2
     # via uvicorn
-colorama==0.4.6
-    # via click
 fastapi==0.142.2
     # via -r requirements.in
 feedparser==6.0.14
@@ -92,7 +90,7 @@ urllib3==2.8.0
     # via -r requirements.in
 uvicorn==0.54.0
     # via -r requirements.in
-uvloop==0.22.1 ; sys_platform != "win32" and platform_python_implementation == "CPython"
+uvloop==0.22.1
     # via uvicorn
 watchfiles==1.2.0
     # via uvicorn
